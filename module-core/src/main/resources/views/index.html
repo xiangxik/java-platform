@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <title>后台管理系统</title>
+	    <link rel="stylesheet" type="text/css" href="${base}/assets/jquery-easyui-1.4.4/themes/default/easyui.css">
+	    <link rel="stylesheet" type="text/css" href="${base}/assets/jquery-easyui-1.4.4/themes/icon.css">
+	    <script type="text/javascript" src="${base}/assets/jquery-easyui-1.4.4/jquery.min.js"></script>
+	    <script type="text/javascript" src="${base}/assets/jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+	</head>
+	
+	<body class="easyui-layout">
+	    <div data-options="region:'north',border:false" style="height:48px; background-color: #e6eef8; border: 0px; padding: 0px; overflow: hidden;">
+	    	<p>后台管理系统</p>
+	    </div>
+	    
+	    <div data-options="region:'west',split:true,border:false" style="width:180px;">
+	    	<div class="easyui-accordion" data-options="fit:true">
+		        <div data-options="collapsed:false,collapsible:false" style="padding:10px;">
+		            <input class="easyui-searchbox" prompt="搜索" style="width:140px;height:25px;">
+		        </div>
+		        <div title="菜单1" data-options="selected:true" style="padding:5px">
+		            <ul class="easyui-tree">  
+					    <li data-options="href:'${base}/admin/user/list'">  
+	                        <span>人员信息</span>  
+	                    </li>  
+	                    <li>
+	                        <span>组织机构管理</span>  
+	                    </li>  
+	                    <li>  
+	                        <span>客户信息管理</span>  
+	                    </li>  
+					    <li>  
+					        <span>项目资料管理</span>  
+					    </li>
+					     <li>  
+					        <span>央行后台管理</span>  
+					    </li> 
+					</ul>  
+		        </div>
+		        <div title="Title2" style="padding:10px">
+		            <p>Content2</p>
+		        </div>
+		    </div>
+	    </div>
+	    
+	    <div data-options="region:'center',border:false">
+	    	<div class="easyui-tabs" id="frame_tabs" style="overflow: hidden;background-color: #e6eef8;"
+				data-options="fit:true,tools:'#tab-tools'">
+				
+				<div title="控制台" data-options="href:'${base}/admin/dashboard',closable:true" style="overflow: hidden;">
+					
+				</div>
+			</div>
+			
+			<div id="tab-tools">
+				<a href="javascript:void(0)" id="link_removeAll" title="关闭全部" class="easyui-linkbutton" 
+					data-options="plain:true,iconCls:'icon-cancel'"></a>
+			</div>
+	    	
+	    </div>
+	    
+	    <div data-options="region:'south',border:false" style="height:20px; background-color: #e6eef8; text-align: center;">
+	    	@版权所有2016
+	    </div>
+	    
+	    <script type="text/javascript">
+	    $(function(){
+	    	var $frame_tabs = $("#frame_tabs");
+	    	var $menus = $(".easyui-accordion ul.easyui-tree");
+	    	var $link_removeAll = $("#link_removeAll");
+	    	
+	    	$menus.tree({
+	    		onSelect: function(node) {
+	    			var nodeText = node.text;
+	    			var exist_tab = $frame_tabs.tabs('getTab', nodeText);
+	    			
+	    			if(exist_tab) {
+	    				$frame_tabs.tabs("select", nodeText);
+	    			} else {
+	    				var href = node.href;
+	    				$frame_tabs.tabs("add", {
+	    					id: "tab",
+	    					title: nodeText,
+	    					fit: true,
+	    					closable: true,
+	    					content: "<div class=\"easyui-panel\" data-options=\"fit:true,border:false,href:'"+href+"'\"></div>",
+	    					tools:[{
+	    						iconCls:'icon-mini-refresh',
+	    						handler:function(){
+	    							
+	    						}
+	    					}]
+	    				});
+	    			}
+	    		}
+	    	});
+	    	
+	    	$link_removeAll.on("click", function() {
+	    		$(".tabs li").each(function(index, obj) {
+	    			var tab = $(".tabs-closable", this).text();
+	    			$frame_tabs.tabs('close', tab);  
+	            });
+	    	});
+	    });
+	    </script>
+	    
+	</body>
+
+</html>
