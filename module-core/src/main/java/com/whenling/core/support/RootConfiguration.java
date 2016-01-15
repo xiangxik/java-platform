@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = { "com.whenling" }, excludeFilters = {
 		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION),
 		@ComponentScan.Filter(value = EnableWebMvc.class, type = FilterType.ANNOTATION) })
-@PropertySource(value = "classpath:/core.properties")
+@PropertySource(value = "classpath:/module-core.properties")
 public class RootConfiguration {
 
 }
