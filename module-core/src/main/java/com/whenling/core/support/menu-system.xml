@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<menu-set name="系统模块" code="system">
+  <menuItems>
+    <menu-item text="人员管理" code="personnel" iconCls="fa fa-users">
+    	<children>
+    		<menu-item text="用户列表" code="user" iconCls="fa fa-user" view="app.view.user.List"/>
+    		<menu-item text="角色列表" code="role" iconCls="fa fa-gavel" view="app.view.role.List"/>
+    	</children>
+    </menu-item>
+    
+    <menu-item text="参数设置" code="setting" iconCls="fa fa-cogs">
+    	<children>
+    		<menu-item text="系统参数" code="system" iconCls="fa fa-cog" view="app.view.role.List"/>
+    	</children>
+    </menu-item>
+    
+  </menuItems>
+</menu-set>

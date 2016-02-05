@@ -20,7 +20,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-		"com.whenling" }, repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class)
+		"com.whenling.core.repo" }, repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class)
 @EnableJpaAuditing
 public class RepositoryConfiguration {
 
@@ -37,7 +37,7 @@ public class RepositoryConfiguration {
 
 		factory.setDataSource(dataSource());
 		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("com.whenling");
+		factory.setPackagesToScan("com.whenling.core.model");
 		factory.setJpaDialect(new HibernateJpaDialect());
 
 		Properties jpaProperties = new Properties();

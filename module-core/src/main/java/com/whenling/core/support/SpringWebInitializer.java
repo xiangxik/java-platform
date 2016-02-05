@@ -1,10 +1,13 @@
 package com.whenling.core.support;
 
+import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -30,6 +33,11 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
+	}
+
+	@Override
+	protected Filter[] getServletFilters() {
+		return new Filter[] { new CharacterEncodingFilter("UTF-8", true), new RequestContextFilter() };
 	}
 
 	@Override
