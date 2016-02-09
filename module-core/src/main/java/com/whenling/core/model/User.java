@@ -1,13 +1,21 @@
 package com.whenling.core.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whenling.core.support.entity.BizEntity;
+import com.whenling.core.support.entity.Lockedable;
 
 /**
  * 用户实体类
@@ -18,7 +26,7 @@ import com.whenling.core.support.entity.BizEntity;
  */
 @Entity
 @Table(name = "sys_user")
-public class User extends BizEntity<User, Long> {
+public class User extends BizEntity<User, Long> implements Lockedable {
 
 	private static final long serialVersionUID = 2839091334861650994L;
 
@@ -51,6 +59,19 @@ public class User extends BizEntity<User, Long> {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private Sex sex;
+
+	@Temporal(TemporalType.DATE)
+	private Date birthday;
+
+	@Column(nullable = false)
+	private boolean superAdmin = false;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "department_id")
+	private Department department;
+
+	@Column(nullable = false)
+	private boolean locked = false;
 
 	public enum Sex {
 		/** 男 */
@@ -114,6 +135,45 @@ public class User extends BizEntity<User, Long> {
 
 	public void setSex(Sex sex) {
 		this.sex = sex;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public boolean isSuperAdmin() {
+		return superAdmin;
+	}
+
+	public void setSuperAdmin(boolean superAdmin) {
+		this.superAdmin = superAdmin;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	@Override
+	public boolean getLocked() {
+		return locked;
+	}
+
+	@Override
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	@Override
+	public void markLocked() {
+		this.locked = true;
 	}
 
 }

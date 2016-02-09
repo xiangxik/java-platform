@@ -4,6 +4,6 @@ Ext.define("app.store.Users", {
 	model : "app.model.User",
 	url : Ext.ctx + "/admin/user/list",
 	extraParams : {
-		paths : [ "name", "email" ]
+		paths : [ "id", "name", "email", "mobile", "sex", "birthday", "superAdmin", "department.name", "department.id" ]
 	}
 })

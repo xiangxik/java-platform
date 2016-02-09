@@ -1,8 +1,11 @@
 package com.whenling.core.support.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,10 +13,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
-import com.whenling.core.model.User;
-
 @MappedSuperclass
-public abstract class TreeEntity<T> extends BizEntity<User, Long> implements Treeable<T> {
+@EntityListeners(value = { TreeEntityListener.class })
+public abstract class TreeEntity<I extends Serializable, U, T> extends BizEntity<U, I> implements Treeable<T> {
 
 	private static final long serialVersionUID = -8438302668847434698L;
 
@@ -24,6 +26,9 @@ public abstract class TreeEntity<T> extends BizEntity<User, Long> implements Tre
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
 	@OrderBy("sortNo asc")
 	private List<T> children;
+
+	@Column(length = 500)
+	private String treePath;
 
 	private Integer sortNo;
 
@@ -55,6 +60,14 @@ public abstract class TreeEntity<T> extends BizEntity<User, Long> implements Tre
 	@Override
 	public void setChildren(List<T> children) {
 		this.children = children;
+	}
+
+	public String getTreePath() {
+		return treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		this.treePath = treePath;
 	}
 
 }

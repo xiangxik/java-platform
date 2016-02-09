@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whenling.core.support.integration.Application;
-import com.whenling.core.support.menu.model.MenuSet;
+import com.whenling.core.support.integration.menu.MenuSet;
 
 @Controller
 @RequestMapping("/admin/menu")
