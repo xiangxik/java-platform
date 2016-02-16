@@ -6,16 +6,45 @@ Ext.define("app.view.role.RoleController", {
 			//
 		}
 	},
+
+	refs : [ {
+		ref : "list",
+		xtype : "gridpanel"
+	} ],
+
 	onRoleAdd : function() {
-		var form = Ext.create("app.view.role.RoleForm");
-		form.getForm().setValues({
-			name : "abcde",
-			code : "dddwww"
+		Ext.create("app.model.Role").load(1, {
+			success : function(role) {
+				var form = Ext.create("app.view.role.RoleForm");
+				// form.getForm().setValues(role.data)
+				Ext.create("Ext.window.Window", {
+					title : "新建角色",
+					modal : true,
+					layout : "fit",
+					items : form
+				}).show();
+			}
 		})
-		Ext.create("Ext.window.Window", {
-			title : "新建角色",
-			layout : "fit",
-			items : form
-		}).show();
+
+	},
+	onFormSave : function(button) {
+
+		var form = button.up('form').getForm();
+		var window = button.up("window");
+		var store = this.getStore("page");
+		if (form.isValid()) {
+			form.submit({
+				success : function(form, action) {
+					Ext.Msg.alert('Success', action.result.msg);
+					window.close();
+					store.load();
+
+				},
+				failure : function(form, action) {
+					Ext.Msg.alert('Failed', action.result.msg);
+				}
+			});
+		}
+
 	}
 });

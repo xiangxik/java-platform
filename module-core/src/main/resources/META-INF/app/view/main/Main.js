@@ -9,11 +9,11 @@ Ext.define('app.view.main.Main', {
 	viewModel : 'main',
 
 	items : [ {
-		region : 'north', // position for region
+		region : 'north',
 		xtype : 'mainheader',
 		margin : '5 5 0 5'
 	}, {
-		region : 'south', // position for region
+		region : 'south',
 		xtype : 'mainfooter',
 		margin : '0 5 0 5'
 	}, {

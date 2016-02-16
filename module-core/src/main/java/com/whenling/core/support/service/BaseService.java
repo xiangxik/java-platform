@@ -35,6 +35,10 @@ public class BaseService<T extends BaseEntity<I>, I extends Serializable> {
 		}
 	}
 
+	public Class<T> getEntityClass() {
+		return entityClass;
+	}
+
 	@Transactional
 	public T save(T entity) {
 		return baseRepository.save(entity);

@@ -50,7 +50,7 @@ public class CoreModule extends Module {
 			superAdmin.setSuperAdmin(true);
 			superAdmin.markLocked();
 			superAdmin.setUsername("admin");
-			superAdmin.setPassword("asd123");
+			userService.changePassword(superAdmin, null, "asd123");
 			superAdmin.setEmail("ken@whenling.com");
 			superAdmin.setMobile("13265323553");
 			superAdmin.setName("管理员");

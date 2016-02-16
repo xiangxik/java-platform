@@ -3,14 +3,19 @@ package com.whenling.core.support.entity;
 public class Result {
 
 	public final static int CODE_SUCCESS = 0;
-	public final static int CODE_VALIDATE_FAILURE = 1;
-	public final static int CODE_PERMISSION_DENIED = 2;
-	public final static int CODE_NOT_LOGIN = 3;
-	public final static int CODE_EXCEPTION = 4;
-	public final static int CODE_UNKNOWN = 5;
+	public final static int CODE_FAILURE = 1;
+	public final static int CODE_VALIDATE_FAILURE = 2;
+	public final static int CODE_PERMISSION_DENIED = 3;
+	public final static int CODE_NOT_LOGIN = 4;
+	public final static int CODE_EXCEPTION = 5;
+	public final static int CODE_UNKNOWN = 6;
 
 	public static Result success() {
 		return new Result().setCode(CODE_SUCCESS);
+	}
+
+	public static Result failure() {
+		return new Result().setCode(CODE_FAILURE);
 	}
 
 	public static Result validateFailure(Object data) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<ehcache name="all">
+
+	<diskStore path="java.io.tmpdir" />
+
+	<defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
+		overflowToDisk="true" maxElementsOnDisk="10000000" diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" />
+
+	<cache name="org.hibernate.cache.spi.UpdateTimestampsCache" maxElementsInMemory="5000" eternal="true"
+		overflowToDisk="true" />
+	<cache name="org.hibernate.cache.internal.StandardQueryCache" maxElementsInMemory="10000" eternal="false"
+		timeToLiveSeconds="120" overflowToDisk="true" />
+		
+	<cache name="Configuration" maxElementsInMemory="5000" eternal="true"
+		overflowToDisk="true" />
+		
+	<!-- 文章点击数缓存 -->
+	<cache name="articleHits" maxElementsInMemory="500" eternal="true" overflowToDisk="true" />
+		
+
+</ehcache>

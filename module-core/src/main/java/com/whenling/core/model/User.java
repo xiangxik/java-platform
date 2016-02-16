@@ -36,7 +36,7 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 
 	/** 密码 */
 	@JsonIgnore
-	@Column(length = 100, nullable = false)
+	@Column(length = 256, nullable = false)
 	private String password;
 
 	/** 邮箱 */

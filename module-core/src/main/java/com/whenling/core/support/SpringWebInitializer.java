@@ -7,6 +7,7 @@ import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -37,7 +38,10 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
 
 	@Override
 	protected Filter[] getServletFilters() {
-		return new Filter[] { new CharacterEncodingFilter("UTF-8", true), new RequestContextFilter() };
+		DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy("shiroFilter");
+		shiroFilter.setTargetFilterLifecycle(true);
+
+		return new Filter[] { new CharacterEncodingFilter("UTF-8", true), new RequestContextFilter(), shiroFilter };
 	}
 
 	@Override

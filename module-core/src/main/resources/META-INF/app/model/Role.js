@@ -9,5 +9,13 @@ Ext.define("app.model.Role", {
 	}, {
 		name : "code",
 		type : "string"
-	} ]
+	} ],
+	idProperty : "id",
+	proxy : {
+		type : "ajax",
+		url : Ext.ctx + "/admin/role/get",
+		extraParams : {
+			paths : [ "id", "name", "code" ]
+		}
+	}
 });

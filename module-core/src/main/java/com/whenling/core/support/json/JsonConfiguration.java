@@ -11,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.whenling.core.support.entity.Result;
+import com.whenling.core.support.json.serializers.ExtjsResultSerializer;
 import com.whenling.core.support.json.serializers.JodaDateTimeSerializer;
 import com.whenling.core.support.json.serializers.PageSerializer;
 
@@ -22,6 +24,7 @@ public class JsonConfiguration {
 		SerializeConfig serializeConfig = SerializeConfig.getGlobalInstance();
 		serializeConfig.put(PageImpl.class, PageSerializer.instance);
 		serializeConfig.put(DateTime.class, JodaDateTimeSerializer.instance);
+		serializeConfig.put(Result.class, ExtjsResultSerializer.instance);
 		return serializeConfig;
 	}
 

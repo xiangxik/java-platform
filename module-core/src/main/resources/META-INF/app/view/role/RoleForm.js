@@ -2,7 +2,7 @@ Ext.define("app.view.role.RoleForm", {
 	extend : "Ext.form.Panel",
 	alias : "widget.roleform",
 	bodyPadding : 5,
-	url : "role",
+	url : Ext.ctx + "/admin/role/save",
 	requires : [ "app.view.role.RoleController", "app.view.role.RoleModel" ],
 	controller : "role",
 	viewModel : "role",
@@ -25,18 +25,6 @@ Ext.define("app.view.role.RoleForm", {
 		text : "保存",
 		formBind : true,
 		disabled : true,
-		handler : function() {
-			var form = this.up('form').getForm();
-			if (form.isValid()) {
-				form.submit({
-					success : function(form, action) {
-						Ext.Msg.alert('Success', action.result.msg);
-					},
-					failure : function(form, action) {
-						Ext.Msg.alert('Failed', action.result.msg);
-					}
-				});
-			}
-		}
+		handler : "onFormSave"
 	} ]
 });

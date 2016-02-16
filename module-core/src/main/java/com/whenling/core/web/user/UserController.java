@@ -24,5 +24,5 @@ public class UserController {
 
 		return userService.findAll(pageable);
 	}
-
+	
 }

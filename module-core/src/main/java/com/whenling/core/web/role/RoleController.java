@@ -33,6 +33,13 @@ public class RoleController {
 		return roleService.findAll(pageable);
 	}
 
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@ResponseBody
+	public Role get(@RequestParam(value = "id", required = false) Role role) {
+
+		return role == null ? roleService.newEntity() : role;
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public Result save(@ModelAttribute("role") @Valid RoleVo roleVo, BindingResult bindingResult, Model model) {

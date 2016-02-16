@@ -9,6 +9,8 @@
 	href="${base}/assets/font-awesome-4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${base}/assets/extjs-6.0.0/resources/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/app/resources/ux.css">
 <script type="text/javascript"
 	src="${base}/assets/extjs-6.0.0/include-ext.js?theme=classic"></script>
 <script type="text/javascript"
@@ -20,9 +22,7 @@
 		paths : {
 			"Ext.ux" : "${base}/assets/extjs-6.0.0/ux"
 		},
-		extend : 'app.Application',
-		requires : [ 'app.view.main.Main' ],
-		mainView : 'app.view.main.Main'
+		extend : 'app.Application'
 	});
 </script>
 </head>
