@@ -1,11 +1,10 @@
 Ext.define("app.view.user.UserList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.userlist",
-	requires : [ 'app.store.Users', "app.view.user.UserController", "app.view.user.UserModel" ],
-	iconCls : "User",
+	requires : [ "app.view.user.UserController", "app.view.user.UserModel" ],
 	title : "用户列表",
-	controller : 'user',
-	viewModel : 'user',
+	controller : "user",
+	viewModel : "user",
 	columns : [ {
 		xtype : 'rownumberer'
 	}, {
@@ -33,9 +32,6 @@ Ext.define("app.view.user.UserList", {
 		xtype : "templatecolumn",
 		tpl : "用户的性别是{sex}"
 	}, {
-		text : "部门",
-		dataIndex : "departmentName"
-	}, {
 		text : "操作",
 		xtype : "actioncolumn",
 		items : [ {
@@ -48,28 +44,24 @@ Ext.define("app.view.user.UserList", {
 	tbar : [ {
 		xtype : "button",
 		text : "添加",
-		iconCls : 'Useradd',
-		handler: "onUserAdd"
+		iconCls : 'Add',
+		handler : "onAdd"
 	}, {
 		xtype : "button",
 		text : "删除",
-		iconCls : 'Userdelete'
-	}, {
-		xtype : "button",
-		text : "修改",
-		iconCls : 'Useredit'
+		iconCls : 'Delete'
 	} ],
 	selType : "checkboxmodel",
 	multiSelect : true,
-	initComponent : function() {
-		this.store = Ext.create("app.store.Users");
-		this.dockedItems = [ {
-			xtype : "pagingtoolbar",
-			dock : "bottom",
-			displayInfo : true,
-			store : this.store
-		} ];
-
-		this.callParent(arguments);
-	}
+	bind : {
+		store : "{list}"
+	},
+	dockedItems : [ {
+		xtype : "pagingtoolbar",
+		dock : "bottom",
+		displayInfo : true,
+		bind : {
+			store : "{list}"
+		}
+	} ]
 });

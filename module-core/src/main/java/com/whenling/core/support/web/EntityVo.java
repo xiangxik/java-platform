@@ -2,6 +2,8 @@ package com.whenling.core.support.web;
 
 import java.io.Serializable;
 
+import javax.persistence.Transient;
+
 import org.springframework.util.ClassUtils;
 
 public class EntityVo<ID extends Serializable> {
@@ -14,6 +16,11 @@ public class EntityVo<ID extends Serializable> {
 
 	public void setId(ID id) {
 		this.id = id;
+	}
+
+	@Transient
+	public boolean isNew() {
+		return null == getId();
 	}
 
 	@Override

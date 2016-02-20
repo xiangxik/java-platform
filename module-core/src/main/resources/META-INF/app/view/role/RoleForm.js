@@ -1,13 +1,21 @@
 Ext.define("app.view.role.RoleForm", {
 	extend : "Ext.form.Panel",
 	alias : "widget.roleform",
-	bodyPadding : 5,
-	url : Ext.ctx + "/admin/role/save",
 	requires : [ "app.view.role.RoleController", "app.view.role.RoleModel" ],
 	controller : "role",
 	viewModel : "role",
+	bodyPadding : 5,
+	url : Ext.ctx + "/admin/role/save",
 	border : false,
 	frame : false,
+	layout : "anchor",
+	defaults : {
+		anchor : "96%"
+	},
+	fieldDefaults : {
+		labelAlign : "left",
+		labelWidth : 60
+	},
 	defaultType : "textfield",
 	items : [ {
 		xtype : "hiddenfield",
@@ -24,7 +32,7 @@ Ext.define("app.view.role.RoleForm", {
 	buttons : [ {
 		text : "保存",
 		formBind : true,
-		disabled : true,
 		handler : "onFormSave"
 	} ]
+
 });

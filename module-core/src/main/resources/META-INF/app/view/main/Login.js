@@ -1,9 +1,7 @@
-Ext.define("app.view.login.Login", {
+Ext.define("app.view.main.Login", {
 	extend : "Ext.window.Window",
-	xtype : "login",
-	requires : [ "app.view.login.LoginController" ],
-	controller : "login",
-	title : "登录窗口v1.1",
+	xtype : "widget.login",
+	title : "登录",
 	width : 422,
 	height : 260,
 	closable : false,

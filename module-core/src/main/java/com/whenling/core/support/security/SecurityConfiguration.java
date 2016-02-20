@@ -38,6 +38,7 @@ public class SecurityConfiguration {
 
 		Map<String, String> filterChainDefinitionMap = Maps.newHashMap();
 		filterChainDefinitionMap.put("/admin", DefaultFilter.authc.name());
+		filterChainDefinitionMap.put("/admin/logout", DefaultFilter.logout.name());
 		filterChainDefinitionMap.put("/admin/**", DefaultFilter.authc.name());
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;

@@ -1,7 +1,7 @@
-Ext.define("app.view.main.region.Center", {
+Ext.define("app.view.main.Center", {
 	extend : "Ext.tab.Panel",
 	alias : "widget.maincenter",
-	uses : [ "app.view.main.region.HomePage" ],
+	uses : [ "app.view.main.HomePage" ],
 	requires : [ "Ext.ux.TabReorderer", "Ext.ux.TabCloseMenu" ],
 	plugins : [ {
 		ptype : "tabclosemenu",

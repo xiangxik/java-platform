@@ -1,9 +1,6 @@
 Ext.define("app.store.Roles", {
-	extend : "app.ux.PageStore",
+	extend : "app.store.PageStore",
 	alias : "store.roles",
 	model : "app.model.Role",
-	url : Ext.ctx + "/admin/role/list",
-	extraParams : {
-		paths : [ "id", "name", "code" ]
-	}
-})
+	url : Ext.ctx + "/admin/role/list"
+});

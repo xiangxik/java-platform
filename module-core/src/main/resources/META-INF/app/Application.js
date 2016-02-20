@@ -3,6 +3,13 @@ Ext.define('app.Application', {
 	name : 'app',
 	stores : [],
 	launch : function() {
+
+		this.onExtraApply();
+
+		Ext.create("app.view.main.Main");
+	},
+
+	onExtraApply : function() {
 		Ext.apply(Ext.Msg, {
 			info : function(title, content, opts) {
 				var configs = {
@@ -37,7 +44,7 @@ Ext.define('app.Application', {
 		Ext.Ajax.on("requestexception", function(conn, response, options, eOpts) {
 			console.log("exception");
 			if (response.status == 401) {
-				Ext.create("app.view.login.Login");
+				Ext.create("app.view.main.Login");
 			} else {
 				Ext.Msg.error("错误", "系统出错");
 			}
@@ -45,11 +52,9 @@ Ext.define('app.Application', {
 
 		Ext.Ajax.on("requestcomplete", function(conn, response, options, eOpts) {
 			if (response.status == 401) {
-				Ext.create("app.view.login.Login");
+				Ext.create("app.view.main.Login");
 			}
 		});
-
-		Ext.create("app.view.main.Main");
 	},
 
 	onAppUpdate : function() {

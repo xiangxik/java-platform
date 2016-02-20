@@ -1,4 +1,4 @@
-Ext.define("app.view.main.region.Header", {
+Ext.define("app.view.main.Header", {
 	extend : "Ext.toolbar.Toolbar",
 	alias : "widget.mainheader",
 	border : false,
@@ -8,18 +8,19 @@ Ext.define("app.view.main.region.Header", {
 	items : [ {
 		xtype : "label",
 		bind : {
-			text : "{info.systemName}"
+			text : "{appInfo.name}"
 		},
-		style : "font-size:14px;font-weight:800"
+		style : "font-size: 14;font-weight: 800"
 	}, "->", {
 		text : "用户",
 		iconCls : "fa fa-user",
 		menu : [ {
-			text : "我的消息",
-			iconCls : "fa fa-info-circle",
+			text : "我的资料",
+			iconCls : "fa fa-info-circle"
 		}, "-", {
 			text : "退出",
-			iconCls : "fa fa-sign-out"
+			iconCls : "fa fa-sign-out",
+			handler : "onSignOut"
 		} ]
 	} ]
 });

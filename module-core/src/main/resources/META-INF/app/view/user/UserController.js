@@ -1,22 +1,40 @@
-Ext.define('app.view.user.UserController', {
-	extend : 'Ext.app.ViewController',
+Ext.define("app.view.user.UserController", {
+	extend : "Ext.app.ViewController",
+	alias : "controller.user",
 
-	alias : 'controller.user',
+	onAdd : function() {
+		if (!this.formWindow) {
+			this.formWindow = Ext.create("Ext.window.Window", {
+				title : "新建用户",
+				modal : true,
+				layout : "fit",
+				closeAction : "hide"
+			});
+		}
 
-	onRowEdit : function(grid, rowIndex, colIndex) {
-		console.log(rowIndex);
-		console.log(colIndex);
+		this.formWindow.removeAll(true);
+		this.formWindow.add(Ext.create("app.view.user.UserForm"));
+		this.formWindow.show();
 	},
 
-	onUserAdd : function(button) {
-		Ext.create('Ext.window.Window', {
-			title : 'Hello',
-			layout : 'fit',
-			items : Ext.create("app.view.user.UserForm", {})
-		}).show();
-	},
+	onFormSave : function(button) {
+		var form = button.up("form").getForm();
+		var window = button.up("window");
 
-	onResetUserForm : function(button) {console.log(button);
-		button.up('form').getForm().reset();
+		var store = this.getViewModel().getStore("list");
+
+		if (form.isValid()) {
+			form.submit({
+				success : function(form, action) {
+					Ext.Msg.info("提示", "操作成功");
+					window.hide();
+					store.reload();
+				},
+				failure : function(form, action) {
+					Ext.Msg.error("提示", "操作失败");
+				}
+			});
+		}
 	}
+
 });

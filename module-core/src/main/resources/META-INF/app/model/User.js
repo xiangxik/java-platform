@@ -1,9 +1,6 @@
 Ext.define("app.model.User", {
-	extend : "Ext.data.Model",
+	extend : "app.model.Entity",
 	fields : [ {
-		name : "id",
-		type : "int"
-	}, {
 		name : "username",
 		type : "string"
 	}, {
@@ -31,9 +28,15 @@ Ext.define("app.model.User", {
 	}, {
 		name : "sex",
 		type : "string"
-	}, {
-		name : "departmentName",
-		mapping : "department.name",
-		reference : "Department"
-	} ]
+	} ],
+	constructor : function() {
+		this.callParent(arguments);
+		app.model.User.setProxy({
+			type : "ajax",
+			url : Ext.ctx + "/admin/user/get",
+			extraParams : {
+				paths : this.paths
+			}
+		})
+	}
 });

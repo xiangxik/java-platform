@@ -1,21 +1,20 @@
 Ext.define("app.model.Role", {
-	extend : "Ext.data.Model",
+	extend : "app.model.Entity",
 	fields : [ {
-		name : "id",
-		type : "int"
-	}, {
 		name : "name",
 		type : "string"
 	}, {
 		name : "code",
 		type : "string"
 	} ],
-	idProperty : "id",
-	proxy : {
-		type : "ajax",
-		url : Ext.ctx + "/admin/role/get",
-		extraParams : {
-			paths : [ "id", "name", "code" ]
-		}
+	constructor : function() {
+		this.callParent(arguments);
+		app.model.Role.setProxy({
+			type : "ajax",
+			url : Ext.ctx + "/admin/role/get",
+			extraParams : {
+				paths : this.paths
+			}
+		})
 	}
 });
