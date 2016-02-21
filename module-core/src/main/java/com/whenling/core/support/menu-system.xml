@@ -9,6 +9,8 @@
 					view="app.view.user.UserList" />
 				<menu-item text="角色列表" code="role" iconCls="Userkey"
 					view="app.view.role.RoleList" />
+				<menu-item text="模板管理" code="cmstemplate" iconCls="Userkey"
+					view="app.view.cms.Template" />
 			</children>
 		</menu-item>
 

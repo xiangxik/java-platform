@@ -5,16 +5,17 @@ Ext.define("app.view.role.RoleController", {
 	showEditWindow : function(role) {
 		if (!this.formWindow) {
 			this.formWindow = Ext.create("Ext.window.Window", {
-				title : (role ? "编辑" : "新建") + "角色",
 				modal : true,
 				layout : "fit",
 				closeAction : "hide"
 			});
 		}
 
+		this.formWindow.setTitle((role ? "编辑" : "新建") + "角色");
 		this.formWindow.removeAll(true);
 
 		var form = Ext.create("app.view.role.RoleForm");
+		
 		if (role) {
 			form.getForm().setValues(role.data);
 		}

@@ -7,6 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.whenling.core.support.config.ServletSupport;
+
 /**
  * 根配置
  * 
@@ -17,7 +19,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan(basePackages = { "com.whenling" }, excludeFilters = {
 		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION),
-		@ComponentScan.Filter(value = EnableWebMvc.class, type = FilterType.ANNOTATION) })
+		@ComponentScan.Filter(value = EnableWebMvc.class, type = FilterType.ANNOTATION),
+		@ComponentScan.Filter(value = ServletSupport.class, type = FilterType.ANNOTATION) })
 @PropertySource(value = "classpath:/module-core.properties")
 public class RootConfiguration {
 
