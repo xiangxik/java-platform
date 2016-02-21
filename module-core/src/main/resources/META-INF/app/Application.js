@@ -42,7 +42,6 @@ Ext.define('app.Application', {
 		});
 
 		Ext.Ajax.on("requestexception", function(conn, response, options, eOpts) {
-			console.log("exception");
 			if (response.status == 401) {
 				Ext.create("app.view.main.Login");
 			} else {

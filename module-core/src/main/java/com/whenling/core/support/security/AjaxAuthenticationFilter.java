@@ -9,8 +9,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.CredentialsException;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +62,24 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request,
 			ServletResponse response) {
 		if (WebHelper.isAjax((HttpServletRequest) request)) {
+			Result result = Result.failure();
+			if (e instanceof IncorrectCredentialsException) {
+				result.setMessage("密码错误");
+			} else if (e instanceof ExpiredCredentialsException) {
+				result.setMessage("密码已过期");
+			} else if (e instanceof UnknownAccountException) {
+				result.setMessage("该账号不存在");
+			} else if (e instanceof DisabledAccountException) {
+				result.setMessage("该账号已禁用");
+			} else if (e instanceof LockedAccountException) {
+				result.setMessage("该账号已锁定");
+			} else if (e instanceof AccountException) {
+				result.setMessage("账号错误");
+			} else if (e instanceof CredentialsException) {
+				result.setMessage("密码错误");
+			}
 			try {
-				writeObject(request, response, Result.failure());
+				writeObject(request, response, result);
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}

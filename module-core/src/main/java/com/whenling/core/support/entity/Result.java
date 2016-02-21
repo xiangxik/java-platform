@@ -1,62 +1,61 @@
 package com.whenling.core.support.entity;
 
+import com.google.common.base.Strings;
+
 public class Result {
 
-	public final static int CODE_SUCCESS = 0;
-	public final static int CODE_FAILURE = 1;
-	public final static int CODE_VALIDATE_FAILURE = 2;
-	public final static int CODE_PERMISSION_DENIED = 3;
-	public final static int CODE_NOT_LOGIN = 4;
-	public final static int CODE_EXCEPTION = 5;
-	public final static int CODE_UNKNOWN = 6;
-
 	public static Result success() {
-		return new Result().setCode(CODE_SUCCESS);
+		return new Result().setCode(Code.success);
 	}
 
 	public static Result failure() {
-		return new Result().setCode(CODE_FAILURE);
+		return new Result().setCode(Code.failure);
 	}
 
-	public static Result validateFailure(Object data) {
-		return new Result().setCode(CODE_VALIDATE_FAILURE).setData(data);
+	public static Result validateError(Object data) {
+		return new Result().setCode(Code.validateError).setData(data);
 	}
 
 	public static Result permissionDenide() {
-		return new Result().setCode(CODE_PERMISSION_DENIED);
+		return new Result().setCode(Code.permissionDenide);
 	}
 
 	public static Result notLogin() {
-		return new Result().setCode(CODE_NOT_LOGIN);
+		return new Result().setCode(Code.notLogin);
 	}
 
 	public static Result exception() {
-		return new Result().setCode(CODE_EXCEPTION);
+		return new Result().setCode(Code.exception);
+	}
+
+	public static Result captchaError() {
+		return new Result().setCode(Code.captchaError);
 	}
 
 	public static Result unknown() {
-		return new Result().setCode(CODE_UNKNOWN);
+		return new Result().setCode(Code.unknown);
 	}
 
-	private int code = CODE_SUCCESS;
-	private String codeDes;
+	private Code code = Code.success;
+	private String message;
 	private Object data;
 
-	public int getCode() {
+	public Code getCode() {
 		return code;
 	}
 
-	public Result setCode(int code) {
+	public Result setCode(Code code) {
 		this.code = code;
 		return this;
 	}
 
-	public String getCodeDes() {
-		return codeDes;
+	public String getMessage() {
+		return Strings.isNullOrEmpty(message) ? this.code.getMessage() : message;
 	}
 
-	public void setCodeDes(String codeDes) {
-		this.codeDes = codeDes;
+	public Result setMessage(String message) {
+		this.message = message;
+		return this;
 	}
 
 	public Object getData() {
@@ -68,19 +67,32 @@ public class Result {
 		return this;
 	}
 
-	// public static Result success() {
-	// return new
-	// Result().setReturnCode(RETURN_SUCCESS).setResultCode(RESULT_SUCCESS);
-	// }
-	//
-	// public static Result failure() {
-	// return new
-	// Result().setReturnCode(RETURN_SUCCESS).setResultCode(RESULT_FAILURE);
-	// }
-	//
-	// public static Result interrupt() {
-	// return new
-	// Result().setReturnCode(RETURN_FAILURE).setResultCode(RESULT_FAILURE);
-	// }
+	public enum Code {
+		success("操作成功"),
+
+		failure("操作失败"),
+
+		validateError("验证错误"),
+
+		permissionDenide("无权限访问"),
+
+		notLogin("未登录"),
+
+		exception("系统异常"),
+
+		captchaError("验证码错误"),
+
+		unknown("未知情况");
+
+		private final String message;
+
+		Code(final String message) {
+			this.message = message;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+	}
 
 }

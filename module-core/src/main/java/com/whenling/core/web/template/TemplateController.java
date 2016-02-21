@@ -50,7 +50,7 @@ public class TemplateController {
 	@ResponseBody
 	public Result save(@RequestParam(name = "path") String path, @RequestParam(name = "content") String content) {
 		if (Strings.isNullOrEmpty(path) || Strings.isNullOrEmpty(content)) {
-			return Result.validateFailure(null);
+			return Result.validateError(null);
 		}
 
 		File file = templateService.getFile(path);

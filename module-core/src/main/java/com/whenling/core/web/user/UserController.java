@@ -52,7 +52,7 @@ public class UserController {
 			bindingResult.addError(new ObjectError("password", "密码不能为空"));
 		}
 		if (bindingResult.hasErrors()) {
-			return Result.validateFailure(bindingResult.getAllErrors());
+			return Result.validateError(bindingResult.getAllErrors());
 		}
 
 		User user = userVo.getId() == null ? userService.newEntity() : userService.findOne(userVo.getId());

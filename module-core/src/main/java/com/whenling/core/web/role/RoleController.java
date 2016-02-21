@@ -44,7 +44,7 @@ public class RoleController {
 	@ResponseBody
 	public Result save(@ModelAttribute("role") @Valid RoleVo roleVo, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return Result.validateFailure(bindingResult.getAllErrors());
+			return Result.validateError(bindingResult.getAllErrors());
 		}
 
 		Role role = roleVo.getId() == null ? roleService.newEntity() : roleService.findOne(roleVo.getId());

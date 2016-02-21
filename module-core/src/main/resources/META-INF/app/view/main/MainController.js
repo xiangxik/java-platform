@@ -59,7 +59,9 @@ Ext.define("app.view.main.MainController", {
 					me.getView().unmask();
 				},
 				failure : function(form, action) {
-					Ext.Msg.alert("提示", "登陆失败");
+					Ext.Msg.alert("提示", action.result.msg);
+
+					document.getElementById("captchaImage").src = Ext.ctx + "/captcha?_t=" + new Date().getTime();
 				}
 			});
 		}

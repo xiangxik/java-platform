@@ -41,7 +41,11 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
 		DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy("shiroFilter");
 		shiroFilter.setTargetFilterLifecycle(true);
 
-		return new Filter[] { new CharacterEncodingFilter("UTF-8", true), new RequestContextFilter(), shiroFilter };
+		DelegatingFilterProxy captchaFilter = new DelegatingFilterProxy("captchaFilter");
+		captchaFilter.setTargetFilterLifecycle(true);
+
+		return new Filter[] { new CharacterEncodingFilter("UTF-8", true), new RequestContextFilter(), captchaFilter,
+				shiroFilter };
 	}
 
 	@Override

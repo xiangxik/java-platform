@@ -58,12 +58,20 @@ Ext.define("app.view.main.Login", {
 				align : "left"
 			},
 			items : [ {
-				xtype : 'textfield',
-				name : 'validateCode'
+				xtype : "textfield",
+				name : "captcha",
+				width : 80,
+				allowBlank : false
 			}, {
 				xtype : "image",
+				id : "captchaImage",
 				src : Ext.ctx + "/captcha",
-				height : 22
+				height : 22,
+				width : 60,
+				margin : "0 2 0 2"
+			}, {
+				xtype : "component",
+				html : "<a href='javascript:;' onclick='onRefreshCaptcha()'>看不清，点击刷新</a>",
 			} ]
 		}, {
 			xtype : 'checkbox',
@@ -78,3 +86,7 @@ Ext.define("app.view.main.Login", {
 		text : "找回密码"
 	} ]
 });
+
+function onRefreshCaptcha() {
+	document.getElementById("captchaImage").src = Ext.ctx + "/captcha?_t=" + new Date().getTime();
+}

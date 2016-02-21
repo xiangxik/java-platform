@@ -6,7 +6,9 @@ import java.lang.reflect.Type;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
+import com.google.common.base.Objects;
 import com.whenling.core.support.entity.Result;
+import com.whenling.core.support.entity.Result.Code;
 
 public class ExtjsResultSerializer implements ObjectSerializer {
 
@@ -14,7 +16,7 @@ public class ExtjsResultSerializer implements ObjectSerializer {
 
 	public static final String FIELD_SUCCESS = "success";
 	public static final String FIELD_MESSAGE = "msg";
-
+	public static final String FIELD_CODE = "code";
 	public static final String FIELD_DATA = "data";
 
 	@Override
@@ -32,11 +34,15 @@ public class ExtjsResultSerializer implements ObjectSerializer {
 		out.write('{');
 
 		out.writeFieldName(FIELD_SUCCESS);
-		out.write(result.getCode() == 0);
+		out.write(Objects.equal(result.getCode(), Code.success));
+		out.write(',');
+
+		out.writeFieldName(FIELD_CODE);
+		out.writeString(result.getCode().name());
 		out.write(',');
 
 		out.writeFieldName(FIELD_MESSAGE);
-		out.writeString(result.getCodeDes());
+		out.writeString(result.getMessage());
 		out.write(',');
 
 		out.writeFieldName(FIELD_DATA);
