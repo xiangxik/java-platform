@@ -60,6 +60,10 @@ Ext.define("app.view.main.Login", {
 			items : [ {
 				xtype : 'textfield',
 				name : 'validateCode'
+			}, {
+				xtype : "image",
+				src : Ext.ctx + "/captcha",
+				height : 22
 			} ]
 		}, {
 			xtype : 'checkbox',
