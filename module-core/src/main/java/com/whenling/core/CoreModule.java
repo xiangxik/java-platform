@@ -1,4 +1,4 @@
-package com.whenling.core.support;
+package com.whenling.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;

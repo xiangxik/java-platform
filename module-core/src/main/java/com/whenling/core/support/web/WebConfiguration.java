@@ -21,12 +21,13 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/admin").setViewName("/index");
+		registry.addViewController("/admin").setViewName("/views/admin/index");
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/", "classpath:/META-INF/assets/")
+				.setCachePeriod(60 * 60 * 24 * 30);
 	}
 
 	@Override

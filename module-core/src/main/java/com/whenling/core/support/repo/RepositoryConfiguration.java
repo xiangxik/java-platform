@@ -5,10 +5,9 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
@@ -24,8 +23,14 @@ import com.alibaba.druid.pool.DruidDataSource;
 @EnableJpaAuditing
 public class RepositoryConfiguration {
 
-	@Autowired
-	private Environment env;
+	@Value("${jdbc.url}")
+	private String jdbcUrl;
+
+	@Value("${jdbc.username}")
+	private String jdbcUsername;
+
+	@Value("${jdbc.password}")
+	private String jdbcPassword;
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -76,9 +81,9 @@ public class RepositoryConfiguration {
 	@Bean
 	public DataSource dataSource() {
 		DruidDataSource dataSource = new DruidDataSource();
-		dataSource.setUrl(env.getProperty("jdbc.url"));
-		dataSource.setUsername(env.getProperty("jdbc.username"));
-		dataSource.setPassword(env.getProperty("jdbc.password"));
+		dataSource.setUrl(jdbcUrl);
+		dataSource.setUsername(jdbcUsername);
+		dataSource.setPassword(jdbcPassword);
 
 		try {
 			// 配置监控统计拦截的filters

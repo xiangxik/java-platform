@@ -11,6 +11,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.whenling.core.support.config.ServletSupport;
+
 /**
  * serlvet配置
  * 
@@ -20,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @Configuration
 @ComponentScan(basePackages = { "com.whenling" }, useDefaultFilters = false, includeFilters = {
-		@Filter({ Controller.class }) })
+		@Filter({ Controller.class }), @Filter({ ServletSupport.class }) })
 @EnableWebMvc
 @EnableSpringDataWebSupport
 public class ServletConfiguration {
