@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
-
-<menu-set name="日志模块" code="log">
-  <menuItems>
-    <menu-item text="操作日志" code="operator" view="app.view.user.List"/>
-  </menuItems>
-</menu-set>

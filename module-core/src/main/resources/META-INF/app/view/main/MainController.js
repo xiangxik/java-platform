@@ -12,15 +12,15 @@ Ext.define("app.view.main.MainController", {
 				var text = response.responseText;
 				var reference = Ext.decode(text, true);
 
-				Ext.each(reference.menuSets, function(menuSet, index, sets) {
+				Ext.each(reference.menus, function(menu, index, sets) {
 					westNav.add({
-						title : menuSet.name,
+						title : menu.text,
 						rootVisible : false,
 						listeners : {
 							itemclick : 'onMenuTreeItemClick'
 						},
 						store : Ext.create("Ext.data.TreeStore", {
-							data : menuSet.menuItems
+							data : menu.children
 						})
 					})
 				});
@@ -59,7 +59,9 @@ Ext.define("app.view.main.MainController", {
 					me.getView().unmask();
 				},
 				failure : function(form, action) {
-					Ext.Msg.alert("提示", action.result.msg);
+					if (action && action.result) {
+						Ext.Msg.alert("提示", action.result.msg);
+					}
 
 					document.getElementById("captchaImage").src = Ext.ctx + "/captcha?_t=" + new Date().getTime();
 				}

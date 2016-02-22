@@ -1,20 +1,18 @@
 package com.whenling.core.support.integration;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Objects;
+import com.whenling.core.model.Menu;
 import com.whenling.core.model.ModuleEntity;
+import com.whenling.core.service.MenuService;
 import com.whenling.core.service.ModuleEntityService;
-import com.whenling.core.support.integration.menu.MenuService;
-import com.whenling.core.support.integration.menu.MenuSet;
 
 /**
  * 
@@ -29,12 +27,10 @@ public class Application {
 	private List<Module> modules;
 
 	@Autowired
-	private MenuService menuService;
-
-	@Autowired
 	private ModuleEntityService moduleEntityService;
 
-	private List<MenuSet> menuSets = new ArrayList<>();
+	@Autowired
+	private MenuService menuService;
 
 	@PostConstruct
 	public void init() {
@@ -81,13 +77,15 @@ public class Application {
 		return modules;
 	}
 
-	public void addNavMenuSetResource(Resource resource) {
-		MenuSet menuSet = menuService.loadMenuSetResource(resource);
-		menuSets.add(menuSet);
-	}
-
-	public List<MenuSet> getMenuSets() {
-		return menuSets;
+	public Menu addMenu(String name, String code, String iconCls, String view, String config, Menu parent) {
+		Menu menu = menuService.newEntity();
+		menu.setName(name);
+		menu.setCode(code);
+		menu.setIconCls(iconCls);
+		menu.setView(view);
+		menu.setConfig(config);
+		menu.setParent(parent);
+		return menuService.save(menu);
 	}
 
 	public Integer getVersion() {

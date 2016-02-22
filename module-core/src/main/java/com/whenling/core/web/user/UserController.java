@@ -20,6 +20,7 @@ import com.whenling.core.model.User;
 import com.whenling.core.service.UserService;
 import com.whenling.core.support.entity.Result;
 import com.whenling.core.support.security.CurrentUser;
+import com.whenling.core.web.menu.vo.MenuNode;
 import com.whenling.core.web.user.vo.UserReference;
 import com.whenling.core.web.user.vo.UserVo;
 
@@ -69,7 +70,7 @@ public class UserController {
 	@ResponseBody
 	public UserReference getReference(@CurrentUser(required = true) User user) {
 		UserReference reference = new UserReference();
-		reference.setMenuSets(userService.getMenuSets(user));
+		reference.setMenus(MenuNode.converters(userService.getMenus(user)));
 		return reference;
 	}
 }

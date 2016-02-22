@@ -1,19 +1,17 @@
 package com.whenling.core.web.user.vo;
 
-import java.util.List;
-
-import com.whenling.core.support.integration.menu.MenuSet;
+import com.whenling.core.web.menu.vo.MenuNode;
 
 public class UserReference {
 
-	private List<MenuSet> menuSets;
+	private MenuNode[] menus;
 
-	public List<MenuSet> getMenuSets() {
-		return menuSets;
+	public MenuNode[] getMenus() {
+		return menus;
 	}
 
-	public void setMenuSets(List<MenuSet> menuSets) {
-		this.menuSets = menuSets;
+	public void setMenus(MenuNode[] menus) {
+		this.menus = menus;
 	}
 
 }

@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.whenling.core.model.Menu;
 import com.whenling.core.model.User;
 import com.whenling.core.repo.UserRepository;
-import com.whenling.core.support.integration.Application;
-import com.whenling.core.support.integration.menu.MenuSet;
 import com.whenling.core.support.security.DatabaseRealm;
 import com.whenling.core.support.security.Principal;
 import com.whenling.core.support.service.BaseService;
@@ -26,7 +25,7 @@ public class UserService extends BaseService<User, Long> {
 	private DatabaseRealm databaseRealm;
 
 	@Autowired
-	private Application application;
+	private MenuService menuService;
 
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
@@ -66,8 +65,8 @@ public class UserService extends BaseService<User, Long> {
 		return null;
 	}
 
-	public List<MenuSet> getMenuSets(User user) {
-		return application.getMenuSets();
+	public List<Menu> getMenus(User user) {
+		return menuService.getRoots();
 	}
 
 }

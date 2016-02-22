@@ -1,10 +1,10 @@
 package com.whenling.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.whenling.core.model.Department;
+import com.whenling.core.model.Menu;
 import com.whenling.core.model.Role;
 import com.whenling.core.model.User;
 import com.whenling.core.model.User.Sex;
@@ -28,18 +28,30 @@ public class CoreModule extends Module {
 
 	@Override
 	public void init(Application app, boolean isNew, boolean isUpdate) {
-		app.addNavMenuSetResource(new ClassPathResource("/com/whenling/core/support/menu-system.xml"));
-		app.addNavMenuSetResource(new ClassPathResource("/com/whenling/core/support/menu-log.xml"));
-
 		if (isUpdate) {
+
+			Menu systemMenu = app.addMenu("系统管理", "system", null, null, null, null);
+
+			Menu personnelMenu = app.addMenu("人员管理", "personnel", "Userhome", null, null, systemMenu);
+			app.addMenu("用户列表", "user", "User", "app.view.user.UserList", null, personnelMenu);
+			app.addMenu("角色列表", "role", "Userkey", "app.view.role.RoleList", null, personnelMenu);
+
+			Menu siteMenu = app.addMenu("站点管理", "site", "Computer", null, null, systemMenu);
+			app.addMenu("参数设置", "setting", "Cog", "app.view.setting.SettingForm", null, siteMenu);
+			app.addMenu("模块列表", "module", "Applicationcascade", "app.view.module.ModuleList", null, siteMenu);
+			app.addMenu("模板管理", "template", "Page", "app.view.cms.Template", null, siteMenu);
+			app.addMenu("操作日志", "log", "Databasego", "app.view.log.LogList", null, siteMenu);
+
+		}
+
+		if (isNew) {
+
 			Role role = roleService.newEntity();
 			role.setName("管理员");
 			role.setCode("admin");
 			role.markLocked();
 			roleService.save(role);
-		}
 
-		if (isNew) {
 			Department company = departmentService.newEntity();
 			company.setName("总公司");
 			company.setCode("company");
@@ -63,7 +75,7 @@ public class CoreModule extends Module {
 
 	@Override
 	public Integer getVersion() {
-		return 1;
+		return 2;
 	}
 
 	@Override
