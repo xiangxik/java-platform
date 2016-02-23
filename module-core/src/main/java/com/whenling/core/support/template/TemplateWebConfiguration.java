@@ -6,11 +6,11 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.core.env.Environment;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
@@ -28,8 +28,8 @@ public class TemplateWebConfiguration {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@Autowired
-	private Environment env;
+	@Value("${template.location}")
+	private String templateLocation;
 
 	@Bean
 	public HandlerMapping templateHandlerMapping() {
@@ -46,7 +46,7 @@ public class TemplateWebConfiguration {
 	@Bean
 	public TemplateHttpRequestHandler templateHttpRequestHandler() {
 		TemplateHttpRequestHandler handler = new TemplateHttpRequestHandler();
-		handler.setLocations(Lists.newArrayList(applicationContext.getResource(env.getProperty("template.location"))));
+		handler.setLocations(Lists.newArrayList(applicationContext.getResource(templateLocation)));
 		handler.setServletContext(servletContext);
 		handler.setApplicationContext(applicationContext);
 		return handler;

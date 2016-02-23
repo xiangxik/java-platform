@@ -1,13 +1,16 @@
 package com.whenling.core.support;
 
+import org.springframework.beans.factory.config.PlaceholderConfigurerSupport;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.whenling.core.support.config.ConfigurationPlaceholderConfigurer;
 import com.whenling.core.support.config.ServletSupport;
+import com.whenling.core.support.config.StaticConfigurationSupplier;
 
 /**
  * 根配置
@@ -21,7 +24,11 @@ import com.whenling.core.support.config.ServletSupport;
 		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION),
 		@ComponentScan.Filter(value = EnableWebMvc.class, type = FilterType.ANNOTATION),
 		@ComponentScan.Filter(value = ServletSupport.class, type = FilterType.ANNOTATION) })
-@PropertySource(value = "classpath:/module-core.properties")
 public class RootConfiguration {
+
+	@Bean
+	public static PlaceholderConfigurerSupport placeholderConfigurer() {
+		return new ConfigurationPlaceholderConfigurer(StaticConfigurationSupplier.getConfiguration());
+	}
 
 }

@@ -6,9 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,10 +62,6 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 
 	@Column(nullable = false)
 	private boolean superAdmin = false;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "department_id")
-	private Department department;
 
 	@Column(nullable = false)
 	private boolean locked = false;
@@ -151,14 +144,6 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 
 	public void setSuperAdmin(boolean superAdmin) {
 		this.superAdmin = superAdmin;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
 	}
 
 	@Override

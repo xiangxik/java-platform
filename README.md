@@ -7,7 +7,7 @@
 1. spring家族
 2. jpa
 3. jackson
-4. easyui
+4. extjs
 
 ### 我的博客
 http://ken.whenling.com

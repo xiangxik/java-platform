@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +22,11 @@ public class TemplateService {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@Autowired
-	private Environment env;
+	@Value("${template.location}")
+	private String templateLocation;
 
 	public List<TemplateFile> getFiles() {
-		Resource resource = applicationContext.getResource(env.getProperty("template.location"));
+		Resource resource = applicationContext.getResource(templateLocation);
 		if (resource.exists()) {
 			try {
 				File dir = resource.getFile();
@@ -39,7 +39,7 @@ public class TemplateService {
 	}
 
 	public File getFile(String path) {
-		Resource resource = applicationContext.getResource(env.getProperty("template.location"));
+		Resource resource = applicationContext.getResource(templateLocation);
 		if (resource.exists()) {
 			try {
 				File dir = resource.getFile();

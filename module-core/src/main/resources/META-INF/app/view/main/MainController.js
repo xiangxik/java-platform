@@ -33,16 +33,20 @@ Ext.define("app.view.main.MainController", {
 		}
 	},
 	addViewToCenter : function(menu) {
+		console.log(menu);
 		var view = this.getView().down("maincenter");
 		var tabId = menu.code;
 		var tab = view.down("> panel#" + tabId);
 		if (!tab) {
-			if (!menu.config) {
-				menu.config = {};
+			var config = {};
+			if (menu.config) {
+				Ext.apply(config, menu.config);
 			}
-			menu.config.closable = true;
-			menu.config.id = tabId;
-			tab = view.add(Ext.create(menu.view, menu.config));
+			config.closable = true;
+			config.id = tabId;
+			config.title = menu.text;
+			config.iconCls = menu.iconCls;
+			tab = view.add(Ext.create(menu.view, config));
 		}
 		view.setActiveTab(tab);
 	},

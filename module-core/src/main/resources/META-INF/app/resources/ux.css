@@ -25,3 +25,92 @@ body .ux-notification-light {
 	background-color: transparent;
 	border: 0px solid white;
 }
+
+.x-edit-wordpaste {
+	background: url(images/editor/edit-word-text.png) 0 0 no-repeat
+		!important;
+}
+
+.x-edit-table {
+	background: url(images/editor/edit-table.png) 0 0 no-repeat !important;
+}
+
+.x-edit-hr {
+	background: url(images/editor/edit-rule.png) 0 0 no-repeat !important;
+}
+
+.x-edit-indent {
+	background: url(images/editor/edit-indent.png) 0 0 no-repeat !important;
+}
+
+.x-edit-char {
+	background: url(images/editor/edit-char.png) 0 0 no-repeat !important;
+}
+
+.x-edit-outdent {
+	background: url(images/editor/edit-outdent.png) 0 0 no-repeat !important;
+}
+
+.x-edit-subscript {
+	background: url(images/editor/edit-subscript.png) 0 0 no-repeat
+		!important;
+}
+
+.x-edit-superscript {
+	background: url(images/editor/edit-superscript.png) 0 0 no-repeat
+		!important;
+}
+
+.x-edit-removeFormat {
+	background: url(images/editor/edit-removeFormat.png) 0 0 no-repeat
+		!important;
+}
+
+.x-edit-image {
+	background: url(images/editor/edit-image.png) 0 0 no-repeat !important;
+}
+
+.x-edit-findandreplace {
+	background: url(images/editor/edit-findandreplace.png) 0 0 no-repeat
+		!important;
+}
+
+.x-edit-undo {
+	background: url(images/editor/edit-undo.png) 0 0 no-repeat !important;
+}
+
+.x-edit-redo {
+	background: url(images/editor/edit-redo.png) 0 0 no-repeat !important;
+}
+
+.x-edit-formatblock-h1 {
+	background: url(images/editor/edit-heading-h1.png) 0 0 no-repeat
+		!important;
+}
+
+.x-edit-formatblock-h2 {
+	background: url(images/editor/edit-heading-h2.png) 0 0 no-repeat
+		!important;
+}
+
+.char-item {
+	float: left;
+	border: 1px solid #99BBE8;
+	margin: 3px;
+	text-align: center;
+	vertical-align: middle;
+	width: 20px;
+	height: 20px;
+	font-size: 14px;
+	color: #15428B;
+	cursor: pointer;
+}
+
+.char-item.x-view-selected {
+	background-color: #777;
+}
+
+.char-over {
+	border: 1px solid #15428B;
+	background-color: #d0def0;
+}

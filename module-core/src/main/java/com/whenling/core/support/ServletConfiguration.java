@@ -3,6 +3,8 @@ package com.whenling.core.support;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PlaceholderConfigurerSupport;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +13,9 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.whenling.core.support.config.ConfigurationPlaceholderConfigurer;
 import com.whenling.core.support.config.ServletSupport;
+import com.whenling.core.support.config.StaticConfigurationSupplier;
 
 /**
  * serlvet配置
@@ -29,6 +33,11 @@ public class ServletConfiguration {
 
 	@Autowired
 	private PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver;
+
+	@Bean
+	public static PlaceholderConfigurerSupport placeholderConfigurer() {
+		return new ConfigurationPlaceholderConfigurer(StaticConfigurationSupplier.getConfiguration());
+	}
 
 	@PostConstruct
 	public void init() {

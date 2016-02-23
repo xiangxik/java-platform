@@ -17,13 +17,13 @@ Ext.define("app.view.role.RoleList", {
 		text : "操作",
 		xtype : "actioncolumn",
 		items : [ {
-			iconCls : "Applicationformedit",
+			iconCls : "Pencil",
 			tooltip : "编辑",
 			handler : "onRowEdit"
 		}, {
 			iconCls : "Delete",
 			tooltip : "删除",
-			handler: "onRowDelete"
+			handler : "onRowDelete"
 		} ]
 	} ],
 	tbar : [ {

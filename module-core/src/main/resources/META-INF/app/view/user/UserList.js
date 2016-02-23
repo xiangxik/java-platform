@@ -12,7 +12,8 @@ Ext.define("app.view.user.UserList", {
 		dataIndex : "name"
 	}, {
 		text : "邮箱",
-		dataIndex : "email"
+		dataIndex : "email",
+		width: 140
 	}, {
 		text : "手机",
 		dataIndex : "mobile"

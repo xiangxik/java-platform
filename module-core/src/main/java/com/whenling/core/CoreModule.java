@@ -3,12 +3,10 @@ package com.whenling.core;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.whenling.core.model.Department;
 import com.whenling.core.model.Menu;
 import com.whenling.core.model.Role;
 import com.whenling.core.model.User;
 import com.whenling.core.model.User.Sex;
-import com.whenling.core.service.DepartmentService;
 import com.whenling.core.service.RoleService;
 import com.whenling.core.service.UserService;
 import com.whenling.core.support.integration.Application;
@@ -23,16 +21,13 @@ public class CoreModule extends Module {
 	@Autowired
 	private RoleService roleService;
 
-	@Autowired
-	private DepartmentService departmentService;
-
 	@Override
 	public void init(Application app, boolean isNew, boolean isUpdate) {
 		if (isUpdate) {
 
 			Menu systemMenu = app.addMenu("系统管理", "system", null, null, null, null);
 
-			Menu personnelMenu = app.addMenu("人员管理", "personnel", "Userhome", null, null, systemMenu);
+			Menu personnelMenu = app.addMenu("企业管理", "enterprise", "Userhome", null, null, systemMenu);
 			app.addMenu("用户列表", "user", "User", "app.view.user.UserList", null, personnelMenu);
 			app.addMenu("角色列表", "role", "Userkey", "app.view.role.RoleList", null, personnelMenu);
 
@@ -52,12 +47,6 @@ public class CoreModule extends Module {
 			role.markLocked();
 			roleService.save(role);
 
-			Department company = departmentService.newEntity();
-			company.setName("总公司");
-			company.setCode("company");
-			company.setSortNo(0);
-			company = departmentService.save(company);
-
 			User superAdmin = userService.newEntity();
 			superAdmin.setSuperAdmin(true);
 			superAdmin.markLocked();
@@ -67,7 +56,6 @@ public class CoreModule extends Module {
 			superAdmin.setMobile("13265323553");
 			superAdmin.setName("管理员");
 			superAdmin.setSex(Sex.male);
-			superAdmin.setDepartment(company);
 
 			userService.save(superAdmin);
 		}

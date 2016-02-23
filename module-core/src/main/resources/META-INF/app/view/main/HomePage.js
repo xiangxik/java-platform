@@ -3,7 +3,7 @@ Ext.define("app.view.main.HomePage", {
 	alias : "widget.homepage",
 	layout : "fit",
 	title : "首页",
-	iconCls : "fa fa-home",
+	iconCls : "fa fa-tachometer",
 	frame : false,
 	border : false
 })
