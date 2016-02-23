@@ -2,6 +2,8 @@ package com.whenling.core.support.json.serializers;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
@@ -32,6 +34,16 @@ public class ExtjsResultSerializer implements ObjectSerializer {
 		Result result = (Result) object;
 
 		out.write('{');
+
+		Map<String, Object> extraProperties = result.getExtraProperties();
+		for (Entry<String, Object> entry : extraProperties.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+
+			out.writeFieldName(key);
+			serializer.write(value);
+			out.write(',');
+		}
 
 		out.writeFieldName(FIELD_SUCCESS);
 		out.write(Objects.equal(result.getCode(), Code.success));

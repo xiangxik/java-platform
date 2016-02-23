@@ -1,5 +1,8 @@
 package com.whenling.core.support.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.common.base.Strings;
 
 public class Result {
@@ -40,6 +43,8 @@ public class Result {
 	private String message;
 	private Object data;
 
+	private Map<String, Object> extraProperties = new HashMap<>();
+
 	public Code getCode() {
 		return code;
 	}
@@ -64,6 +69,20 @@ public class Result {
 
 	public Result setData(Object data) {
 		this.data = data;
+		return this;
+	}
+
+	public Map<String, Object> getExtraProperties() {
+		return extraProperties;
+	}
+
+	public Result setExtraProperties(Map<String, Object> extraProperties) {
+		this.extraProperties = extraProperties;
+		return this;
+	}
+
+	public Result addExtraProperties(String key, Object value) {
+		this.extraProperties.put(key, value);
 		return this;
 	}
 

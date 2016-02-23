@@ -1,11 +1,11 @@
 Ext.define("app.view.user.UserForm", {
 	extend : "Ext.form.Panel",
 	alias : "widget.userform",
-	requires : [ "app.view.user.UserController", "app.view.user.UserModel", "app.ux.form.htmleditor.Table" ],
+	requires : [ "app.view.user.UserController", "app.view.user.UserModel", "app.ux.form.htmleditor.Table", "app.ux.form.htmleditor.Image" ],
 	controller : "user",
 	viewModel : "user",
 	bodyPadding : 5,
-	width : 480,
+	width : 600,
 	height : 320,
 	url : Ext.ctx + "/admin/user/save",
 	border : false,
@@ -73,10 +73,11 @@ Ext.define("app.view.user.UserForm", {
 			xtype : "htmleditor",
 			plugins : [ {
 				ptype : "htmleditortable"
+			}, {
+				ptype : "htmleditorimage"
 			} ],
 			name : "introduce",
 			hideLabel : true
-
 		} ]
 	} ],
 	buttons : [ {

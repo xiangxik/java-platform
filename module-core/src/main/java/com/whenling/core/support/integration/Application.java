@@ -12,7 +12,7 @@ import com.google.common.base.Objects;
 import com.whenling.core.model.Menu;
 import com.whenling.core.model.ModuleEntity;
 import com.whenling.core.service.MenuService;
-import com.whenling.core.service.ModuleEntityService;
+import com.whenling.core.service.ModuleService;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class Application {
 	private List<Module> modules;
 
 	@Autowired
-	private ModuleEntityService moduleEntityService;
+	private ModuleService moduleEntityService;
 
 	@Autowired
 	private MenuService menuService;
