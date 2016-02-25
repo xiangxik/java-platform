@@ -1,5 +1,6 @@
 package com.whenling.core.support.security;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -25,6 +26,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.google.common.collect.Maps;
 
@@ -68,7 +72,7 @@ public class SecurityConfiguration {
 	public SecurityManager securityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setCacheManager(shiroCacheManager());
-//		securityManager.setSessionManager(sessionManager());
+		// securityManager.setSessionManager(sessionManager());
 		securityManager.setRememberMeManager(rememberMeManager());
 		securityManager.setRealm(databaseRealm());
 		return securityManager;
@@ -148,4 +152,18 @@ public class SecurityConfiguration {
 		return shiroCacheManager;
 	}
 
+	@Bean
+	public WebMvcConfigurer securityWebMvcConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+				argumentResolvers.add(currentUserHandlerMethodArgumentResolver());
+			}
+		};
+	}
+
+	@Bean
+	public HandlerMethodArgumentResolver currentUserHandlerMethodArgumentResolver() {
+		return new CurrentUserHandlerMethodArgumentResolver();
+	}
 }

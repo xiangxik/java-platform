@@ -79,7 +79,18 @@ Ext.define("app.view.main.Login", {
 			fieldLabel : "记住我"
 		} ]
 	} ],
+	listeners : {
+		afterRender : function(form, options) {
+			Ext.create("Ext.util.KeyNav", this.el, {
+				enter : function() {
+					this.lookupController("main").onLoginSubmit(this.down("button#loginButton"))
+				},
+				scope : this
+			})
+		}
+	},
 	buttons : [ {
+		id : "loginButton",
 		text : "登录",
 		handler : "onLoginSubmit"
 	}, {

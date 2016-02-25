@@ -5,6 +5,7 @@ Ext.define("app.view.main.MainController", {
 		var westNav = this.getView().down("mainwestnav");
 		westNav.removeAll(true);
 
+		var vm = this.getViewModel();
 		Ext.Ajax.request({
 			url : Ext.ctx + "/admin/user/reference",
 			async : true,
@@ -12,6 +13,10 @@ Ext.define("app.view.main.MainController", {
 				var text = response.responseText;
 				var reference = Ext.decode(text, true);
 
+				if(reference.user) {
+					vm.set("user", reference.user);
+				}
+				
 				Ext.each(reference.menus, function(menu, index, sets) {
 					westNav.add({
 						title : menu.text,
@@ -33,7 +38,6 @@ Ext.define("app.view.main.MainController", {
 		}
 	},
 	addViewToCenter : function(menu) {
-		console.log(menu);
 		var view = this.getView().down("maincenter");
 		var tabId = menu.code;
 		var tab = view.down("> panel#" + tabId);

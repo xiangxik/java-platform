@@ -8,15 +8,24 @@ Ext.define("app.view.user.UserList", {
 	columns : [ {
 		xtype : 'rownumberer'
 	}, {
+		text : "账号",
+		dataIndex : "username"
+	}, {
 		text : "名称",
 		dataIndex : "name"
 	}, {
 		text : "邮箱",
 		dataIndex : "email",
-		width: 140
+		width : 140
 	}, {
 		text : "手机",
 		dataIndex : "mobile"
+	}, {
+		text : "性别",
+		width : 60,
+		renderer : function(data, metadata, record, rowIndex, columnIndex, store) {
+			return record.get("sex") === "male" ? "男" : (record.get("sex") === "female" ? "女" : "");
+		}
 	}, {
 		text : "生日",
 		xtype : 'datecolumn',
@@ -25,32 +34,35 @@ Ext.define("app.view.user.UserList", {
 	}, {
 		text : "超级管理员",
 		xtype : "booleancolumn",
+		width : 80,
 		dataIndex : "superAdmin",
+		align : "center",
 		trueText : "是",
-		falseText : "不是"
-	}, {
-		text : "性别",
-		xtype : "templatecolumn",
-		tpl : "用户的性别是{sex}"
+		falseText : "否"
 	}, {
 		text : "操作",
 		xtype : "actioncolumn",
+		width : 80,
 		items : [ {
-			iconCls : "Applicationformedit",
+			iconCls : "Pencil",
+			tooltip : "编辑",
 			handler : "onRowEdit"
 		}, {
-			iconCls : "Delete"
+			iconCls : "Delete",
+			tooltip : "删除",
+			handler : "onRowDelete"
 		} ]
 	} ],
 	tbar : [ {
 		xtype : "button",
 		text : "添加",
-		iconCls : 'Add',
+		iconCls : "Add",
 		handler : "onAdd"
 	}, {
 		xtype : "button",
 		text : "删除",
-		iconCls : 'Delete'
+		iconCls : "Delete",
+		handler : "onDelete"
 	} ],
 	selType : "checkboxmodel",
 	multiSelect : true,

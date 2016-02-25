@@ -15,9 +15,9 @@ Ext.define("app.view.role.RoleController", {
 		this.formWindow.removeAll(true);
 
 		var form = Ext.create("app.view.role.RoleForm");
-		
+
 		if (role) {
-			form.getForm().setValues(role.data);
+			form.loadRecord(role);
 		}
 		this.formWindow.add(form);
 

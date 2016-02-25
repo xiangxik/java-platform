@@ -16,5 +16,14 @@ Ext.define("app.view.main.MainModel", {
 				});
 			}
 		});
+	},
+	data : {
+		user : {
+			id : null,
+			name : "游客",
+			username : "",
+			email : "",
+			mobile : ""
+		}
 	}
 });

@@ -66,11 +66,29 @@ public class UserController {
 		return Result.success();
 	}
 
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, params = "id")
+	@ResponseBody
+	public Result delete(@RequestParam(value = "id") User user) {
+		userService.delete(user);
+		return Result.success();
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, params = "ids")
+	@ResponseBody
+	public Result batchDelete(@RequestParam(value = "ids") User[] users) {
+		for (User user : users) {
+			userService.delete(user);
+		}
+
+		return Result.success();
+	}
+
 	@RequestMapping(value = "/reference", method = RequestMethod.GET)
 	@ResponseBody
 	public UserReference getReference(@CurrentUser(required = true) User user) {
 		UserReference reference = new UserReference();
 		reference.setMenus(MenuNode.converters(userService.getMenus(user)));
+		reference.setUser(UserVo.convert(user));
 		return reference;
 	}
 }
