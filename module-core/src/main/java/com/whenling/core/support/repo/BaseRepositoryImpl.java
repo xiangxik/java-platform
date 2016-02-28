@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
+import com.whenling.core.support.entity.Lockedable;
+import com.whenling.core.support.repo.exception.DeleteLockedEntityException;
+
 public class BaseRepositoryImpl<T, I extends Serializable> extends SimpleJpaRepository<T, I>
 		implements BaseRepository<T, I> {
 
@@ -19,4 +22,15 @@ public class BaseRepositoryImpl<T, I extends Serializable> extends SimpleJpaRepo
 		this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em);
 	}
 
+	@Override
+	public void delete(T entity) {
+		if (entity instanceof Lockedable) {
+			if (((Lockedable) entity).getLocked()) {
+				throw new DeleteLockedEntityException();
+			}
+		}
+		
+		
+		super.delete(entity);
+	}
 }

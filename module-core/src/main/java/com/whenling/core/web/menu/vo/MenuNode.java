@@ -48,7 +48,7 @@ public class MenuNode extends NodeInterface<MenuNode> {
 
 	public static MenuNode convert(Menu menu) {
 		MenuNode node = new MenuNode();
-		node.setText(menu.getName());
+		node.setText(menu.getText());
 		node.setCode(menu.getCode());
 		node.setIconCls(menu.getIconCls());
 		node.setView(menu.getView());

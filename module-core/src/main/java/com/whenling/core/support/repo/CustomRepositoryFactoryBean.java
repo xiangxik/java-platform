@@ -29,21 +29,31 @@ public class CustomRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I ext
 			this.entityManager = entityManager;
 		}
 
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		protected Object getTargetRepository(RepositoryInformation information) {
 			return isBaseRepository(information.getRepositoryInterface())
-					? new BaseRepositoryImpl<>(getEntityInformation(information.getDomainType()), entityManager)
+					? (isTreeRepository(information.getRepositoryInterface())
+							? new TreeRepositoryImpl(getEntityInformation(information.getDomainType()), entityManager)
+							: new BaseRepositoryImpl<>(getEntityInformation(information.getDomainType()),
+									entityManager))
 					: super.getTargetRepository(information);
 		}
 
 		@Override
 		protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-			return isBaseRepository(metadata.getRepositoryInterface()) ? BaseRepositoryImpl.class
+			return isBaseRepository(metadata.getRepositoryInterface())
+					? (isTreeRepository(metadata.getRepositoryInterface()) ? TreeRepositoryImpl.class
+							: BaseRepositoryImpl.class)
 					: super.getRepositoryBaseClass(metadata);
 		}
 
 		private boolean isBaseRepository(Class<?> repositoryInterface) {
 			return ClassUtils.isAssignable(BaseRepository.class, repositoryInterface);
+		}
+
+		private boolean isTreeRepository(Class<?> repositoryInterface) {
+			return ClassUtils.isAssignable(TreeRepository.class, repositoryInterface);
 		}
 
 	}

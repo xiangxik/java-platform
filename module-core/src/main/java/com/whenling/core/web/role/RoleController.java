@@ -14,9 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Sets;
+import com.whenling.core.model.Menu;
 import com.whenling.core.model.Role;
+import com.whenling.core.model.User;
+import com.whenling.core.model.UserRole;
+import com.whenling.core.service.MenuService;
 import com.whenling.core.service.RoleService;
+import com.whenling.core.service.UserRoleService;
 import com.whenling.core.support.entity.Result;
+import com.whenling.core.support.entity.Tree;
 import com.whenling.core.web.role.vo.RoleVo;
 
 @Controller
@@ -25,6 +32,12 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private MenuService menuService;
+
+	@Autowired
+	private UserRoleService userRoleService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
@@ -40,9 +53,48 @@ public class RoleController {
 		return role == null ? roleService.newEntity() : role;
 	}
 
+	@RequestMapping(value = "/menuTree", method = RequestMethod.GET)
+	@ResponseBody
+	public Tree<Menu> getMenuTree(@RequestParam(value = "id", required = false) Role role) {
+		Tree<Menu> tree = menuService.findTree(null);
+		tree.makeCheckable();
+		tree.setChecked(role.getMenus());
+		return tree;
+	}
+
+	@RequestMapping(value = "/menuTree", method = RequestMethod.POST)
+	@ResponseBody
+	public Result postMenuTree(@RequestParam(value = "id", required = false) Role role,
+			@RequestParam(value = "menus") Menu[] menus) {
+		role.setMenus(Sets.newHashSet(menus));
+		roleService.save(role);
+		return Result.success();
+	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@ResponseBody
+	public Page<User> user(@RequestParam(value = "id", required = false) Role role, Pageable pageable) {
+		return userRoleService.findByRole(role, pageable);
+	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@ResponseBody
+	public Result postUser(@RequestParam(value = "id", required = false) Role role,
+			@RequestParam(value = "users") User[] users) {
+		if (users != null) {
+			for (User user : users) {
+				UserRole userRole = userRoleService.newEntity();
+				userRole.setUser(user);
+				userRole.setRole(role);
+				userRoleService.save(userRole);
+			}
+		}
+		return Result.success();
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public Result save(@ModelAttribute("role") @Valid RoleVo roleVo, BindingResult bindingResult, Model model) {
+	public Result save(@ModelAttribute @Valid RoleVo roleVo, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return Result.validateError(bindingResult.getAllErrors());
 		}

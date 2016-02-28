@@ -5,6 +5,7 @@ Ext.define("app.view.user.UserController", {
 	showEditWindow : function(user) {
 		if (!this.formWindow) {
 			this.formWindow = Ext.create("Ext.window.Window", {
+				iconCls : "User",
 				modal : true,
 				layout : "fit",
 				closeAction : "hide"
@@ -30,6 +31,30 @@ Ext.define("app.view.user.UserController", {
 	onRowEdit : function(grid, rowIndex, colIndex) {
 		var user = grid.getStore().getAt(rowIndex);
 		this.showEditWindow(user);
+	},
+	onRowChangPassword : function(grid, rowIndex, colIndex) {
+
+		if (!this.passwordWindow) {
+			this.passwordWindow = Ext.create("Ext.window.Window", {
+				modal : true,
+				title : "修改密码",
+				iconCls : "Key",
+				layout : "fit",
+				closeAction : "hide"
+			});
+		}
+
+		this.passwordWindow.removeAll(true);
+
+		var form = Ext.create("app.view.user.PasswordForm");
+
+		var user = grid.getStore().getAt(rowIndex);
+		if (user) {
+			form.loadRecord(user);
+		}
+
+		this.passwordWindow.add(form);
+		this.passwordWindow.show();
 	},
 
 	onRowDelete : function(grid, rowIndex, colIndex) {
@@ -99,6 +124,21 @@ Ext.define("app.view.user.UserController", {
 					Ext.Msg.info("提示", "操作成功");
 					window.hide();
 					store.reload();
+				},
+				failure : function(form, action) {
+					Ext.Msg.error("提示", "操作失败");
+				}
+			});
+		}
+	},
+	onPasswordChange : function(button) {
+		var form = button.up("form").getForm();
+		var window = button.up("window");
+		if (form.isValid()) {
+			form.submit({
+				success : function(form, action) {
+					Ext.Msg.info("提示", "操作成功");
+					window.hide();
 				},
 				failure : function(form, action) {
 					Ext.Msg.error("提示", "操作失败");

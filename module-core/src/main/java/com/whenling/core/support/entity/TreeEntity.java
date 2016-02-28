@@ -13,8 +13,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import com.alibaba.fastjson.annotation.JSONType;
+
 @MappedSuperclass
 @EntityListeners(value = { TreeEntityListener.class })
+@JSONType(ignores = { "parent", "children" })
 public abstract class TreeEntity<I extends Serializable, U, T> extends BizEntity<U, I> implements Treeable<T> {
 
 	private static final long serialVersionUID = -8438302668847434698L;

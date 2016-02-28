@@ -14,7 +14,7 @@ public class Menu extends TreeEntity<Long, User, Menu> implements Resourceable {
 	private static final long serialVersionUID = -1346718655779585942L;
 
 	@Column(nullable = false, length = 50)
-	private String name;
+	private String text;
 
 	@Column(nullable = false, length = 50, unique = true)
 	private String code;
@@ -33,12 +33,12 @@ public class Menu extends TreeEntity<Long, User, Menu> implements Resourceable {
 		return code;
 	}
 
-	public String getName() {
-		return name;
+	public String getText() {
+		return text;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public String getIconCls() {

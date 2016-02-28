@@ -3,8 +3,5 @@ Ext.define("app.view.user.UserModel", {
 	alias : "viewmodel.user",
 	stores : {
 		list : Ext.create("app.store.Users")
-	},
-	data : {
-		isNew : true
 	}
 });

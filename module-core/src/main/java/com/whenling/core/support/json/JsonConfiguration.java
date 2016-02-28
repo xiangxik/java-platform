@@ -12,10 +12,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.whenling.core.support.entity.Node;
 import com.whenling.core.support.entity.Result;
+import com.whenling.core.support.entity.TreeImpl;
 import com.whenling.core.support.json.serializers.ExtjsResultSerializer;
 import com.whenling.core.support.json.serializers.JodaDateTimeSerializer;
+import com.whenling.core.support.json.serializers.NodeSerializer;
 import com.whenling.core.support.json.serializers.PageSerializer;
+import com.whenling.core.support.json.serializers.TreeSerializer;
 
 @Configuration
 public class JsonConfiguration {
@@ -26,6 +30,8 @@ public class JsonConfiguration {
 		serializeConfig.put(PageImpl.class, PageSerializer.instance);
 		serializeConfig.put(DateTime.class, JodaDateTimeSerializer.instance);
 		serializeConfig.put(Result.class, ExtjsResultSerializer.instance);
+		serializeConfig.put(TreeImpl.class, TreeSerializer.instance);
+		serializeConfig.put(Node.class, new NodeSerializer(serializeConfig));
 		return serializeConfig;
 	}
 

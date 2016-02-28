@@ -29,11 +29,12 @@ public class CoreModule extends Module {
 
 			Menu personnelMenu = app.addMenu("企业管理", "enterprise", "Userhome", null, null, systemMenu);
 			app.addMenu("用户列表", "user", "User", "app.view.user.UserList", null, personnelMenu);
-			app.addMenu("角色列表", "role", "Userkey", "app.view.role.RoleList", null, personnelMenu);
+			app.addMenu("角色列表", "role", "Userkey", "app.view.role.Role", null, personnelMenu);
 
 			Menu siteMenu = app.addMenu("站点管理", "site", "Computer", null, null, systemMenu);
 			app.addMenu("参数设置", "setting", "Cog", "app.view.setting.SettingForm", null, siteMenu);
 			app.addMenu("模块列表", "module", "Applicationcascade", "app.view.module.ModuleList", null, siteMenu);
+			app.addMenu("菜单管理", "menu", "Applicationsidelist", "app.view.menu.Menu", null, siteMenu);
 			app.addMenu("模板管理", "template", "Page", "app.view.cms.Template", null, siteMenu);
 			app.addMenu("操作日志", "log", "Databasego", "app.view.log.LogList", null, siteMenu);
 

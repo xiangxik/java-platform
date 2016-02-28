@@ -3,9 +3,12 @@ package com.whenling.core.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.comparator.DirectoryFileComparator;
+import org.apache.commons.io.comparator.NameFileComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -57,13 +60,19 @@ public class TemplateService {
 
 	private TemplateFile[] toTemplates(File dir, String parentPath) {
 		List<TemplateFile> list = new ArrayList<>();
-		for (File file : dir.listFiles()) {
+		File[] files = dir.listFiles();
+
+		Arrays.sort(files, NameFileComparator.NAME_COMPARATOR);
+		Arrays.sort(files, DirectoryFileComparator.DIRECTORY_COMPARATOR);
+
+		for (File file : files) {
 			TemplateFile templateFile = new TemplateFile();
 			templateFile.setText(file.getName());
 			String path = parentPath + "/" + file.getName();
 			templateFile.setPath(path);
 			if (file.isDirectory()) {
 				templateFile.setChildren(toTemplates(file, path));
+				templateFile.setIconCls("Folder");
 			} else {
 				String extension = FilenameUtils.getExtension(file.getName());
 				if ("html".equals(extension)) {
@@ -72,6 +81,8 @@ public class TemplateService {
 					templateFile.setIconCls("Script");
 				} else if ("css".equals(extension)) {
 					templateFile.setIconCls("Css");
+				} else {
+					templateFile.setIconCls("Page");
 				}
 			}
 			list.add(templateFile);

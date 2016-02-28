@@ -1,5 +1,6 @@
 package com.whenling.core.support.web;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import javax.xml.transform.Source;
@@ -37,7 +38,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+		StringHttpMessageConverter stringConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
 		stringConverter.setWriteAcceptCharset(false);
 
 		converters.add(new ByteArrayHttpMessageConverter());

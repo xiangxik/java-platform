@@ -44,11 +44,15 @@ Ext.define("app.view.user.UserList", {
 		xtype : "actioncolumn",
 		width : 80,
 		items : [ {
-			iconCls : "Pencil",
+			iconCls : "Pencil actionColumnIcon",
 			tooltip : "编辑",
 			handler : "onRowEdit"
 		}, {
-			iconCls : "Delete",
+			iconCls : "Key actionColumnIcon",
+			tooltip : "修改密码",
+			handler : "onRowChangPassword"
+		} , {
+			iconCls : "Delete actionColumnIcon",
 			tooltip : "删除",
 			handler : "onRowDelete"
 		} ]

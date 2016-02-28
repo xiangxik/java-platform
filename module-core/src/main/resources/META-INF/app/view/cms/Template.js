@@ -23,7 +23,18 @@ Ext.define("app.view.cms.Template", {
 		collapsible : true,
 		border : false,
 		frame : false,
-		split : true
+		split : true,
+		tbar : [ {
+			xtype : "button",
+			text : "添加",
+			iconCls : "Add",
+			handler : "onAdd"
+		}, {
+			xtype : "button",
+			text : "删除",
+			iconCls : "Delete",
+			handler : "onDelete"
+		} ]
 	}, {
 		region : "center",
 		xtype : "form",

@@ -77,9 +77,9 @@ public class Application {
 		return modules;
 	}
 
-	public Menu addMenu(String name, String code, String iconCls, String view, String config, Menu parent) {
+	public Menu addMenu(String text, String code, String iconCls, String view, String config, Menu parent) {
 		Menu menu = menuService.newEntity();
-		menu.setName(name);
+		menu.setText(text);
 		menu.setCode(code);
 		menu.setIconCls(iconCls);
 		menu.setView(view);

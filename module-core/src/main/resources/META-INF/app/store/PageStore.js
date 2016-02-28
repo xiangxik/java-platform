@@ -11,12 +11,18 @@ Ext.define("app.store.PageStore", {
 			paths.push(field.getName());
 		});
 
+		if (!this.extraParams) {
+			this.extraParams = {};
+		}
+
+		Ext.apply(this.extraParams, {
+			paths : paths
+		});
+
 		this.setProxy({
 			type : "ajax",
 			url : this.url,
-			extraParams : {
-				paths : paths
-			},
+			extraParams : this.extraParams,
 			reader : {
 				type : "json",
 				rootProperty : "rows"

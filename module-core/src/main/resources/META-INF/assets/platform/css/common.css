@@ -1,0 +1,7 @@
+.actionColumnIcon {
+	margin: 0 2px;
+}
+
+.actionColumnIcon:hover {
+	background-color: #ff8000;
+}

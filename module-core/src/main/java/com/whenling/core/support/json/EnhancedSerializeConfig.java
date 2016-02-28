@@ -6,7 +6,9 @@ import java.util.Map;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 
-public class SerializeConfigWrapper extends SerializeConfig {
+public class EnhancedSerializeConfig extends SerializeConfig {
+
+	private final static EnhancedSerializeConfig globalInstance = new EnhancedSerializeConfig();
 
 	private Map<Class<?>, ObjectSerializer> assignableSerializerMap = new HashMap<>();
 
@@ -22,6 +24,10 @@ public class SerializeConfigWrapper extends SerializeConfig {
 			}
 		}
 		return super.getObjectWriter(clazz);
+	}
+
+	public static EnhancedSerializeConfig getGlobalInstance() {
+		return globalInstance;
 	}
 
 	public void putAssignableTo(Class<?> clazz, ObjectSerializer objectSerializer) {

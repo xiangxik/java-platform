@@ -66,7 +66,7 @@ public class UserService extends BaseService<User, Long> {
 	}
 
 	public List<Menu> getMenus(User user) {
-		return menuService.getRoots();
+		return menuService.findRoots();
 	}
 
 }

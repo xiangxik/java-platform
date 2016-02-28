@@ -36,6 +36,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Sets;
 import com.whenling.core.support.base.PropertyUtil;
 import com.whenling.core.support.entity.BaseEntity;
+import com.whenling.core.support.entity.Node;
 
 public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConverter<Object> {
 
@@ -149,6 +150,10 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 
 		if (value instanceof BaseEntity) {
 			return value.getClass();
+		}
+
+		if (value instanceof Node) {
+			return filterClass(((Node<?>) value).getData());
 		}
 		return null;
 	}

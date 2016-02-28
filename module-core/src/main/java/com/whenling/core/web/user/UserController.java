@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.whenling.core.model.User;
 import com.whenling.core.service.UserService;
@@ -61,6 +63,23 @@ public class UserController {
 		if (user.isNew()) {
 			userService.changePassword(user, null, password);
 		}
+		userService.save(user);
+
+		return Result.success();
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	@ResponseBody
+	public Result changePassword(@RequestParam(value = "id") User user, String oldPassword, String newPassword,
+			String repeatPassword) {
+		Assert.notNull(user);
+		Assert.isTrue(!Strings.isNullOrEmpty(oldPassword));
+		Assert.isTrue(!Strings.isNullOrEmpty(newPassword));
+		Assert.isTrue(!Strings.isNullOrEmpty(repeatPassword));
+
+		Assert.isTrue(Objects.equal(newPassword, repeatPassword));
+
+		userService.changePassword(user, oldPassword, newPassword);
 		userService.save(user);
 
 		return Result.success();

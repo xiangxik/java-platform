@@ -22,6 +22,7 @@ Ext.define("app.view.user.UserForm", {
 		name : "id"
 	}, {
 		xtype : "fieldset",
+		id : "baseSet",
 		title : "基本信息",
 		defaultType : "textfield",
 		defaults : {
@@ -32,14 +33,6 @@ Ext.define("app.view.user.UserForm", {
 			fieldLabel : "账号",
 			name : "username",
 			allowBlank : false
-		}, {
-			fieldLabel : "密码",
-			name : "password",
-			inputType : "password",
-			allowBlank : false,
-			bind : {
-				hidden : "{!isNew}"
-			}
 		}, {
 			fieldLabel : "姓名",
 			name : "name",
@@ -83,7 +76,14 @@ Ext.define("app.view.user.UserForm", {
 	listeners : {
 		afterRender : function(form, opts) {
 			var record = form.getRecord();
-			form.getViewModel().set("isNew", record == null || record.get("id") == null);
+			if (record == null || record.get("id") == null) {
+				form.getComponent("baseSet").insert(1, {
+					fieldLabel : "密码",
+					name : "password",
+					inputType : "password",
+					allowBlank : false
+				});
+			}
 		}
 	}
 });

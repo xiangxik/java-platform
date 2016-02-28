@@ -1,11 +1,15 @@
 package com.whenling.core.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,6 +69,9 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 
 	@Column(nullable = false)
 	private boolean locked = false;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Set<UserRole> roles = new HashSet<>();
 
 	public enum Sex {
 		/** 男 */
@@ -159,6 +166,14 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 	@Override
 	public void markLocked() {
 		this.locked = true;
+	}
+
+	public Set<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<UserRole> roles) {
+		this.roles = roles;
 	}
 
 }

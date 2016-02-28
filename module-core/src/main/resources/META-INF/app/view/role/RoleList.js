@@ -1,10 +1,6 @@
 Ext.define("app.view.role.RoleList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.rolelist",
-	requires : [ "app.view.role.RoleController", "app.view.role.RoleModel" ],
-	title : "角色列表",
-	controller : "role",
-	viewModel : "role",
 	columns : [ {
 		xtype : 'rownumberer'
 	}, {
@@ -17,11 +13,19 @@ Ext.define("app.view.role.RoleList", {
 		text : "操作",
 		xtype : "actioncolumn",
 		items : [ {
-			iconCls : "Pencil",
+			iconCls : "Pencil actionColumnIcon",
 			tooltip : "编辑",
 			handler : "onRowEdit"
 		}, {
-			iconCls : "Delete",
+			iconCls : "Lockkey actionColumnIcon",
+			tooltip : "授权",
+			handler : "onRowAuthorize"
+		}, {
+			iconCls : "Usergo actionColumnIcon",
+			tooltip : "用户",
+			handler : "onRowUser"
+		}, {
+			iconCls : "Delete actionColumnIcon",
 			tooltip : "删除",
 			handler : "onRowDelete"
 		} ]

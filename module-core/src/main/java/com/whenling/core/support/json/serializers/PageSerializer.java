@@ -27,25 +27,25 @@ public class PageSerializer implements ObjectSerializer {
 			return;
 		}
 
-		out.write('{');
-		
 		Page<?> page = (Page<?>) object;
-		
+
+		out.write('{');
+
 		out.writeFieldName(DEFAULT_CURRENT_FIELD);
 		out.writeInt(page.getNumber());
 		out.write(',');
-		
+
 		out.writeFieldName(DEFAULT_ROWCOUNT_FIELD);
 		out.writeInt(page.getSize());
 		out.write(',');
-		
+
 		out.writeFieldName(DEFAULT_TOTAL_FIELD);
 		out.writeLong(page.getTotalElements());
 		out.write(',');
-		
+
 		out.writeFieldName(DEFAULT_ROWS_FIELD);
 		serializer.write(page.getContent());
-		
+
 		out.write('}');
 	}
 

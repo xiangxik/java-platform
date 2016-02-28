@@ -37,7 +37,7 @@ public class TemplateController {
 		File file = templateService.getFile(path);
 		if (file != null) {
 			try {
-				return Files.toString(file, Charset.forName("utf-8"));
+				return Files.toString(file, Charset.forName("UTF-8"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
