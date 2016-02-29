@@ -27,5 +27,5 @@ https://git.oschina.net/xiangxik/java-platform
 http://ken.whenling.com
 
 ### 更新日志
->【2016-02-09】V1.0.0.RELEASE 
+####【2016-02-09】V1.0.0.RELEASE
 初版发布
