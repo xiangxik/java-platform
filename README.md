@@ -20,8 +20,8 @@
 * extension-mall: 扩展平台包。包含商城及支付等功能。引入该包即拥有商城功能。
 
 ### 代码地址
-https://github.com/xiangxik/java-platform
-https://git.oschina.net/xiangxik/java-platform
+* https://github.com/xiangxik/java-platform
+* https://git.oschina.net/xiangxik/java-platform
 
 ### 详细介绍
 http://ken.whenling.com
