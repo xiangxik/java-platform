@@ -1,4 +1,4 @@
-package com.whenling.module.web.extjs;
+package com.whenling.module.web.multipart;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.whenling.module.domain.model.Result;
-import com.whenling.module.web.multipart.MultipartService;
 import com.whenling.module.web.multipart.model.FileEntity;
 import com.whenling.module.web.multipart.service.FileService;
 

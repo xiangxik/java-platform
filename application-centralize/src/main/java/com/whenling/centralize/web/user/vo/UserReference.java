@@ -1,18 +1,20 @@
 package com.whenling.centralize.web.user.vo;
 
-import com.whenling.centralize.web.menu.vo.MenuNode;
+import java.util.List;
+
+import com.whenling.centralize.web.menu.vo.MenuVo;
 
 public class UserReference {
 
-	private MenuNode[] menus;
+	private List<MenuVo> menus;
 
 	private UserVo user;
 
-	public MenuNode[] getMenus() {
+	public List<MenuVo> getMenus() {
 		return menus;
 	}
 
-	public void setMenus(MenuNode[] menus) {
+	public void setMenus(List<MenuVo> menus) {
 		this.menus = menus;
 	}
 

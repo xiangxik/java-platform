@@ -1,4 +1,4 @@
-package com.whenling.centralize.service;
+package com.whenling.extension.cms.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.whenling.centralize.model.TemplateFile;
+import com.whenling.extension.cms.model.TemplateFile;
 
 @Service
 public class TemplateService {

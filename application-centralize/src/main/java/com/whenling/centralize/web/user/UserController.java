@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.whenling.centralize.service.UserService;
-import com.whenling.centralize.web.menu.vo.MenuNode;
+import com.whenling.centralize.web.menu.vo.MenuVo;
 import com.whenling.centralize.web.user.vo.UserReference;
 import com.whenling.centralize.web.user.vo.UserVo;
 import com.whenling.module.domain.model.Result;
@@ -106,7 +107,7 @@ public class UserController {
 	@ResponseBody
 	public UserReference getReference(@CurrentUser(required = true) User user) {
 		UserReference reference = new UserReference();
-		reference.setMenus(MenuNode.converters(userService.getMenus(user)));
+		reference.setMenus(Lists.transform(userService.getMenus(user), MenuVo::convert));
 		reference.setUser(UserVo.convert(user));
 		return reference;
 	}

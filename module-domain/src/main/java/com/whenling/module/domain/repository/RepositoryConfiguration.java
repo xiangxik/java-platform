@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
@@ -21,6 +22,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 @EnableJpaRepositories(basePackages = {
 		"com.whenling" }, repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class)
 @EnableJpaAuditing
+@PropertySource("classpath:/com/whenling/module/domain/config.properties")
 public class RepositoryConfiguration {
 
 	@Value("${jdbc.url}")

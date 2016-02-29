@@ -1,4 +1,4 @@
-package com.whenling.centralize.web.template;
+package com.whenling.extension.cms.web.template;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
-import com.whenling.centralize.model.TemplateFile;
-import com.whenling.centralize.service.TemplateService;
+import com.whenling.extension.cms.model.TemplateFile;
+import com.whenling.extension.cms.service.TemplateService;
 import com.whenling.module.domain.model.Result;
 
 @Controller

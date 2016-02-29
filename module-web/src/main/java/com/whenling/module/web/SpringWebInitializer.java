@@ -2,6 +2,8 @@ package com.whenling.module.web;
 
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.core.Ordered;
@@ -10,6 +12,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.whenling.module.base.config.StaticConfigurationSupplier;
 
 /**
  * Web初始化器
@@ -20,6 +24,13 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  */
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		StaticConfigurationSupplier.append("/com/whenling/module/web/config.properties");
+		super.onStartup(servletContext);
+		System.out.println("System is started.");
+	}
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

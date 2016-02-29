@@ -20,10 +20,10 @@ public class CacheConfiguration implements CachingConfigurer {
 
 	@Value("${cacheConfigFile?:com/whenling/module/domain/cache/ehcache.xml}")
 	private String cacheConfigFileLocation;
-	
+
 	@Bean
 	public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
-		EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();System.out.println(cacheConfigFileLocation);
+		EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
 		factoryBean.setConfigLocation(new ClassPathResource(cacheConfigFileLocation));
 		factoryBean.setShared(true);
 		return factoryBean;

@@ -1,8 +1,11 @@
 package com.whenling.centralize.web.menu.vo;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.google.common.collect.Lists;
 import com.whenling.centralize.model.Menu;
 import com.whenling.module.domain.model.EntityVo;
 
@@ -20,6 +23,13 @@ public class MenuVo extends EntityVo<Long> {
 	private String view;
 	private String config;
 
+	private List<MenuVo> children;
+
+	public Boolean getLeaf() {
+		List<MenuVo> children = getChildren();
+		return children == null || children.size() == 0;
+	}
+
 	public Menu applyTo(Menu menu) {
 		menu.setText(text);
 		menu.setCode(code);
@@ -27,6 +37,30 @@ public class MenuVo extends EntityVo<Long> {
 		menu.setView(view);
 		menu.setConfig(config);
 		return menu;
+	}
+
+	public static MenuVo convert(Menu menu) {
+		MenuVo menuVo = new MenuVo();
+		menuVo.setId(menu.getId());
+		menuVo.setText(menu.getText());
+		menuVo.setCode(menu.getCode());
+		menuVo.setConfig(menu.getConfig());
+		menuVo.setIconCls(menu.getIconCls());
+		menuVo.setView(menu.getView());
+
+		List<Menu> children = menu.getChildren();
+		if (children != null && children.size() > 0) {
+			menuVo.setChildren(Lists.transform(children, MenuVo::convert));
+		}
+		return menuVo;
+	}
+
+	public List<MenuVo> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<MenuVo> children) {
+		this.children = children;
 	}
 
 	public String getText() {

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +40,10 @@ public class ExtensionEntity extends BaseEntity<Long> {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date lastModifiedDate;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private Type type;
 
 	public String getName() {
 		return name;
@@ -93,5 +99,17 @@ public class ExtensionEntity extends BaseEntity<Long> {
 
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public enum Type {
+		Application, Extension
 	}
 }
