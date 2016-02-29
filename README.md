@@ -1,13 +1,19 @@
 # 静态模块化java开发平台
 
-### 基础架构
-采用servlet3.1的web集成机制。使用springmvc+spring+springdata构成。
+### 特点
+采用Java8的语法。故必须使用jdk8以上版本。
+主要模块化的思想是来自于servlet3.1规范的web集成机制。故必须使用支持servlet3.1服务器。
+
 
 ### 涉及到的第三方框架
-1. spring家族
-2. jpa
-3. jackson
-4. extjs
+* springframework
+* springmvc
+* spring-data
+* jpa
+* fastjson
+* ehcache
+* beetl
+* extjs6
 
-### 我的博客
+### 详细介绍
 http://ken.whenling.com
