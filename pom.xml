@@ -235,7 +235,14 @@
 		<url>whenling.com</url>
 	</organization>
 	<modules>
-		<module>module-core</module>
+		<module>module-base</module>
+		<module>module-domain</module>
+		<module>module-web</module>
+		<module>module-security</module>
+		<module>module-web-extjs</module>
+		<module>application-centralize</module>
+		<module>extension-cms</module>
+		<module>extension-mall</module>
 		<module>example-web</module>
 	</modules>
 </project>

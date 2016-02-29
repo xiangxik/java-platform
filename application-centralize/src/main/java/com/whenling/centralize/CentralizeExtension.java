@@ -1,0 +1,73 @@
+package com.whenling.centralize;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.whenling.centralize.model.Menu;
+import com.whenling.centralize.model.Role;
+import com.whenling.centralize.service.RoleService;
+import com.whenling.centralize.service.UserService;
+import com.whenling.module.domain.model.User;
+import com.whenling.module.domain.model.User.Sex;
+
+@Component
+public class CentralizeExtension extends Extension {
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private RoleService roleService;
+
+	@Override
+	public void init(Application app, boolean isNew, boolean isUpdate, Integer historyVersion) {
+		if (isUpdate) {
+
+			Menu systemMenu = app.addMenu("系统管理", "system", null, null, null, null);
+
+			Menu personnelMenu = app.addMenu("企业管理", "enterprise", "Userhome", null, null, systemMenu);
+			app.addMenu("用户列表", "user", "User", "app.view.user.UserList", null, personnelMenu);
+			app.addMenu("角色列表", "role", "Userkey", "app.view.role.Role", null, personnelMenu);
+
+			Menu siteMenu = app.addMenu("站点管理", "site", "Computer", null, null, systemMenu);
+			app.addMenu("参数设置", "setting", "Cog", "app.view.setting.SettingForm", null, siteMenu);
+			app.addMenu("模块列表", "module", "Applicationcascade", "app.view.module.ModuleList", null, siteMenu);
+			app.addMenu("菜单管理", "menu", "Applicationsidelist", "app.view.menu.Menu", null, siteMenu);
+			app.addMenu("模板管理", "template", "Page", "app.view.cms.Template", null, siteMenu);
+			app.addMenu("操作日志", "log", "Databasego", "app.view.log.LogList", null, siteMenu);
+
+		}
+
+		if (isNew) {
+
+			Role role = roleService.newEntity();
+			role.setName("管理员");
+			role.setCode("admin");
+			role.markLocked();
+			roleService.save(role);
+
+			User superAdmin = userService.newEntity();
+			superAdmin.setSuperAdmin(true);
+			superAdmin.markLocked();
+			superAdmin.setUsername("admin");
+			userService.changePassword(superAdmin, null, "asd123");
+			superAdmin.setEmail("ken@whenling.com");
+			superAdmin.setMobile("13265323553");
+			superAdmin.setName("管理员");
+			superAdmin.setSex(Sex.male);
+
+			userService.save(superAdmin);
+		}
+	}
+
+	@Override
+	public Integer getVersion() {
+		return 2;
+	}
+
+	@Override
+	public String getAuthor() {
+		return "孔祥溪";
+	}
+
+}
