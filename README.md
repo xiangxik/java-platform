@@ -2,12 +2,12 @@
 基于servlet3.1的模块化规范，采用spring, spring mvc, jpa, spring data, shiro, fastjson, beetl等开源技术，搭建了一套可模块化扩展的java框架，并使用extjs6实现了后台管理的公共功能。
 
 ### 特点
-基于目前最新的一些java技术
-采用Java8的语法。
-主要模块化的思想是来自于servlet3.1规范的web集成机制
-可扩展模块，通过引入jar包来决定是否采用该功能
-采用spring javaconfig.达到0spring配置文件
-包含通用的后台管理功能
+* 基于目前最新的一些java技术
+* 采用Java8的语法。
+* 主要模块化的思想是来自于servlet3.1规范的web集成机制
+* 可扩展模块，通过引入jar包来决定是否采用该功能
+* 采用spring javaconfig.达到0spring配置文件
+* 包含通用的后台管理功能
 
 ### 工程用途说明
 * application-centralize: 平台包，项目引入该包即可包含了主要功能，依赖于全部module包。
@@ -27,4 +27,5 @@ https://git.oschina.net/xiangxik/java-platform
 http://ken.whenling.com
 
 ### 更新日志
-【2016-02-09】V1.0.0.RELEASE 初版发布
+>【2016-02-09】V1.0.0.RELEASE 
+初版发布
