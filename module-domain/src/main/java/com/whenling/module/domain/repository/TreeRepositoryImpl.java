@@ -25,7 +25,7 @@ import com.whenling.module.domain.model.TreeImpl;
  * @param <T>
  * @param <I>
  */
-public class TreeRepositoryImpl<T extends TreeEntity<I, ?, T>, I extends Serializable> extends BaseRepositoryImpl<T, I>
+public class TreeRepositoryImpl<T extends TreeEntity<?, I, T>, I extends Serializable> extends BaseRepositoryImpl<T, I>
 		implements TreeRepository<T, I> {
 
 	public TreeRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {

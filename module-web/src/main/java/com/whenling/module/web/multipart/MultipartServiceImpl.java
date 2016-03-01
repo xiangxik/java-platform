@@ -21,8 +21,6 @@ import com.google.common.base.Strings;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import com.whenling.module.web.multipart.model.FileEntity;
-import com.whenling.module.web.multipart.service.FileService;
 
 /**
  * 附件服务实现类
@@ -34,9 +32,6 @@ import com.whenling.module.web.multipart.service.FileService;
 @Component
 public class MultipartServiceImpl implements MultipartService {
 
-	@Autowired
-	private FileService fileService;
-
 	@Value("${multipart.saveDir?:/upload}")
 	private String saveDir;
 
@@ -44,38 +39,25 @@ public class MultipartServiceImpl implements MultipartService {
 	private ServletContext servletContext;
 
 	@Override
-	public FileEntity upload(MultipartFile multipartFile) throws IOException {
+	public String upload(MultipartFile multipartFile) throws IOException {
 		Assert.notNull(multipartFile);
-
-		FileEntity fileEntity = fileService.newEntity();
-		fileEntity.setFilename(multipartFile.getOriginalFilename());
-		fileEntity.setContentType(multipartFile.getContentType());
-		fileEntity.setFileSize(multipartFile.getSize());
 
 		String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 		String storePath = saveDir + "/" + randomString() + (Strings.isNullOrEmpty(extension) ? "" : "." + extension);
-		fileEntity.setStorePath(servletContext.getContextPath() + storePath);
 		store(multipartFile.getInputStream(), storePath);
-
-		return fileService.save(fileEntity);
+		return servletContext.getContextPath() + storePath;
 
 	}
 
 	@Override
-	public FileEntity upload(Part part) throws IOException {
+	public String upload(Part part) throws IOException {
 		Assert.notNull(part);
-
-		FileEntity fileEntity = fileService.newEntity();
-		fileEntity.setFilename(part.getSubmittedFileName());
-		fileEntity.setContentType(part.getContentType());
-		fileEntity.setFileSize(part.getSize());
 
 		String extension = FilenameUtils.getExtension(part.getSubmittedFileName());
 		String storePath = saveDir + "/" + randomString() + (Strings.isNullOrEmpty(extension) ? "" : "." + extension);
-		fileEntity.setStorePath(servletContext.getContextPath() + storePath);
 		store(part.getInputStream(), storePath);
 
-		return fileService.save(fileEntity);
+		return servletContext.getContextPath() + storePath;
 	}
 
 	protected String randomString() {

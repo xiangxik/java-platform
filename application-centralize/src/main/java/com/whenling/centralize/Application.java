@@ -13,12 +13,12 @@ import com.whenling.centralize.model.ExtensionEntity;
 import com.whenling.centralize.model.ExtensionEntity.Type;
 import com.whenling.centralize.model.Menu;
 import com.whenling.centralize.model.Role;
+import com.whenling.centralize.model.User;
+import com.whenling.centralize.model.User.Sex;
 import com.whenling.centralize.service.ExtensionService;
 import com.whenling.centralize.service.MenuService;
 import com.whenling.centralize.service.RoleService;
 import com.whenling.centralize.service.UserService;
-import com.whenling.module.domain.model.User;
-import com.whenling.module.domain.model.User.Sex;
 
 /**
  * 应用
@@ -30,7 +30,7 @@ import com.whenling.module.domain.model.User.Sex;
 @Component
 public class Application {
 
-	@Autowired
+	@Autowired(required = false)
 	private List<Extension> extensions;
 
 	@Autowired
@@ -109,9 +109,8 @@ public class Application {
 	}
 
 	private void initExtension() {
-		List<ExtensionEntity> moduleEntities = extensionService.findAllExtension();
-
 		if (extensions != null) {
+			List<ExtensionEntity> moduleEntities = extensionService.findAllExtension();
 			for (Extension module : extensions) {
 				ExtensionEntity moduleEntity = findModuleEntityByCode(moduleEntities, module.getCode());
 				boolean isNew = moduleEntity == null;

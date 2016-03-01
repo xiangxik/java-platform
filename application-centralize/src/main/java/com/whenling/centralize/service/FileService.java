@@ -1,9 +1,9 @@
-package com.whenling.module.web.multipart.service;
+package com.whenling.centralize.service;
 
 import org.springframework.stereotype.Service;
 
+import com.whenling.centralize.model.FileEntity;
 import com.whenling.module.domain.service.BaseService;
-import com.whenling.module.web.multipart.model.FileEntity;
 
 /**
  * 文件服务

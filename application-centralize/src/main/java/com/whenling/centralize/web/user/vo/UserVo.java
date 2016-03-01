@@ -6,9 +6,9 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.whenling.centralize.model.User;
+import com.whenling.centralize.model.User.Sex;
 import com.whenling.module.domain.model.EntityVo;
-import com.whenling.module.domain.model.User;
-import com.whenling.module.domain.model.User.Sex;
 
 /**
  * 用户值对象

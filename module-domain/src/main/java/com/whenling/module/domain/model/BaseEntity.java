@@ -3,6 +3,7 @@ package com.whenling.module.domain.model;
 import java.io.Serializable;
 
 import javax.persistence.MappedSuperclass;
+import javax.validation.groups.Default;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.util.ClassUtils;
@@ -19,6 +20,20 @@ import org.springframework.util.ClassUtils;
 public abstract class BaseEntity<ID extends Serializable> extends AbstractPersistable<ID> {
 
 	private static final long serialVersionUID = 5227521689231872715L;
+
+	/**
+	 * 保存验证组
+	 */
+	public interface Save extends Default {
+
+	}
+
+	/**
+	 * 更新验证组
+	 */
+	public interface Update extends Default {
+
+	}
 
 	@Override
 	public boolean equals(Object obj) {

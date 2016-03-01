@@ -16,7 +16,7 @@ import com.whenling.module.domain.repository.TreeRepository;
  * @param <T>
  * @param <I>
  */
-public class TreeService<T extends TreeEntity<I, ?, T>, I extends Serializable> extends BaseService<T, I> {
+public class TreeService<T extends TreeEntity<?, I, T>, I extends Serializable> extends BaseService<T, I> {
 
 	public List<T> findRoots() {
 		return getTreeRepository().findRoots();

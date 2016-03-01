@@ -1,4 +1,4 @@
-package com.whenling.module.security.shiro;
+package com.whenling.centralize.support.security;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -12,10 +12,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.util.SimpleByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
-import com.whenling.module.domain.model.User;
-import com.whenling.module.domain.repository.UserRepository;
+import com.whenling.centralize.model.User;
+import com.whenling.centralize.repo.UserRepository;
+import com.whenling.module.security.shiro.HashedCredentialsGeneratorAndMatcher;
+import com.whenling.module.security.shiro.Principal;
 
 /**
  * 数据库域
@@ -24,6 +27,7 @@ import com.whenling.module.domain.repository.UserRepository;
  * @博客 http://ken.whenling.com
  * @创建时间 2016年3月1日 下午7:06:54
  */
+@Component
 public class DatabaseRealm extends AuthorizingRealm {
 
 	@Autowired

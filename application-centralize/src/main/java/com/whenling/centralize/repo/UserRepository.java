@@ -1,6 +1,7 @@
-package com.whenling.module.domain.repository;
+package com.whenling.centralize.repo;
 
-import com.whenling.module.domain.model.User;
+import com.whenling.centralize.model.User;
+import com.whenling.module.domain.repository.BaseRepository;
 
 /**
  * 用户仓库

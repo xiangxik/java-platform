@@ -6,7 +6,6 @@ import javax.persistence.Table;
 
 import com.whenling.module.domain.model.Resourceable;
 import com.whenling.module.domain.model.TreeEntity;
-import com.whenling.module.domain.model.User;
 
 /**
  * 菜单实体类
@@ -17,7 +16,7 @@ import com.whenling.module.domain.model.User;
  */
 @Entity
 @Table(name = "sys_menu")
-public class Menu extends TreeEntity<Long, User, Menu> implements Resourceable {
+public class Menu extends TreeEntity<User, Long, Menu> implements Resourceable {
 
 	private static final long serialVersionUID = -1346718655779585942L;
 

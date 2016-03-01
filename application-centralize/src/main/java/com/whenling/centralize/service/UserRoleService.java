@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whenling.centralize.model.Role;
+import com.whenling.centralize.model.User;
 import com.whenling.centralize.model.UserRole;
 import com.whenling.centralize.repo.UserRoleRepository;
-import com.whenling.module.domain.model.User;
 import com.whenling.module.domain.service.BaseService;
 
 /**

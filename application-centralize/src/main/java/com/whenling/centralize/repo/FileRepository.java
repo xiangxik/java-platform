@@ -1,7 +1,7 @@
-package com.whenling.module.web.multipart.repo;
+package com.whenling.centralize.repo;
 
+import com.whenling.centralize.model.FileEntity;
 import com.whenling.module.domain.repository.BaseRepository;
-import com.whenling.module.web.multipart.model.FileEntity;
 
 /**
  * 文件仓库

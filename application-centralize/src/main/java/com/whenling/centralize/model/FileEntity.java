@@ -1,11 +1,10 @@
-package com.whenling.module.web.multipart.model;
+package com.whenling.centralize.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.whenling.module.domain.model.BizEntity;
-import com.whenling.module.domain.model.User;
 
 /**
  * 文件实体

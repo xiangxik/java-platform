@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.whenling.module.domain.model.BaseEntity;
-import com.whenling.module.domain.model.User;
 
 /**
  * 用户角色关联类

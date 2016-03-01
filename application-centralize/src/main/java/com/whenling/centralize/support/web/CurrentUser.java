@@ -1,4 +1,4 @@
-package com.whenling.module.security;
+package com.whenling.centralize.support.web;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -1,7 +1,5 @@
-package com.whenling.module.security.shiro;
+package com.whenling.centralize.support.web;
 
-import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -9,9 +7,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.whenling.module.domain.model.User;
-import com.whenling.module.domain.repository.UserRepository;
-import com.whenling.module.security.CurrentUser;
+import com.whenling.centralize.model.User;
+import com.whenling.centralize.service.UserService;
 
 /**
  * 当前用户方法参数解析器
@@ -22,8 +19,11 @@ import com.whenling.module.security.CurrentUser;
  */
 public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
-	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
+
+	public CurrentUserHandlerMethodArgumentResolver(UserService userService) {
+		this.userService = userService;
+	}
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
@@ -36,7 +36,7 @@ public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodAr
 		CurrentUser currentUser = parameter.getParameterAnnotation(CurrentUser.class);
 		boolean required = currentUser.required();
 
-		User user = getCurrentUser();
+		User user = userService.getCurrentUser();
 		if (user == null) {
 			Assert.isTrue(!required);
 
@@ -44,17 +44,6 @@ public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodAr
 		}
 
 		return user;
-	}
-
-	protected User getCurrentUser() {
-		Object principal = SecurityUtils.getSubject().getPrincipal();
-		if (principal != null && principal instanceof Principal) {
-			Long currentUserId = ((Principal) principal).getId();
-			if (currentUserId != null) {
-				return userRepository.getOne(currentUserId);
-			}
-		}
-		return null;
 	}
 
 }

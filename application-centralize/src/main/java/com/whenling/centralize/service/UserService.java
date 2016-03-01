@@ -2,16 +2,18 @@ package com.whenling.centralize.service;
 
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.util.SimpleByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.whenling.centralize.model.Menu;
-import com.whenling.module.domain.model.User;
-import com.whenling.module.domain.repository.UserRepository;
+import com.whenling.centralize.model.User;
+import com.whenling.centralize.repo.UserRepository;
+import com.whenling.centralize.support.security.DatabaseRealm;
 import com.whenling.module.domain.service.BaseService;
-import com.whenling.module.security.shiro.DatabaseRealm;
+import com.whenling.module.security.shiro.Principal;
 
 /**
  * 用户服务
@@ -34,6 +36,17 @@ public class UserService extends BaseService<User, Long> {
 
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	public User getCurrentUser() {
+		Object principal = SecurityUtils.getSubject().getPrincipal();
+		if (principal != null && principal instanceof Principal) {
+			Long currentUserId = ((Principal) principal).getId();
+			if (currentUserId != null) {
+				return getOne(currentUserId);
+			}
+		}
+		return null;
 	}
 
 	/**

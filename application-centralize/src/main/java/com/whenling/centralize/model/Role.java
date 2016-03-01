@@ -18,7 +18,6 @@ import javax.persistence.Table;
 
 import com.whenling.module.domain.model.BizEntity;
 import com.whenling.module.domain.model.Lockedable;
-import com.whenling.module.domain.model.User;
 
 /**
  * 角色实体类

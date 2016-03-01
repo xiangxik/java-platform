@@ -11,7 +11,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.whenling</groupId>
-			<artifactId>application-centralize</artifactId>
+			<artifactId>extension-cms</artifactId>
 			<version>1.0.0.RELEASE</version>
 		</dependency>
 	</dependencies>

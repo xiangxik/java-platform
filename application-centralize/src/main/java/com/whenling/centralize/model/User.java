@@ -1,4 +1,4 @@
-package com.whenling.module.domain.model;
+package com.whenling.centralize.model;
 
 import java.util.Date;
 
@@ -11,6 +11,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.whenling.module.domain.model.BizEntity;
+import com.whenling.module.domain.model.Lockedable;
 
 /**
  * 用户实体类

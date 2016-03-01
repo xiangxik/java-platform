@@ -28,7 +28,7 @@ import com.alibaba.fastjson.annotation.JSONType;
 @MappedSuperclass
 @EntityListeners(value = { TreeEntityListener.class })
 @JSONType(ignores = { "parent", "children" })
-public abstract class TreeEntity<I extends Serializable, U, T> extends BizEntity<U, I> implements Treeable<T> {
+public abstract class TreeEntity<U, I extends Serializable, T> extends SortEntity<U, I> implements Treeable<T> {
 
 	private static final long serialVersionUID = -8438302668847434698L;
 
@@ -42,18 +42,6 @@ public abstract class TreeEntity<I extends Serializable, U, T> extends BizEntity
 
 	@Column(length = 500)
 	private String treePath;
-
-	private Integer sortNo;
-
-	@Override
-	public Integer getSortNo() {
-		return sortNo;
-	}
-
-	@Override
-	public void setSortNo(Integer sortNo) {
-		this.sortNo = sortNo;
-	}
 
 	@Override
 	public T getParent() {

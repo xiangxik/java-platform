@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Sets;
 import com.whenling.centralize.model.Menu;
 import com.whenling.centralize.model.Role;
+import com.whenling.centralize.model.User;
 import com.whenling.centralize.model.UserRole;
 import com.whenling.centralize.service.MenuService;
 import com.whenling.centralize.service.RoleService;
@@ -24,7 +25,6 @@ import com.whenling.centralize.service.UserRoleService;
 import com.whenling.centralize.web.role.vo.RoleVo;
 import com.whenling.module.domain.model.Result;
 import com.whenling.module.domain.model.Tree;
-import com.whenling.module.domain.model.User;
 
 /**
  * 角色控制器

@@ -22,9 +22,9 @@ public class TreeEntityListener {
 	 * @param entity
 	 */
 	@PrePersist
-	public <I extends Serializable, U, T> void prePersist(TreeEntity<I, U, T> entity) {
+	public <U, I extends Serializable, T> void prePersist(TreeEntity<U, I, T> entity) {
 		@SuppressWarnings("unchecked")
-		TreeEntity<I, U, T> parent = (TreeEntity<I, U, T>) entity.getParent();
+		TreeEntity<U, I, T> parent = (TreeEntity<U, I, T>) entity.getParent();
 		if (parent != null) {
 			entity.setTreePath(parent.getTreePath() + parent.getId() + TREE_PATH_SEPARATOR);
 		} else {
@@ -37,9 +37,9 @@ public class TreeEntityListener {
 	 * @param entity
 	 */
 	@PreUpdate
-	public <I extends Serializable, U, T> void preUpdate(TreeEntity<I, U, T> entity) {
+	public <U, I extends Serializable, T> void preUpdate(TreeEntity<U, I, T> entity) {
 		@SuppressWarnings("unchecked")
-		TreeEntity<I, U, T> parent = (TreeEntity<I, U, T>) entity.getParent();
+		TreeEntity<U, I, T> parent = (TreeEntity<U, I, T>) entity.getParent();
 		if (parent != null) {
 			entity.setTreePath(parent.getTreePath() + parent.getId() + TREE_PATH_SEPARATOR);
 		} else {

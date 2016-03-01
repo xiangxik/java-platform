@@ -1,6 +1,5 @@
 package com.whenling.module.security;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -26,14 +25,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.google.common.collect.Maps;
 import com.whenling.module.security.shiro.AjaxAuthenticationFilter;
-import com.whenling.module.security.shiro.CurrentUserHandlerMethodArgumentResolver;
-import com.whenling.module.security.shiro.DatabaseRealm;
 
 import net.sf.ehcache.CacheManager;
 
@@ -84,7 +78,7 @@ public class SecurityConfiguration {
 		securityManager.setCacheManager(shiroCacheManager());
 		// securityManager.setSessionManager(sessionManager());
 		securityManager.setRememberMeManager(rememberMeManager());
-		securityManager.setRealm(databaseRealm());
+//		securityManager.setRealm(databaseRealm());
 		return securityManager;
 	}
 
@@ -145,11 +139,6 @@ public class SecurityConfiguration {
 		return factoryBean;
 	}
 
-	@Bean
-	public DatabaseRealm databaseRealm() {
-		return new DatabaseRealm();
-	}
-
 	@Bean(name = "lifecycleBeanPostProcessor")
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 		return new LifecycleBeanPostProcessor();
@@ -162,18 +151,4 @@ public class SecurityConfiguration {
 		return shiroCacheManager;
 	}
 
-	@Bean
-	public WebMvcConfigurer securityWebMvcConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-				argumentResolvers.add(currentUserHandlerMethodArgumentResolver());
-			}
-		};
-	}
-
-	@Bean
-	public HandlerMethodArgumentResolver currentUserHandlerMethodArgumentResolver() {
-		return new CurrentUserHandlerMethodArgumentResolver();
-	}
 }

@@ -18,7 +18,7 @@ import com.whenling.module.domain.model.TreeEntity;
  * @param <I>
  */
 @NoRepositoryBean
-public interface TreeRepository<T extends TreeEntity<I, ?, T>, I extends Serializable> extends BaseRepository<T, I> {
+public interface TreeRepository<T extends TreeEntity<?, I, T>, I extends Serializable> extends BaseRepository<T, I> {
 
 	List<T> findRoots();
 
