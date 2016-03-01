@@ -14,10 +14,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
-import com.whenling.extension.cms.model.TemplateFile;
-import com.whenling.extension.cms.service.TemplateService;
+import com.whenling.extension.cms.support.template.TemplateFile;
+import com.whenling.extension.cms.support.template.TemplateService;
 import com.whenling.module.domain.model.Result;
 
+/**
+ * 模板 控制器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:34:49
+ */
 @Controller
 @RequestMapping("/admin/template")
 public class TemplateController {

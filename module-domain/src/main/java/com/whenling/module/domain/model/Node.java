@@ -2,6 +2,14 @@ package com.whenling.module.domain.model;
 
 import java.util.List;
 
+/**
+ * 节点。一般用于树形
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午6:09:32
+ * @param <T>
+ */
 public class Node<T extends Treeable<T>> {
 
 	private T data;

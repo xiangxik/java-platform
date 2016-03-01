@@ -10,6 +10,13 @@ import com.whenling.module.domain.model.EntityVo;
 import com.whenling.module.domain.model.User;
 import com.whenling.module.domain.model.User.Sex;
 
+/**
+ * 用户值对象
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:33:10
+ */
 public class UserVo extends EntityVo<Long> {
 
 	@NotBlank

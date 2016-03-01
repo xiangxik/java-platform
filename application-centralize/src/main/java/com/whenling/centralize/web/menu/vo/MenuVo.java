@@ -9,6 +9,13 @@ import com.google.common.collect.Lists;
 import com.whenling.centralize.model.Menu;
 import com.whenling.module.domain.model.EntityVo;
 
+/**
+ * 菜单值对象
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:30:52
+ */
 public class MenuVo extends EntityVo<Long> {
 
 	@NotBlank

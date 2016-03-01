@@ -14,6 +14,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+/**
+ * 缓存配置
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:50:24
+ */
 @Configuration
 @EnableCaching
 public class CacheConfiguration implements CachingConfigurer {

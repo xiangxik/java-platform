@@ -10,6 +10,13 @@ import com.whenling.centralize.model.ExtensionEntity.Type;
 import com.whenling.centralize.repo.ExtensionRepository;
 import com.whenling.module.domain.service.BaseService;
 
+/**
+ * 模块扩展服务
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:29:26
+ */
 @Service
 public class ExtensionService extends BaseService<ExtensionEntity, Long> {
 

@@ -20,6 +20,13 @@ import com.whenling.centralize.web.menu.vo.MenuVo;
 import com.whenling.module.domain.model.Result;
 import com.whenling.module.domain.model.Tree;
 
+/**
+ * 菜单控制器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:31:00
+ */
 @Controller
 @RequestMapping("/admin/menu")
 public class MenuController {

@@ -8,6 +8,13 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import com.google.common.base.Objects;
 
+/**
+ * 属性工具
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:48:43
+ */
 public class PropertyUtil {
 
 	private static Map<Class<?>, PropertyDescriptor[]> propertyDescriptorCache = new HashMap<>();

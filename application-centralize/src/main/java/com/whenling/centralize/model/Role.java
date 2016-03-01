@@ -20,6 +20,13 @@ import com.whenling.module.domain.model.BizEntity;
 import com.whenling.module.domain.model.Lockedable;
 import com.whenling.module.domain.model.User;
 
+/**
+ * 角色实体类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:26:17
+ */
 @Entity
 @Table(name = "sys_role")
 public class Role extends BizEntity<User, Long> implements Lockedable {

@@ -1,5 +1,12 @@
 package com.whenling.module.domain.model;
 
+/**
+ * 可锁定的，如为true，则不可删除
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午6:09:00
+ */
 public interface Lockedable {
 	public boolean getLocked();
 

@@ -10,6 +10,13 @@ import com.google.common.collect.Lists;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.service.BaseService;
 
+/**
+ * 缓存的key生成器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:50:03
+ */
 public class BaseKeyGenerator extends SimpleKeyGenerator {
 
 	@Override

@@ -13,6 +13,15 @@ import com.whenling.module.base.util.ReflectHelper;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.repository.BaseRepository;
 
+/**
+ * 基础服务
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:04:45
+ * @param <T>
+ * @param <I>
+ */
 public class BaseService<T extends BaseEntity<I>, I extends Serializable> {
 
 	protected BaseRepository<T, I> baseRepository;

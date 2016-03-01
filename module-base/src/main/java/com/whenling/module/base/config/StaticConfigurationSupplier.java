@@ -17,6 +17,13 @@ import org.springframework.core.io.ClassPathResource;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * 静态配置，可覆盖，可引入xml、plist、properties类型的配置文件
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:47:40
+ */
 public class StaticConfigurationSupplier {
 	private static CombinedConfiguration CONFIGURATION;
 	private static List<String> _configLocations = new ArrayList<>();

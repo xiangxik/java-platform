@@ -15,6 +15,16 @@ import javax.persistence.OrderBy;
 
 import com.alibaba.fastjson.annotation.JSONType;
 
+/**
+ * 树形实体
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:02:23
+ * @param <I>
+ * @param <U>
+ * @param <T>
+ */
 @MappedSuperclass
 @EntityListeners(value = { TreeEntityListener.class })
 @JSONType(ignores = { "parent", "children" })

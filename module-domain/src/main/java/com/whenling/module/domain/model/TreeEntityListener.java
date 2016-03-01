@@ -5,6 +5,13 @@ import java.io.Serializable;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+/**
+ * 树形实体监听器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:02:31
+ */
 public class TreeEntityListener {
 
 	/** 树路径分隔符 */

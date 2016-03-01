@@ -21,6 +21,7 @@ import com.whenling.module.domain.model.User;
 import com.whenling.module.domain.model.User.Sex;
 
 /**
+ * 应用
  * 
  * @作者 孔祥溪
  * @博客 http://ken.whenling.com

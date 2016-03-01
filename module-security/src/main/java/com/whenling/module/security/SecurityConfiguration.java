@@ -31,9 +31,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.google.common.collect.Maps;
+import com.whenling.module.security.shiro.AjaxAuthenticationFilter;
+import com.whenling.module.security.shiro.CurrentUserHandlerMethodArgumentResolver;
+import com.whenling.module.security.shiro.DatabaseRealm;
 
 import net.sf.ehcache.CacheManager;
 
+/**
+ * 安全配置
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:08:55
+ */
 @Configuration
 public class SecurityConfiguration {
 

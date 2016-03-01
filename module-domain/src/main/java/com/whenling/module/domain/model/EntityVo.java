@@ -6,6 +6,14 @@ import javax.persistence.Transient;
 
 import org.springframework.util.ClassUtils;
 
+/**
+ * 实体值对象
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午6:08:48
+ * @param <ID>
+ */
 public class EntityVo<ID extends Serializable> {
 
 	private ID id;

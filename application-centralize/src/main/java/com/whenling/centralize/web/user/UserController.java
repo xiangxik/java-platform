@@ -27,6 +27,13 @@ import com.whenling.module.domain.model.Result;
 import com.whenling.module.domain.model.User;
 import com.whenling.module.security.CurrentUser;
 
+/**
+ * 用户控制器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:33:18
+ */
 @Controller
 @RequestMapping("/admin/user")
 public class UserController {

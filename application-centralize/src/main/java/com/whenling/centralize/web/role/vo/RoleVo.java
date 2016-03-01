@@ -6,6 +6,13 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.whenling.centralize.model.Role;
 import com.whenling.module.domain.model.EntityVo;
 
+/**
+ * 角色值对象
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:31:18
+ */
 public class RoleVo extends EntityVo<Long> {
 
 	@NotBlank

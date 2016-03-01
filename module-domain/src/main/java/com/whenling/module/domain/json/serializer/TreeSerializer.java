@@ -12,10 +12,17 @@ import com.google.common.base.Objects;
 import com.whenling.module.domain.model.Node;
 import com.whenling.module.domain.model.Tree;
 
+/**
+ * tree类型的解析器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:51:58
+ */
 public class TreeSerializer implements ObjectSerializer {
 
 	public static TreeSerializer instance = new TreeSerializer();
-	
+
 	@Override
 	public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
 			throws IOException {

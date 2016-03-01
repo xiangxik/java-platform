@@ -17,6 +17,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.ViewResolver;
 
+/**
+ * 视图配置
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:10:08
+ */
 @Configuration
 public class ViewConfiguration {
 

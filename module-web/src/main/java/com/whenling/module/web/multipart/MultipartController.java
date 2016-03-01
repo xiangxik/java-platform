@@ -19,8 +19,15 @@ import com.whenling.module.domain.model.Result;
 import com.whenling.module.web.multipart.model.FileEntity;
 import com.whenling.module.web.multipart.service.FileService;
 
+/**
+ * 附件控制器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:09:41
+ */
 @Controller
-@RequestMapping("${multipart.url}")
+@RequestMapping("${multipart.url?:/multipart}")
 public class MultipartController {
 
 	@Autowired

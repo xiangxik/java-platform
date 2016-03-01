@@ -12,6 +12,13 @@ import org.springframework.cache.interceptor.CacheResolver;
 import com.google.common.collect.Lists;
 import com.whenling.module.domain.service.BaseService;
 
+/**
+ * 缓存解析器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:50:31
+ */
 public class EhCacheCacheResolver implements CacheResolver {
 
 	private EhCacheCacheManager cacheManager;

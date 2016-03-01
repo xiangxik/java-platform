@@ -7,6 +7,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whenling.centralize.web.system.vo.AppInfo;
 
+/**
+ * 系统控制器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:31:35
+ */
 @Controller
 @RequestMapping("/appinfo")
 public class SystemController {

@@ -7,6 +7,14 @@ import javax.persistence.MappedSuperclass;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.util.ClassUtils;
 
+/**
+ * 实体基类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午6:08:27
+ * @param <ID>
+ */
 @MappedSuperclass
 public abstract class BaseEntity<ID extends Serializable> extends AbstractPersistable<ID> {
 

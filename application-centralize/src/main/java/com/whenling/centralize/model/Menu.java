@@ -8,6 +8,13 @@ import com.whenling.module.domain.model.Resourceable;
 import com.whenling.module.domain.model.TreeEntity;
 import com.whenling.module.domain.model.User;
 
+/**
+ * 菜单实体类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:26:03
+ */
 @Entity
 @Table(name = "sys_menu")
 public class Menu extends TreeEntity<Long, User, Menu> implements Resourceable {

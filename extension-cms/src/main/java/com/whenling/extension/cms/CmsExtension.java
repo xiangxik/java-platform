@@ -6,6 +6,13 @@ import com.whenling.centralize.Application;
 import com.whenling.centralize.Extension;
 import com.whenling.centralize.model.Menu;
 
+/**
+ * CMS扩展
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:34:59
+ */
 @Component
 public class CmsExtension extends Extension {
 

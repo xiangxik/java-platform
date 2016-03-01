@@ -15,6 +15,15 @@ import org.joda.time.DateTime;
 import org.springframework.data.domain.Auditable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/**
+ * 业务实体基类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午6:08:38
+ * @param <U>
+ * @param <ID>
+ */
 @MappedSuperclass
 @EntityListeners(value = { AuditingEntityListener.class })
 public abstract class BizEntity<U, ID extends Serializable> extends BaseEntity<ID> implements Auditable<U, ID> {

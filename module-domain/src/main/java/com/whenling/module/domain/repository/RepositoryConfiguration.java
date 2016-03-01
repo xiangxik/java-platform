@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
@@ -18,20 +17,26 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
+/**
+ * 仓库配置
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:03:51
+ */
 @Configuration
 @EnableJpaRepositories(basePackages = {
 		"com.whenling" }, repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class)
 @EnableJpaAuditing
-@PropertySource("classpath:/com/whenling/module/domain/config.properties")
 public class RepositoryConfiguration {
 
-	@Value("${jdbc.url}")
+	@Value("${jdbc.url?:jdbc:mysql://localhost:3306/platform?useUnicode=true&characterEncoding=utf-8}")
 	private String jdbcUrl;
 
-	@Value("${jdbc.username}")
+	@Value("${jdbc.username?:root}")
 	private String jdbcUsername;
 
-	@Value("${jdbc.password}")
+	@Value("${jdbc.password?:123456}")
 	private String jdbcPassword;
 
 	@Bean

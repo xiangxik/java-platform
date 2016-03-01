@@ -9,6 +9,13 @@ import javax.persistence.Table;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.model.User;
 
+/**
+ * 用户角色关联类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:26:25
+ */
 @Entity
 @Table(name = "sys_user_role")
 public class UserRole extends BaseEntity<Long> {

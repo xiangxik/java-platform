@@ -25,6 +25,8 @@
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>
 		<httpmime.version>4.5.1</httpmime.version>
+		<commons-io.version>2.4</commons-io.version>
+		<commons-configuration.version>1.10</commons-configuration.version>
 	</properties>
 
 	<dependencyManagement>
@@ -129,6 +131,17 @@
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpmime</artifactId>
 				<version>${httpmime.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-configuration</groupId>
+				<artifactId>commons-configuration</artifactId>
+				<version>${commons-configuration.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -240,9 +253,10 @@
 		<module>module-web</module>
 		<module>module-security</module>
 		<module>module-web-extjs</module>
+		<module>module-web-easyui</module>
+		<module>module-web-bootstrap</module>
 		<module>application-centralize</module>
 		<module>extension-cms</module>
 		<module>extension-mall</module>
-		<module>example-web</module>
 	</modules>
 </project>

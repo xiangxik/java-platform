@@ -11,8 +11,15 @@ import com.whenling.centralize.model.Menu;
 import com.whenling.module.domain.model.User;
 import com.whenling.module.domain.repository.UserRepository;
 import com.whenling.module.domain.service.BaseService;
-import com.whenling.module.security.DatabaseRealm;
+import com.whenling.module.security.shiro.DatabaseRealm;
 
+/**
+ * 用户服务
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:30:19
+ */
 @Service
 public class UserService extends BaseService<User, Long> {
 

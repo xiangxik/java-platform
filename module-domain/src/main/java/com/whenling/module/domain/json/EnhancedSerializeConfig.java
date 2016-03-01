@@ -6,6 +6,13 @@ import java.util.Map;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 
+/**
+ * 增强的序列化配置
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:51:01
+ */
 public class EnhancedSerializeConfig extends SerializeConfig {
 
 	private final static EnhancedSerializeConfig globalInstance = new EnhancedSerializeConfig();

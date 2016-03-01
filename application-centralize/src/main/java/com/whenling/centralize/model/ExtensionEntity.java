@@ -12,6 +12,13 @@ import javax.persistence.TemporalType;
 
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 扩展模块实体
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:25:26
+ */
 @Entity
 @Table(name = "sys_extension")
 public class ExtensionEntity extends BaseEntity<Long> {
@@ -110,6 +117,6 @@ public class ExtensionEntity extends BaseEntity<Long> {
 	}
 
 	public enum Type {
-		Application, Extension
+		Application, Extension, Module
 	}
 }

@@ -12,6 +12,16 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.util.ClassUtils;
 
+/**
+ * 自定义仓库工厂
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:03:20
+ * @param <R>
+ * @param <T>
+ * @param <I>
+ */
 public class CustomRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
 		extends JpaRepositoryFactoryBean<R, T, I> {
 	@Override

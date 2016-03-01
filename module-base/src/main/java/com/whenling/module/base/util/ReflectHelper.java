@@ -3,6 +3,13 @@ package com.whenling.module.base.util;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * 反射工具
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:48:51
+ */
 public class ReflectHelper {
 
 	@SuppressWarnings("unchecked")

@@ -7,6 +7,13 @@ import javax.persistence.Table;
 import com.whenling.module.domain.model.BizEntity;
 import com.whenling.module.domain.model.User;
 
+/**
+ * 文件实体
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:09:13
+ */
 @Entity
 @Table(name = "sys_file_entity")
 public class FileEntity extends BizEntity<User, Long> {

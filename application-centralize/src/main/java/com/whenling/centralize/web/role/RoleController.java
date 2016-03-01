@@ -26,6 +26,13 @@ import com.whenling.module.domain.model.Result;
 import com.whenling.module.domain.model.Tree;
 import com.whenling.module.domain.model.User;
 
+/**
+ * 角色控制器
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:31:10
+ */
 @Controller
 @RequestMapping("/admin/role")
 public class RoleController {

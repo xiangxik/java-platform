@@ -24,13 +24,20 @@ import com.google.common.io.Files;
 import com.whenling.module.web.multipart.model.FileEntity;
 import com.whenling.module.web.multipart.service.FileService;
 
+/**
+ * 附件服务实现类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:09:55
+ */
 @Component
 public class MultipartServiceImpl implements MultipartService {
 
 	@Autowired
 	private FileService fileService;
 
-	@Value("${multipart.saveDir}")
+	@Value("${multipart.saveDir?:/upload}")
 	private String saveDir;
 
 	@Autowired

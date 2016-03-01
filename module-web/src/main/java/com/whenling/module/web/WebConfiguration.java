@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.xml.transform.Source;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
@@ -17,8 +18,25 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.whenling.module.web.converter.FastjsonHttpMessageConverter;
+
+/**
+ * web配置
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午7:10:42
+ */
 @Component
 public class WebConfiguration extends WebMvcConfigurerAdapter {
+
+	@Autowired
+	private SerializeConfig serializeConfig;
+
+	@Autowired
+	private ParserConfig parserConfig;
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -46,6 +64,9 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		converters.add(new ResourceHttpMessageConverter());
 		converters.add(new SourceHttpMessageConverter<Source>());
 		converters.add(new AllEncompassingFormHttpMessageConverter());
+		FastjsonHttpMessageConverter fastjsonMessageConverter = new FastjsonHttpMessageConverter(serializeConfig,
+				parserConfig);
+		converters.add(fastjsonMessageConverter);
 	}
 
 }

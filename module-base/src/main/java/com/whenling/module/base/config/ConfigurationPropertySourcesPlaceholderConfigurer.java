@@ -17,6 +17,13 @@ import org.springframework.core.env.PropertySourcesPropertyResolver;
 import org.springframework.util.Assert;
 import org.springframework.util.StringValueResolver;
 
+/**
+ * 使用apache configuration作为spring的placeholder
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月1日 下午4:47:18
+ */
 public class ConfigurationPropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerSupport
 		implements EnvironmentAware {
 
@@ -62,6 +69,9 @@ public class ConfigurationPropertySourcesPlaceholderConfigurer extends Placehold
 					PropertySourcesPlaceholderConfigurer.LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME, configuration) {
 				@Override
 				public Object getProperty(String name) {
+					if (name != null && name.indexOf("?:") > 0) {
+						name = name.substring(0, name.indexOf("?:"));
+					}
 					return this.source.getProperty(name);
 				}
 			};
