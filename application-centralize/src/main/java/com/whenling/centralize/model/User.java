@@ -1,11 +1,16 @@
 package com.whenling.centralize.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +28,7 @@ import com.whenling.module.domain.model.Lockedable;
  */
 @Entity
 @Table(name = "sys_user")
-public class User extends BizEntity<User, Long> implements Lockedable {
+public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 
 	private static final long serialVersionUID = 2839091334861650994L;
 
@@ -60,11 +65,22 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 	@Temporal(TemporalType.DATE)
 	private Date birthday;
 
+	/** 地区名称 */
+	@Column
+	private String areaName;
+
+	/** 地区 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Area area;
+
 	@Column(nullable = false)
 	private boolean superAdmin = false;
 
 	@Column(nullable = false)
 	private boolean locked = false;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Set<UserRole> userRoles = new HashSet<>();
 
 	public enum Sex {
 		/** 男 */
@@ -159,6 +175,34 @@ public class User extends BizEntity<User, Long> implements Lockedable {
 	@Override
 	public void markLocked() {
 		this.locked = true;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	@Override
+	public Area getArea() {
+		return area;
+	}
+
+	@Override
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
+	@Override
+	public String getAreaName() {
+		return areaName;
+	}
+
+	@Override
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 
 }
