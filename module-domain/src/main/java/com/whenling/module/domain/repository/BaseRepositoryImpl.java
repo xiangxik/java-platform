@@ -41,4 +41,5 @@ public class BaseRepositoryImpl<T, I extends Serializable> extends SimpleJpaRepo
 
 		super.delete(entity);
 	}
+
 }

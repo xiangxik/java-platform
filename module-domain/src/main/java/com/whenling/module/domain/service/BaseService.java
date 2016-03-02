@@ -119,4 +119,5 @@ public class BaseService<T extends BaseEntity<I>, I extends Serializable> {
 	public Page<T> findAll(Pageable pageable) {
 		return baseRepository.findAll(pageable);
 	}
+
 }
