@@ -9,8 +9,15 @@ import javax.persistence.Table;
 
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 订单日志
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:20:42
+ */
 @Entity
-@Table(name = "xx_order_log")
+@Table(name = "mall_order_log")
 public class OrderLog extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -1890792953018301184L;

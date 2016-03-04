@@ -13,8 +13,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ConfigConfiguration {
+
 	@Bean
 	public static PlaceholderConfigurerSupport placeholderConfigurer() {
 		return new ConfigurationPropertySourcesPlaceholderConfigurer(StaticConfigurationSupplier.getConfiguration());
 	}
+
 }

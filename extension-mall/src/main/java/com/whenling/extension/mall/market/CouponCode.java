@@ -8,12 +8,20 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.order.model.Order;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 优惠码
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:18:46
+ */
 @Entity
 @Table(name = "mall_coupon_code")
 public class CouponCode extends BaseEntity<Long> {
@@ -93,4 +101,13 @@ public class CouponCode extends BaseEntity<Long> {
 		this.order = order;
 	}
 
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		if (getOrder() != null) {
+			getOrder().setCouponCode(null);
+		}
+	}
 }

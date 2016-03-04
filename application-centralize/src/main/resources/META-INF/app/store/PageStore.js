@@ -8,7 +8,7 @@ Ext.define("app.store.PageStore", {
 		var fields = entity.getFields();
 		var paths = [];
 		Ext.each(fields, function(field, index, array) {
-			paths.push(field.getName());
+			paths.push(field.getMapping()||field.getName());
 		});
 
 		if (!this.extraParams) {

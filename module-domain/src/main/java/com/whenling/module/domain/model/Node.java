@@ -17,6 +17,8 @@ public class Node<T extends Treeable<T>> {
 
 	private Boolean checked;
 
+	private Boolean expended;
+
 	public Boolean getLeaf() {
 		List<Node<T>> children = getChildren();
 		return children == null || children.size() == 0;
@@ -44,6 +46,14 @@ public class Node<T extends Treeable<T>> {
 
 	public void setChecked(Boolean checked) {
 		this.checked = checked;
+	}
+
+	public Boolean getExpended() {
+		return expended;
+	}
+
+	public void setExpended(Boolean expended) {
+		this.expended = expended;
 	}
 
 }

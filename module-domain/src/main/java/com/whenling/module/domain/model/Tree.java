@@ -21,5 +21,9 @@ public interface Tree<T extends Treeable<T>> {
 
 	boolean isCheckable();
 
+	boolean isExpandAll();
+
 	void makeCheckable();
+
+	void makeExpandAll();
 }

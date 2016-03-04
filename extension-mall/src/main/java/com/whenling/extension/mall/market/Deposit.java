@@ -16,8 +16,15 @@ import com.whenling.extension.mall.order.model.Order;
 import com.whenling.extension.mall.order.model.Payment;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 预存款
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:19:04
+ */
 @Entity
-@Table(name = "xx_deposit")
+@Table(name = "mall_deposit")
 public class Deposit extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -2680443359995313570L;

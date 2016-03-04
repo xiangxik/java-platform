@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -22,8 +23,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 退货单
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:36:53
+ */
 @Entity
-@Table(name = "xx_returns")
+@Table(name = "mall_returns")
 public class Returns extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -2934022855287717334L;
@@ -213,4 +221,21 @@ public class Returns extends BaseEntity<Long> {
 		this.returnsItems = returnsItems;
 	}
 
+	/**
+	 * 获取数量
+	 * 
+	 * @return 数量
+	 */
+	@Transient
+	public int getQuantity() {
+		int quantity = 0;
+		if (getReturnsItems() != null) {
+			for (ReturnsItem returnsItem : getReturnsItems()) {
+				if (returnsItem != null && returnsItem.getQuantity() != null) {
+					quantity += returnsItem.getQuantity();
+				}
+			}
+		}
+		return quantity;
+	}
 }

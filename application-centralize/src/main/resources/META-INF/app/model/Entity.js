@@ -1,5 +1,6 @@
 Ext.define("app.model.Entity", {
 	extend : "Ext.data.Model",
+	idProperty : "id",
 	constructor : function() {
 		var me = this;
 		this.callParent(arguments);
@@ -12,7 +13,7 @@ Ext.define("app.model.Entity", {
 			if (field.getName() == "id") {
 				hasIdField = true;
 			}
-			me.paths.push(field.getName());
+			me.paths.push(field.getMapping() || field.getName());
 		});
 
 		if (!hasIdField) {

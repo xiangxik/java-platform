@@ -7,8 +7,9 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -20,9 +21,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 会员等级
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:19:24
+ */
 @Entity
-@Table(name = "mall_member_rank")
-public class MemberRank extends BizEntity<User, Long> {
+@Table(name = "mall_rank")
+public class Rank extends BizEntity<User, Long> {
 
 	private static final long serialVersionUID = 2341049010731441027L;
 
@@ -56,7 +64,8 @@ public class MemberRank extends BizEntity<User, Long> {
 	private Boolean isSpecial;
 
 	/** 会员 */
-	@OneToMany(mappedBy = "memberRank", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "mall_user_rank")
 	private Set<User> users = new HashSet<User>();
 
 	/** 促销 */
@@ -118,5 +127,18 @@ public class MemberRank extends BizEntity<User, Long> {
 	public void setPromotions(Set<Promotion> promotions) {
 		this.promotions = promotions;
 	}
-	
+
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		Set<Promotion> promotions = getPromotions();
+		if (promotions != null) {
+			for (Promotion promotion : promotions) {
+				promotion.getMemberRanks().remove(this);
+			}
+		}
+	}
+
 }

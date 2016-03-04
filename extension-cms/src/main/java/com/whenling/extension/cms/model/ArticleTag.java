@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
@@ -14,6 +16,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 文章标签
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:17:28
+ */
 @Entity
 @Table(name = "cms_article_tag")
 public class ArticleTag extends SortEntity<User, Long> {
@@ -35,6 +44,7 @@ public class ArticleTag extends SortEntity<User, Long> {
 	private String memo;
 
 	/** 文章 */
+	@ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
 	private Set<Article> articles = new HashSet<Article>();
 
 	public String getName() {

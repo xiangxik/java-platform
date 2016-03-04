@@ -3,8 +3,10 @@ package com.whenling.extension.mall.market;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,11 +16,14 @@ import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -26,6 +31,13 @@ import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.order.model.Order;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 优惠券
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:18:37
+ */
 @Entity
 @Table(name = "mall_coupon")
 public class Coupon extends BizEntity<User, Long> {
@@ -231,4 +243,74 @@ public class Coupon extends BizEntity<User, Long> {
 		this.orders = orders;
 	}
 
+	/**
+	 * 判断是否已开始
+	 * 
+	 * @return 是否已开始
+	 */
+	@Transient
+	public boolean hasBegun() {
+		return getBeginDate() == null || new Date().after(getBeginDate());
+	}
+
+	/**
+	 * 判断是否已过期
+	 * 
+	 * @return 是否已过期
+	 */
+	@Transient
+	public boolean hasExpired() {
+		return getEndDate() != null && new Date().after(getEndDate());
+	}
+
+	/**
+	 * 计算优惠价格
+	 * 
+	 * @param quantity
+	 *            商品数量
+	 * @param price
+	 *            商品价格
+	 * @return 优惠价格
+	 */
+	@Transient
+	public BigDecimal calculatePrice(Integer quantity, BigDecimal price) {
+		if (price == null || StringUtils.isEmpty(getPriceExpression())) {
+			return price;
+		}
+		BigDecimal result = new BigDecimal(0);
+		// try {
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("quantity", quantity);
+		model.put("price", price);
+		// result = new BigDecimal(FreemarkerUtils.process("#{(" +
+		// getPriceExpression() + ");M50}", model));
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// // } catch (TemplateException e) {
+		// // e.printStackTrace();
+		// }
+		if (result.compareTo(price) > 0) {
+			return price;
+		}
+		return result.compareTo(new BigDecimal(0)) > 0 ? result : new BigDecimal(0);
+	}
+
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		Set<Promotion> promotions = getPromotions();
+		if (promotions != null) {
+			for (Promotion promotion : promotions) {
+				promotion.getCoupons().remove(this);
+			}
+		}
+		List<Order> orders = getOrders();
+		if (orders != null) {
+			for (Order order : orders) {
+				order.getCoupons().remove(this);
+			}
+		}
+	}
 }

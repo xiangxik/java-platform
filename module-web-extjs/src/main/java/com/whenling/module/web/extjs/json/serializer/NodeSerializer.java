@@ -3,6 +3,7 @@ package com.whenling.module.web.extjs.json.serializer;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,7 +14,9 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.google.common.collect.Iterables;
+import com.whenling.module.domain.json.IncludesPropertyPreFilter;
 import com.whenling.module.domain.model.Node;
+import com.whenling.module.domain.model.Treeable;
 
 /**
  * node类型的解析器
@@ -57,10 +60,39 @@ public class NodeSerializer implements ObjectSerializer {
 			out.write(",");
 		}
 
+		if (node.getExpended() != null) {
+			out.writeFieldName("expended");
+			out.write(node.getExpended());
+			out.write(",");
+		}
+
 		List<? extends SerializeFilter> serializeFilters = serializer.getPropertyPreFilters();
-		String dataString = serializeFilters == null ? JSON.toJSONString(node.getData(), serializeConfig)
-				: JSON.toJSONString(node.getData(), serializeConfig,
-						Iterables.toArray(serializeFilters, SerializeFilter.class));
+
+		Object data = node.getData();
+		if (data != null && data instanceof Treeable && serializeFilters != null && serializeFilters.size() > 0) {
+			boolean parentProcess = false;
+			for (SerializeFilter filter : serializeFilters) {
+				if (filter instanceof IncludesPropertyPreFilter) {
+					Set<String> includes = ((IncludesPropertyPreFilter) filter).getIncludes();
+					parentProcess = includes.contains("parent");
+					if (parentProcess) {
+						break;
+					}
+				}
+			}
+			if (parentProcess) {
+				Object parent = ((Treeable<?>) data).getParent();
+				if (parent != null) {
+					out.writeFieldName("parent");
+					out.write(JSON.toJSONString(parent, serializeConfig,
+							Iterables.toArray(serializeFilters, SerializeFilter.class)));
+					out.write(",");
+				}
+			}
+		}
+
+		String dataString = serializeFilters == null ? JSON.toJSONString(data, serializeConfig)
+				: JSON.toJSONString(data, serializeConfig, Iterables.toArray(serializeFilters, SerializeFilter.class));
 		dataString = StringUtils.substring(dataString, 1);
 		out.write(dataString);
 	}

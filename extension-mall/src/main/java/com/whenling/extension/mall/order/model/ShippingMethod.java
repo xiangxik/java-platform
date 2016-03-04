@@ -23,8 +23,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 发货方式
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:37:36
+ */
 @Entity
-@Table(name = "xx_shipping_method")
+@Table(name = "mall_shipping_method")
 public class ShippingMethod extends SortEntity<User, Long> {
 
 	private static final long serialVersionUID = 2140664776248108321L;

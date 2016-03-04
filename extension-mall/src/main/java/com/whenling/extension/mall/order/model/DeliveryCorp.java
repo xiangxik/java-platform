@@ -16,8 +16,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 物流公司
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:20:04
+ */
 @Entity
-@Table(name = "xx_delivery_corp")
+@Table(name = "mall_delivery_corp")
 public class DeliveryCorp extends SortEntity<User, Long> {
 
 	private static final long serialVersionUID = -3801676722604675533L;

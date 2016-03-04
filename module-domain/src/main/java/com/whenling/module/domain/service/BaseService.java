@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ResolvableType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.whenling.module.base.util.ReflectHelper;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.repository.BaseRepository;
 
@@ -22,7 +22,7 @@ import com.whenling.module.domain.repository.BaseRepository;
  * @param <T>
  * @param <I>
  */
-public class BaseService<T extends BaseEntity<I>, I extends Serializable> {
+public abstract class BaseService<T extends BaseEntity<I>, I extends Serializable> {
 
 	protected BaseRepository<T, I> baseRepository;
 	protected final Class<T> entityClass;
@@ -32,8 +32,10 @@ public class BaseService<T extends BaseEntity<I>, I extends Serializable> {
 		this.baseRepository = baseRepository;
 	}
 
+	@SuppressWarnings("unchecked")
 	public BaseService() {
-		entityClass = ReflectHelper.findParameterizedType(getClass(), 0);
+		ResolvableType resolvableType = ResolvableType.forClass(getClass());
+		entityClass = (Class<T>) resolvableType.as(BaseService.class).getGeneric(0).resolve();
 	}
 
 	public T newEntity() {

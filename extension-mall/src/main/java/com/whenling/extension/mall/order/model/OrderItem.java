@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -18,8 +19,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.extension.mall.product.model.Product;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 订单项
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:20:34
+ */
 @Entity
-@Table(name = "xx_order_item")
+@Table(name = "mall_order_item")
 public class OrderItem extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -7877769490006596996L;
@@ -174,5 +182,33 @@ public class OrderItem extends BaseEntity<Long> {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	/**
+	 * 获取商品总重量
+	 * 
+	 * @return 商品总重量
+	 */
+	@Transient
+	public int getTotalWeight() {
+		if (getWeight() != null && getQuantity() != null) {
+			return getWeight() * getQuantity();
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * 获取小计
+	 * 
+	 * @return 小计
+	 */
+	@Transient
+	public BigDecimal getSubtotal() {
+		if (getPrice() != null && getQuantity() != null) {
+			return getPrice().multiply(new BigDecimal(getQuantity()));
+		} else {
+			return new BigDecimal(0);
+		}
 	}
 }

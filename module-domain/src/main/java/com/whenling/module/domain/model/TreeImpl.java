@@ -16,6 +16,7 @@ public class TreeImpl<T extends Treeable<T>> implements Tree<T> {
 	private List<Node<T>> roots;
 	private Set<T> checked;
 	private boolean checkable = false;
+	private boolean expendAll = false;
 
 	public TreeImpl(List<Node<T>> roots) {
 		this.roots = roots;
@@ -44,6 +45,16 @@ public class TreeImpl<T extends Treeable<T>> implements Tree<T> {
 	@Override
 	public void makeCheckable() {
 		this.checkable = true;
+	}
+
+	@Override
+	public void makeExpandAll() {
+		this.expendAll = true;
+	}
+
+	@Override
+	public boolean isExpandAll() {
+		return expendAll;
 	}
 
 }

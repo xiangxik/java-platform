@@ -1,6 +1,7 @@
 Ext.define("app.view.main.Center", {
 	extend : "Ext.tab.Panel",
 	alias : "widget.maincenter",
+	id : "maincenter",
 	uses : [ "app.view.main.HomePage" ],
 	requires : [ "Ext.ux.TabReorderer", "Ext.ux.TabCloseMenu" ],
 	plugins : [ {
