@@ -3,8 +3,10 @@ package com.whenling.extension.mall.market;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,11 +18,13 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -31,6 +35,13 @@ import com.whenling.extension.mall.product.model.Product;
 import com.whenling.extension.mall.product.model.ProductCategory;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 促销
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:18:58
+ */
 @Entity
 @Table(name = "mall_promotion")
 public class Promotion extends SortEntity<User, Long> {
@@ -98,7 +109,7 @@ public class Promotion extends SortEntity<User, Long> {
 	/** 允许参加会员等级 */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "mall_promotion_member_rank")
-	private Set<MemberRank> memberRanks = new HashSet<MemberRank>();
+	private Set<Rank> memberRanks = new HashSet<Rank>();
 
 	/** 允许参与商品分类 */
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -229,11 +240,11 @@ public class Promotion extends SortEntity<User, Long> {
 		this.introduction = introduction;
 	}
 
-	public Set<MemberRank> getMemberRanks() {
+	public Set<Rank> getMemberRanks() {
 		return memberRanks;
 	}
 
-	public void setMemberRanks(Set<MemberRank> memberRanks) {
+	public void setMemberRanks(Set<Rank> memberRanks) {
 		this.memberRanks = memberRanks;
 	}
 
@@ -277,4 +288,90 @@ public class Promotion extends SortEntity<User, Long> {
 		this.giftItems = giftItems;
 	}
 
+	/**
+	 * 判断是否已开始
+	 * 
+	 * @return 是否已开始
+	 */
+	@Transient
+	public boolean hasBegun() {
+		return getBeginDate() == null || new Date().after(getBeginDate());
+	}
+
+	/**
+	 * 判断是否已结束
+	 * 
+	 * @return 是否已结束
+	 */
+	@Transient
+	public boolean hasEnded() {
+		return getEndDate() != null && new Date().after(getEndDate());
+	}
+
+	/**
+	 * 计算促销价格
+	 * 
+	 * @param quantity
+	 *            商品数量
+	 * @param price
+	 *            商品价格
+	 * @return 促销价格
+	 */
+	@Transient
+	public BigDecimal calculatePrice(Integer quantity, BigDecimal price) {
+		if (price == null || StringUtils.isEmpty(getPriceExpression())) {
+			return price;
+		}
+		BigDecimal result = new BigDecimal(0);
+		// try {
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("quantity", quantity);
+		model.put("price", price);
+		// result = new BigDecimal(FreemarkerUtils.process("#{(" +
+		// getPriceExpression() + ");M50}", model));
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// } catch (TemplateException e) {
+		// e.printStackTrace();
+		// }
+		if (result.compareTo(price) > 0) {
+			return price;
+		}
+		return result.compareTo(new BigDecimal(0)) > 0 ? result : new BigDecimal(0);
+	}
+
+	/**
+	 * 计算促销赠送积分
+	 * 
+	 * @param quantity
+	 *            商品数量
+	 * @param point
+	 *            赠送积分
+	 * @return 促销赠送积分
+	 */
+	@Transient
+	public Long calculatePoint(Integer quantity, Long point) {
+		if (point == null || StringUtils.isEmpty(getPointExpression())) {
+			return point;
+		}
+		Long result = 0L;
+		// try {
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("quantity", quantity);
+		model.put("point", point);
+		// result = Double.valueOf(FreemarkerUtils.process("#{(" +
+		// getPointExpression() + ");M50}", model))
+		// .longValue();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// } catch (TemplateException e) {
+		// e.printStackTrace();
+		// } catch (NumberFormatException e) {
+		// e.printStackTrace();
+		// }
+		if (result < point) {
+			return point;
+		}
+		return result > 0L ? result : 0L;
+	}
 }

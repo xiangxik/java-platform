@@ -13,7 +13,7 @@ Ext.define("app.store.TreeStore", {
 		var paths = [];
 		Ext.each(fields, function(field, index, array) {
 			if (Ext.Array.indexOf(excludes, field.getName()) < 0) {
-				paths.push(field.getName());
+				paths.push(field.getMapping()||field.getName());
 			}
 		});
 

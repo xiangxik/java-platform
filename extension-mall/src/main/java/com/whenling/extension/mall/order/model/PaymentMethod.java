@@ -24,8 +24,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 付款方式
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:21:03
+ */
 @Entity
-@Table(name = "xx_payment_method")
+@Table(name = "mall_payment_method")
 public class PaymentMethod extends SortEntity<User, Long> {
 
 	private static final long serialVersionUID = 6511870140312147868L;
@@ -72,7 +79,7 @@ public class PaymentMethod extends SortEntity<User, Long> {
 
 	/** 支持配送方式 */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "xx_payment_shipping_method")
+	@JoinTable(name = "mall_payment_shipping_method")
 	@OrderBy("order asc")
 	private Set<ShippingMethod> shippingMethods = new HashSet<ShippingMethod>();
 

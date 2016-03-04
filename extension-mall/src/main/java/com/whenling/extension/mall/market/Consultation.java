@@ -20,6 +20,13 @@ import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.product.model.Product;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 咨询
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:18:23
+ */
 @Entity
 @Table(name = "mall_consultation")
 public class Consultation extends BaseEntity<Long> {

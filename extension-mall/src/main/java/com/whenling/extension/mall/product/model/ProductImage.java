@@ -10,6 +10,13 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 商品图片
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:49:10
+ */
 @Embeddable
 public class ProductImage implements Serializable, Comparable<ProductImage> {
 
@@ -94,6 +101,7 @@ public class ProductImage implements Serializable, Comparable<ProductImage> {
 		this.file = file;
 	}
 
+	@Transient
 	public boolean isEmpty() {
 		return (getFile() == null || getFile().isEmpty())
 				&& (StringUtils.isEmpty(getSource()) || StringUtils.isEmpty(getLarge())

@@ -11,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -22,8 +24,15 @@ import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.market.Deposit;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 收款单
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:20:51
+ */
 @Entity
-@Table(name = "xx_payment")
+@Table(name = "mall_payment")
 public class Payment extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -2758327971395017062L;
@@ -294,4 +303,34 @@ public class Payment extends BaseEntity<Long> {
 		this.order = order;
 	}
 
+	/**
+	 * 获取有效金额
+	 * 
+	 * @return 有效金额
+	 */
+	@Transient
+	public BigDecimal getEffectiveAmount() {
+		BigDecimal effectiveAmount = getAmount().subtract(getFee());
+		return effectiveAmount.compareTo(new BigDecimal(0)) > 0 ? effectiveAmount : new BigDecimal(0);
+	}
+
+	/**
+	 * 判断是否已过期
+	 * 
+	 * @return 是否已过期
+	 */
+	@Transient
+	public boolean hasExpired() {
+		return getExpire() != null && new Date().after(getExpire());
+	}
+
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		if (getDeposit() != null) {
+			getDeposit().setPayment(null);
+		}
+	}
 }

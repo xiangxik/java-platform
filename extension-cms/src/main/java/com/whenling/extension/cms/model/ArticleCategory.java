@@ -15,8 +15,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.TreeEntity;
 
+/**
+ * 文章分类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:17:19
+ */
 @Entity
-@Table(name = "xx_article_category")
+@Table(name = "cms_article_category")
 public class ArticleCategory extends TreeEntity<User, Long, ArticleCategory> {
 
 	private static final long serialVersionUID = -3664321932012445026L;

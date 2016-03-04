@@ -1,257 +1,274 @@
 /**
- * A Picker field that contains a tree panel on its popup, enabling selection of tree nodes.
+ * A Picker field that contains a tree panel on its popup, enabling selection of
+ * tree nodes.
  */
 Ext.define('Ext.ux.TreePicker', {
-    extend: 'Ext.form.field.Picker',
-    xtype: 'treepicker',
-    
-    uses: [
-        'Ext.tree.Panel'
-    ],
+	extend : 'Ext.form.field.Picker',
+	xtype : 'treepicker',
 
-    triggerCls: Ext.baseCSSPrefix + 'form-arrow-trigger',
+	uses : [ 'Ext.tree.Panel' ],
 
-    config: {
-        /**
-         * @cfg {Ext.data.TreeStore} store
-         * A tree store that the tree picker will be bound to
-         */
-        store: null,
+	triggerCls : Ext.baseCSSPrefix + 'form-arrow-trigger',
 
-        /**
-         * @cfg {String} displayField
-         * The field inside the model that will be used as the node's text.
-         * Defaults to the default value of {@link Ext.tree.Panel}'s `displayField` configuration.
-         */
-        displayField: null,
+	config : {
+		/**
+		 * @cfg {Ext.data.TreeStore} store A tree store that the tree picker
+		 *      will be bound to
+		 */
+		store : null,
 
-        /**
-         * @cfg {Array} columns
-         * An optional array of columns for multi-column trees
-         */
-        columns: null,
+		/**
+		 * @cfg {String} displayField The field inside the model that will be
+		 *      used as the node's text. Defaults to the default value of
+		 *      {@link Ext.tree.Panel}'s `displayField` configuration.
+		 */
+		displayField : null,
 
-        /**
-         * @cfg {Boolean} selectOnTab
-         * Whether the Tab key should select the currently highlighted item. Defaults to `true`.
-         */
-        selectOnTab: true,
+		/**
+		 * @cfg {Array} columns An optional array of columns for multi-column
+		 *      trees
+		 */
+		columns : null,
 
-        /**
-         * @cfg {Number} maxPickerHeight
-         * The maximum height of the tree dropdown. Defaults to 300.
-         */
-        maxPickerHeight: 300,
+		/**
+		 * @cfg {Boolean} selectOnTab Whether the Tab key should select the
+		 *      currently highlighted item. Defaults to `true`.
+		 */
+		selectOnTab : true,
 
-        /**
-         * @cfg {Number} minPickerHeight
-         * The minimum height of the tree dropdown. Defaults to 100.
-         */
-        minPickerHeight: 100
-    },
-   
-    editable: false,
+		/**
+		 * @cfg {Number} maxPickerHeight The maximum height of the tree
+		 *      dropdown. Defaults to 300.
+		 */
+		maxPickerHeight : 300,
 
-    /**
-     * @event select
-     * Fires when a tree node is selected
-     * @param {Ext.ux.TreePicker} picker        This tree picker
-     * @param {Ext.data.Model} record           The selected record
-     */
+		/**
+		 * @cfg {Number} minPickerHeight The minimum height of the tree
+		 *      dropdown. Defaults to 100.
+		 */
+		minPickerHeight : 100,
 
-    initComponent: function() {
-        var me = this;
+		rootVisible : false
+	},
 
-        me.callParent(arguments);
+	editable : false,
 
-        me.mon(me.store, {
-            scope: me,
-            load: me.onLoad,
-            update: me.onUpdate
-        });
-    },
+	/**
+	 * @event select Fires when a tree node is selected
+	 * @param {Ext.ux.TreePicker}
+	 *            picker This tree picker
+	 * @param {Ext.data.Model}
+	 *            record The selected record
+	 */
 
-    /**
-     * Creates and returns the tree panel to be used as this field's picker.
-     */
-    createPicker: function() {
-        var me = this,
-            picker = new Ext.tree.Panel({
-                shrinkWrapDock: 2,
-                store: me.store,
-                floating: true,
-                displayField: me.displayField,
-                columns: me.columns,
-                minHeight: me.minPickerHeight,
-                maxHeight: me.maxPickerHeight,
-                manageHeight: false,
-                shadow: false,
-                listeners: {
-                    scope: me,
-                    itemclick: me.onItemClick
-                },
-                viewConfig: {
-                    listeners: {
-                        scope: me,
-                        render: me.onViewRender
-                    }
-                }
-            }),
-            view = picker.getView();
+	initComponent : function() {
+		var me = this;
 
-        if (Ext.isIE9 && Ext.isStrict) {
-            // In IE9 strict mode, the tree view grows by the height of the horizontal scroll bar when the items are highlighted or unhighlighted.
-            // Also when items are collapsed or expanded the height of the view is off. Forcing a repaint fixes the problem.
-            view.on({
-                scope: me,
-                highlightitem: me.repaintPickerView,
-                unhighlightitem: me.repaintPickerView,
-                afteritemexpand: me.repaintPickerView,
-                afteritemcollapse: me.repaintPickerView
-            });
-        }
-        return picker;
-    },
-    
-    onViewRender: function(view){
-        view.getEl().on('keypress', this.onPickerKeypress, this);
-    },
+		me.callParent(arguments);
 
-    /**
-     * repaints the tree view
-     */
-    repaintPickerView: function() {
-        var style = this.picker.getView().getEl().dom.style;
+		me.mon(me.store, {
+			scope : me,
+			load : me.onLoad,
+			update : me.onUpdate
+		});
+	},
 
-        // can't use Element.repaint because it contains a setTimeout, which results in a flicker effect
-        style.display = style.display;
-    },
+	/**
+	 * Creates and returns the tree panel to be used as this field's picker.
+	 */
+	createPicker : function() {
+		var me = this, picker = new Ext.tree.Panel({
+			shrinkWrapDock : 2,
+			store : me.store,
+			floating : true,
+			displayField : me.displayField,
+			columns : me.columns,
+			minHeight : me.minPickerHeight,
+			maxHeight : me.maxPickerHeight,
+			manageHeight : false,
+			shadow : false,
+			rootVisible : me.rootVisible,
+			listeners : {
+				scope : me,
+				itemclick : me.onItemClick
+			},
+			viewConfig : {
+				listeners : {
+					scope : me,
+					render : me.onViewRender
+				}
+			}
+		}), view = picker.getView();
 
-    /**
-     * Handles a click even on a tree node
-     * @private
-     * @param {Ext.tree.View} view
-     * @param {Ext.data.Model} record
-     * @param {HTMLElement} node
-     * @param {Number} rowIndex
-     * @param {Ext.event.Event} e
-     */
-    onItemClick: function(view, record, node, rowIndex, e) {
-        this.selectItem(record);
-    },
+		if (Ext.isIE9 && Ext.isStrict) {
+			// In IE9 strict mode, the tree view grows by the height of the
+			// horizontal scroll bar when the items are highlighted or
+			// unhighlighted.
+			// Also when items are collapsed or expanded the height of the view
+			// is off. Forcing a repaint fixes the problem.
+			view.on({
+				scope : me,
+				highlightitem : me.repaintPickerView,
+				unhighlightitem : me.repaintPickerView,
+				afteritemexpand : me.repaintPickerView,
+				afteritemcollapse : me.repaintPickerView
+			});
+		}
+		return picker;
+	},
 
-    /**
-     * Handles a keypress event on the picker element
-     * @private
-     * @param {Ext.event.Event} e
-     * @param {HTMLElement} el
-     */
-    onPickerKeypress: function(e, el) {
-        var key = e.getKey();
+	onViewRender : function(view) {
+		view.getEl().on('keypress', this.onPickerKeypress, this);
+	},
 
-        if(key === e.ENTER || (key === e.TAB && this.selectOnTab)) {
-            this.selectItem(this.picker.getSelectionModel().getSelection()[0]);
-        }
-    },
+	/**
+	 * repaints the tree view
+	 */
+	repaintPickerView : function() {
+		var style = this.picker.getView().getEl().dom.style;
 
-    /**
-     * Changes the selection to a given record and closes the picker
-     * @private
-     * @param {Ext.data.Model} record
-     */
-    selectItem: function(record) {
-        var me = this;
-        me.setValue(record.getId());
-        me.fireEvent('select', me, record);
-        me.collapse();
-    },
+		// can't use Element.repaint because it contains a setTimeout, which
+		// results in a flicker effect
+		style.display = style.display;
+	},
 
-    /**
-     * Runs when the picker is expanded.  Selects the appropriate tree node based on the value of the input element,
-     * and focuses the picker so that keyboard navigation will work.
-     * @private
-     */
-    onExpand: function() {
-        var me = this,
-            picker = me.picker,
-            store = picker.store,
-            value = me.value,
-            node;
+	/**
+	 * Handles a click even on a tree node
+	 * 
+	 * @private
+	 * @param {Ext.tree.View}
+	 *            view
+	 * @param {Ext.data.Model}
+	 *            record
+	 * @param {HTMLElement}
+	 *            node
+	 * @param {Number}
+	 *            rowIndex
+	 * @param {Ext.event.Event}
+	 *            e
+	 */
+	onItemClick : function(view, record, node, rowIndex, e) {
+		this.selectItem(record);
+	},
 
-        
-        if (value) {
-            node = store.getNodeById(value);
-        }
-        
-        if (!node) {
-            node = store.getRoot();
-        }
-        
-        picker.selectPath(node.getPath());
-    },
+	/**
+	 * Handles a keypress event on the picker element
+	 * 
+	 * @private
+	 * @param {Ext.event.Event}
+	 *            e
+	 * @param {HTMLElement}
+	 *            el
+	 */
+	onPickerKeypress : function(e, el) {
+		var key = e.getKey();
 
-    /**
-     * Sets the specified value into the field
-     * @param {Mixed} value
-     * @return {Ext.ux.TreePicker} this
-     */
-    setValue: function(value) {
-        var me = this,
-            record;
+		if (key === e.ENTER || (key === e.TAB && this.selectOnTab)) {
+			this.selectItem(this.picker.getSelectionModel().getSelection()[0]);
+		}
+	},
 
-        me.value = value;
+	/**
+	 * Changes the selection to a given record and closes the picker
+	 * 
+	 * @private
+	 * @param {Ext.data.Model}
+	 *            record
+	 */
+	selectItem : function(record) {
+		var me = this;
+		me.setValue(record.getId());
+		me.fireEvent('select', me, record);
+		me.collapse();
+	},
 
-        if (me.store.loading) {
-            // Called while the Store is loading. Ensure it is processed by the onLoad method.
-            return me;
-        }
-            
-        // try to find a record in the store that matches the value
-        record = value ? me.store.getNodeById(value) : me.store.getRoot();
-        if (value === undefined) {
-            record = me.store.getRoot();
-            me.value = record.getId();
-        } else {
-            record = me.store.getNodeById(value);
-        }
+	/**
+	 * Runs when the picker is expanded. Selects the appropriate tree node based
+	 * on the value of the input element, and focuses the picker so that
+	 * keyboard navigation will work.
+	 * 
+	 * @private
+	 */
+	onExpand : function() {
+		var me = this, picker = me.picker, store = picker.store, value = me.value, node;
 
-        // set the raw value to the record's display field if a record was found
-        me.setRawValue(record ? record.get(me.displayField) : '');
+		if (value) {
+			node = store.getNodeById(value);
+		}
 
-        return me;
-    },
-    
-    getSubmitValue: function(){
-        return this.value;    
-    },
+		if (!node) {
+			node = store.getRoot();
+		}
 
-    /**
-     * Returns the current data value of the field (the idProperty of the record)
-     * @return {Number}
-     */
-    getValue: function() {
-        return this.value;
-    },
+		picker.selectPath(node.getPath());
+	},
 
-    /**
-     * Handles the store's load event.
-     * @private
-     */
-    onLoad: function() {
-        var value = this.value;
+	/**
+	 * Sets the specified value into the field
+	 * 
+	 * @param {Mixed}
+	 *            value
+	 * @return {Ext.ux.TreePicker} this
+	 */
+	setValue : function(value) {
+		var me = this, record;
 
-        if (value) {
-            this.setValue(value);
-        }
-    },
-    
-    onUpdate: function(store, rec, type, modifiedFieldNames){
-        var display = this.displayField;
-        
-        if (type === 'edit' && modifiedFieldNames && Ext.Array.contains(modifiedFieldNames, display) && this.value === rec.getId()) {
-            this.setRawValue(rec.get(display));
-        }
-    }
+		me.value = value;
+
+		if (me.store.loading) {
+			// Called while the Store is loading. Ensure it is processed by the
+			// onLoad method.
+			return me;
+		}
+
+		// try to find a record in the store that matches the value
+		record = value ? me.store.getNodeById(value) : me.store.getRoot();
+		if (value === undefined) {
+			record = me.store.getRoot();
+			me.value = record.getId();
+		} else {
+			record = me.store.getNodeById(value);
+		}
+
+		// set the raw value to the record's display field if a record was found
+		me.setRawValue(record ? record.get(me.displayField) : '');
+
+		return me;
+	},
+
+	getSubmitValue : function() {
+		return this.value;
+	},
+
+	/**
+	 * Returns the current data value of the field (the idProperty of the
+	 * record)
+	 * 
+	 * @return {Number}
+	 */
+	getValue : function() {
+		return this.value;
+	},
+
+	/**
+	 * Handles the store's load event.
+	 * 
+	 * @private
+	 */
+	onLoad : function() {
+		var value = this.value;
+
+		if (value) {
+			this.setValue(value);
+		}
+	},
+
+	onUpdate : function(store, rec, type, modifiedFieldNames) {
+		var display = this.displayField;
+
+		if (type === 'edit' && modifiedFieldNames && Ext.Array.contains(modifiedFieldNames, display) && this.value === rec.getId()) {
+			this.setRawValue(rec.get(display));
+		}
+	}
 
 });
-

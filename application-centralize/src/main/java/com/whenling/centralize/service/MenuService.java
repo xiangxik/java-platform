@@ -1,8 +1,10 @@
 package com.whenling.centralize.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.whenling.centralize.model.Menu;
+import com.whenling.centralize.repo.MenuRepository;
 import com.whenling.module.domain.service.TreeService;
 
 /**
@@ -15,4 +17,10 @@ import com.whenling.module.domain.service.TreeService;
 @Service
 public class MenuService extends TreeService<Menu, Long> {
 
+	@Autowired
+	private MenuRepository menuRepository;
+
+	public Menu findByCode(String code) {
+		return menuRepository.findByCode(code);
+	}
 }

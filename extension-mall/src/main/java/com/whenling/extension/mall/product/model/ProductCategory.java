@@ -5,11 +5,14 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PreRemove;
+import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,6 +21,15 @@ import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.market.Promotion;
 import com.whenling.module.domain.model.TreeEntity;
 
+/**
+ * 商品分类
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:47:47
+ */
+@Entity
+@Table(name = "mall_product_category")
 public class ProductCategory extends TreeEntity<User, Long, ProductCategory> {
 
 	private static final long serialVersionUID = 2865111397278035659L;
@@ -48,7 +60,7 @@ public class ProductCategory extends TreeEntity<User, Long, ProductCategory> {
 
 	/** 筛选品牌 */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "xx_product_category_brand")
+	@JoinTable(name = "mall_product_category_brand")
 	@OrderBy("sortNo asc")
 	private Set<Brand> brands = new HashSet<Brand>();
 
@@ -136,6 +148,19 @@ public class ProductCategory extends TreeEntity<User, Long, ProductCategory> {
 
 	public void setPromotions(Set<Promotion> promotions) {
 		this.promotions = promotions;
+	}
+
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		Set<Promotion> promotions = getPromotions();
+		if (promotions != null) {
+			for (Promotion promotion : promotions) {
+				promotion.getProductCategories().remove(this);
+			}
+		}
 	}
 
 }

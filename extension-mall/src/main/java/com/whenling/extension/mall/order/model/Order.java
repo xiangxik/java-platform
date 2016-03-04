@@ -20,7 +20,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -32,16 +36,27 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.Area;
 import com.whenling.centralize.model.Areable;
 import com.whenling.centralize.model.User;
+import com.whenling.extension.mall.MallSetting;
 import com.whenling.extension.mall.market.Coupon;
 import com.whenling.extension.mall.market.CouponCode;
 import com.whenling.extension.mall.market.Deposit;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 订单
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:20:26
+ */
 @Entity
-@Table(name = "xx_order")
+@Table(name = "mall_order")
 public class Order extends BizEntity<User, Long> implements Areable {
 
 	private static final long serialVersionUID = -8159429771441170371L;
+
+	/** 订单名称分隔符 */
+	private static final String NAME_SEPARATOR = " ";
 
 	/**
 	 * 订单状态
@@ -256,7 +271,7 @@ public class Order extends BizEntity<User, Long> implements Areable {
 
 	/** 优惠券 */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "xx_order_coupon")
+	@JoinTable(name = "mall_order_coupon")
 	private List<Coupon> coupons = new ArrayList<Coupon>();
 
 	/** 订单项 */
@@ -613,5 +628,269 @@ public class Order extends BizEntity<User, Long> implements Areable {
 
 	public void setReturns(Set<Returns> returns) {
 		this.returns = returns;
+	}
+
+	/**
+	 * 获取订单名称
+	 * 
+	 * @return 订单名称
+	 */
+	@Transient
+	public String getName() {
+		StringBuffer name = new StringBuffer();
+		if (getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null && orderItem.getFullName() != null) {
+					name.append(NAME_SEPARATOR).append(orderItem.getFullName());
+				}
+			}
+			if (name.length() > 0) {
+				name.deleteCharAt(0);
+			}
+		}
+		return name.toString();
+	}
+
+	/**
+	 * 获取商品重量
+	 * 
+	 * @return 商品重量
+	 */
+	@Transient
+	public int getWeight() {
+		int weight = 0;
+		if (getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null) {
+					weight += orderItem.getTotalWeight();
+				}
+			}
+		}
+		return weight;
+	}
+
+	/**
+	 * 获取商品数量
+	 * 
+	 * @return 商品数量
+	 */
+	@Transient
+	public int getQuantity() {
+		int quantity = 0;
+		if (getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null && orderItem.getQuantity() != null) {
+					quantity += orderItem.getQuantity();
+				}
+			}
+		}
+		return quantity;
+	}
+
+	/**
+	 * 获取已发货数量
+	 * 
+	 * @return 已发货数量
+	 */
+	@Transient
+	public int getShippedQuantity() {
+		int shippedQuantity = 0;
+		if (getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null && orderItem.getShippedQuantity() != null) {
+					shippedQuantity += orderItem.getShippedQuantity();
+				}
+			}
+		}
+		return shippedQuantity;
+	}
+
+	/**
+	 * 获取已退货数量
+	 * 
+	 * @return 已退货数量
+	 */
+	@Transient
+	public int getReturnQuantity() {
+		int returnQuantity = 0;
+		if (getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null && orderItem.getReturnQuantity() != null) {
+					returnQuantity += orderItem.getReturnQuantity();
+				}
+			}
+		}
+		return returnQuantity;
+	}
+
+	/**
+	 * 获取商品价格
+	 * 
+	 * @return 商品价格
+	 */
+	@Transient
+	public BigDecimal getPrice() {
+		BigDecimal price = new BigDecimal(0);
+		if (getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null && orderItem.getSubtotal() != null) {
+					price = price.add(orderItem.getSubtotal());
+				}
+			}
+		}
+		return price;
+	}
+
+	/**
+	 * 获取订单金额
+	 * 
+	 * @return 订单金额
+	 */
+	@Transient
+	public BigDecimal getAmount() {
+		BigDecimal amount = getPrice();
+		if (getFee() != null) {
+			amount = amount.add(getFee());
+		}
+		if (getFreight() != null) {
+			amount = amount.add(getFreight());
+		}
+		if (getPromotionDiscount() != null) {
+			amount = amount.subtract(getPromotionDiscount());
+		}
+		if (getCouponDiscount() != null) {
+			amount = amount.subtract(getCouponDiscount());
+		}
+		if (getOffsetAmount() != null) {
+			amount = amount.add(getOffsetAmount());
+		}
+		if (getTax() != null) {
+			amount = amount.add(getTax());
+		}
+		return amount.compareTo(new BigDecimal(0)) > 0 ? amount : new BigDecimal(0);
+	}
+
+	/**
+	 * 获取应付金额
+	 * 
+	 * @return 应付金额
+	 */
+	@Transient
+	public BigDecimal getAmountPayable() {
+		BigDecimal amountPayable = getAmount().subtract(getAmountPaid());
+		return amountPayable.compareTo(new BigDecimal(0)) > 0 ? amountPayable : new BigDecimal(0);
+	}
+
+	/**
+	 * 是否已过期
+	 * 
+	 * @return 是否已过期
+	 */
+	@Transient
+	public boolean isExpired() {
+		return getExpire() != null && new Date().after(getExpire());
+	}
+
+	/**
+	 * 获取订单项
+	 * 
+	 * @param sn
+	 *            商品编号
+	 * @return 订单项
+	 */
+	@Transient
+	public OrderItem getOrderItem(String sn) {
+		if (sn != null && getOrderItems() != null) {
+			for (OrderItem orderItem : getOrderItems()) {
+				if (orderItem != null && sn.equalsIgnoreCase(orderItem.getSn())) {
+					return orderItem;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 判断是否已锁定
+	 * 
+	 * @param operator
+	 *            操作员
+	 * @return 是否已锁定
+	 */
+	@Transient
+	public boolean isLocked(User operator) {
+		return getLockExpire() != null && new Date().before(getLockExpire())
+				&& ((operator != null && !operator.equals(getOperator()))
+						|| (operator == null && getOperator() != null));
+	}
+
+	/**
+	 * 计算税金
+	 * 
+	 * @return 税金
+	 */
+	@Transient
+	public BigDecimal calculateTax() {
+		BigDecimal tax = new BigDecimal(0);
+		MallSetting setting = MallSetting.get();
+		if (setting.getIsTaxPriceEnabled()) {
+			BigDecimal amount = getPrice();
+			if (getPromotionDiscount() != null) {
+				amount = amount.subtract(getPromotionDiscount());
+			}
+			if (getCouponDiscount() != null) {
+				amount = amount.subtract(getCouponDiscount());
+			}
+			if (getOffsetAmount() != null) {
+				amount = amount.add(getOffsetAmount());
+			}
+			tax = amount.multiply(new BigDecimal(setting.getTaxRate().toString()));
+		}
+		return setting.setScale(tax);
+	}
+
+	/**
+	 * 持久化前处理
+	 */
+	@PrePersist
+	public void prePersist() {
+		if (getArea() != null) {
+			setAreaName(getArea().getFullName());
+		}
+		if (getPaymentMethod() != null) {
+			setPaymentMethodName(getPaymentMethod().getName());
+		}
+		if (getShippingMethod() != null) {
+			setShippingMethodName(getShippingMethod().getName());
+		}
+	}
+
+	/**
+	 * 更新前处理
+	 */
+	@PreUpdate
+	public void preUpdate() {
+		if (getArea() != null) {
+			setAreaName(getArea().getFullName());
+		}
+		if (getPaymentMethod() != null) {
+			setPaymentMethodName(getPaymentMethod().getName());
+		}
+		if (getShippingMethod() != null) {
+			setShippingMethodName(getShippingMethod().getName());
+		}
+	}
+
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		Set<Deposit> deposits = getDeposits();
+		if (deposits != null) {
+			for (Deposit deposit : deposits) {
+				deposit.setOrder(null);
+			}
+		}
 	}
 }

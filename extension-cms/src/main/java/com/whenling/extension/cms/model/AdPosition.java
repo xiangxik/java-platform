@@ -20,6 +20,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 广告位
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:17:01
+ */
 @Entity
 @Table(name = "cms_ad_position")
 public class AdPosition extends BizEntity<User, Long> {

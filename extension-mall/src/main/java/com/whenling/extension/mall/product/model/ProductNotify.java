@@ -14,6 +14,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 到货通知
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:49:22
+ */
 @Entity
 @Table(name = "mall_product_notify")
 public class ProductNotify extends BaseEntity<Long> {

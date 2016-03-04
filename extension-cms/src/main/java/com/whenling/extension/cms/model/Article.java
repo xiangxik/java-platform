@@ -32,8 +32,15 @@ import org.jsoup.nodes.TextNode;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 文章
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:17:09
+ */
 @Entity
-@Table(name = "sys_article")
+@Table(name = "cms_article")
 public class Article extends BizEntity<User, Long> {
 
 	private static final long serialVersionUID = 8004745715001630351L;

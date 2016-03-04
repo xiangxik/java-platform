@@ -11,5 +11,5 @@ import com.whenling.module.domain.repository.TreeRepository;
  * @创建时间 2016年3月1日 下午4:26:53
  */
 public interface MenuRepository extends TreeRepository<Menu, Long> {
-
+	Menu findByCode(String code);
 }

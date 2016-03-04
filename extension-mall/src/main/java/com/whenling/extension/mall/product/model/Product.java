@@ -1,5 +1,6 @@
 package com.whenling.extension.mall.product.model;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -22,28 +24,63 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.market.Consultation;
-import com.whenling.extension.mall.market.MemberRank;
+import com.whenling.extension.mall.market.Rank;
 import com.whenling.extension.mall.market.Promotion;
 import com.whenling.extension.mall.market.Review;
 import com.whenling.extension.mall.order.model.OrderItem;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 商品
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:48:59
+ */
 @Entity
 @Table(name = "mall_product")
 public class Product extends BizEntity<User, Long> {
 
 	private static final long serialVersionUID = 1L;
+
+	/** 点击数缓存名称 */
+	public static final String HITS_CACHE_NAME = "productHits";
+
+	/** 点击数缓存更新间隔时间 */
+	public static final int HITS_CACHE_INTERVAL = 600000;
+
+	/** 商品属性值属性个数 */
+	public static final int ATTRIBUTE_VALUE_PROPERTY_COUNT = 20;
+
+	/** 商品属性值属性名称前缀 */
+	public static final String ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX = "attributeValue";
+
+	/** 全称规格前缀 */
+	public static final String FULL_NAME_SPECIFICATION_PREFIX = "[";
+
+	/** 全称规格后缀 */
+	public static final String FULL_NAME_SPECIFICATION_SUFFIX = "]";
+
+	/** 全称规格分隔符 */
+	public static final String FULL_NAME_SPECIFICATION_SEPARATOR = " ";
 
 	/**
 	 * 排序类型
@@ -409,7 +446,7 @@ public class Product extends BizEntity<User, Long> {
 	/** 会员价 */
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "mall_product_member_price")
-	private Map<MemberRank, BigDecimal> memberPrice = new HashMap<MemberRank, BigDecimal>();
+	private Map<Rank, BigDecimal> memberPrice = new HashMap<Rank, BigDecimal>();
 
 	/** 参数值 */
 	@ElementCollection(fetch = FetchType.LAZY)
@@ -984,11 +1021,11 @@ public class Product extends BizEntity<User, Long> {
 		this.productNotifies = productNotifies;
 	}
 
-	public Map<MemberRank, BigDecimal> getMemberPrice() {
+	public Map<Rank, BigDecimal> getMemberPrice() {
 		return memberPrice;
 	}
 
-	public void setMemberPrice(Map<MemberRank, BigDecimal> memberPrice) {
+	public void setMemberPrice(Map<Rank, BigDecimal> memberPrice) {
 		this.memberPrice = memberPrice;
 	}
 
@@ -1000,4 +1037,241 @@ public class Product extends BizEntity<User, Long> {
 		this.parameterValue = parameterValue;
 	}
 
+	/**
+	 * 获取商品属性值
+	 * 
+	 * @param attribute
+	 *            商品属性
+	 * @return 商品属性值
+	 */
+	@Transient
+	public String getAttributeValue(Attribute attribute) {
+		if (attribute != null && attribute.getPropertyIndex() != null) {
+			try {
+				String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + attribute.getPropertyIndex();
+				return (String) PropertyUtils.getProperty(this, propertyName);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 设置商品属性值
+	 * 
+	 * @param attribute
+	 *            商品属性
+	 * @param value
+	 *            商品属性值
+	 */
+	@Transient
+	public void setAttributeValue(Attribute attribute, String value) {
+		if (attribute != null && attribute.getPropertyIndex() != null) {
+			if (StringUtils.isEmpty(value)) {
+				value = null;
+			}
+			if (value == null || (attribute.getOptions() != null && attribute.getOptions().contains(value))) {
+				try {
+					String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + attribute.getPropertyIndex();
+					PropertyUtils.setProperty(this, propertyName, value);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	/**
+	 * 获取同货品商品
+	 * 
+	 * @return 同货品商品，不包含自身
+	 */
+	@Transient
+	public List<Product> getSiblings() {
+		List<Product> siblings = new ArrayList<Product>();
+		if (getGoods() != null && getGoods().getProducts() != null) {
+			for (Product product : getGoods().getProducts()) {
+				if (!this.equals(product)) {
+					siblings.add(product);
+				}
+			}
+		}
+		return siblings;
+	}
+
+	/**
+	 * 获取访问路径
+	 * 
+	 * @return 访问路径
+	 */
+	@JsonProperty
+	@Transient
+	public String getPath() {
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("id", getId());
+		model.put("createDate", getCreatedDate());
+		model.put("modifyDate", getLastModifiedDate());
+		model.put("sn", getSn());
+		model.put("name", getName());
+		model.put("fullName", getFullName());
+		model.put("seoTitle", getSeoTitle());
+		model.put("seoKeywords", getSeoKeywords());
+		model.put("seoDescription", getSeoDescription());
+		model.put("productCategory", getProductCategory());
+		// try {
+		// return FreemarkerUtils.process(staticPath, model);
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// } catch (TemplateException e) {
+		// e.printStackTrace();
+		// }
+		return null;
+	}
+
+	/**
+	 * 获取缩略图
+	 * 
+	 * @return 缩略图
+	 */
+	@JsonProperty
+	@Transient
+	public String getThumbnail() {
+		if (getProductImages() != null && !getProductImages().isEmpty()) {
+			return getProductImages().get(0).getThumbnail();
+		}
+		return null;
+	}
+
+	/**
+	 * 获取有效促销
+	 * 
+	 * @return 有效促销
+	 */
+	@Transient
+	public Set<Promotion> getValidPromotions() {
+		Set<Promotion> allPromotions = new HashSet<Promotion>();
+		if (getPromotions() != null) {
+			allPromotions.addAll(getPromotions());
+		}
+		if (getProductCategory() != null && getProductCategory().getPromotions() != null) {
+			allPromotions.addAll(getProductCategory().getPromotions());
+		}
+		if (getBrand() != null && getBrand().getPromotions() != null) {
+			allPromotions.addAll(getBrand().getPromotions());
+		}
+		Set<Promotion> validPromotions = new TreeSet<Promotion>();
+		for (Promotion promotion : allPromotions) {
+			if (promotion != null && promotion.hasBegun() && !promotion.hasEnded() && promotion.getMemberRanks() != null
+					&& !promotion.getMemberRanks().isEmpty()) {
+				validPromotions.add(promotion);
+			}
+		}
+		return validPromotions;
+	}
+
+	/**
+	 * 获取可用库存
+	 * 
+	 * @return 可用库存
+	 */
+	@Transient
+	public Integer getAvailableStock() {
+		Integer availableStock = null;
+		if (getStock() != null && getAllocatedStock() != null) {
+			availableStock = getStock() - getAllocatedStock();
+			if (availableStock < 0) {
+				availableStock = 0;
+			}
+		}
+		return availableStock;
+	}
+
+	/**
+	 * 获取是否缺货
+	 * 
+	 * @return 是否缺货
+	 */
+	@Transient
+	public Boolean getIsOutOfStock() {
+		return getStock() != null && getAllocatedStock() != null && getAllocatedStock() >= getStock();
+	}
+
+	/**
+	 * 判断促销是否有效
+	 * 
+	 * @param promotion
+	 *            促销
+	 * @return 促销是否有效
+	 */
+	@Transient
+	public boolean isValid(Promotion promotion) {
+		if (promotion == null || !promotion.hasBegun() || promotion.hasEnded() || promotion.getMemberRanks() == null
+				|| promotion.getMemberRanks().isEmpty()) {
+			return false;
+		}
+		if (getValidPromotions().contains(promotion)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		// Set<User> favoriteUsers = getFavoriteUsers();
+		// if (favoriteUsers != null) {
+		// for (User favoriteMember : favoriteUsers) {
+		// favoriteMember.getFavoriteProducts().remove(this);
+		// }
+		// }
+		Set<Promotion> promotions = getPromotions();
+		if (promotions != null) {
+			for (Promotion promotion : promotions) {
+				promotion.getProducts().remove(this);
+			}
+		}
+		Set<OrderItem> orderItems = getOrderItems();
+		if (orderItems != null) {
+			for (OrderItem orderItem : orderItems) {
+				orderItem.setProduct(null);
+			}
+		}
+	}
+
+	/**
+	 * 持久化前处理
+	 */
+	@PrePersist
+	public void prePersist() {
+		if (getStock() == null) {
+			setAllocatedStock(0);
+		}
+		setScore(0F);
+	}
+
+	/**
+	 * 更新前处理
+	 */
+	@PreUpdate
+	public void preUpdate() {
+		if (getStock() == null) {
+			setAllocatedStock(0);
+		}
+		if (getTotalScore() != null && getScoreCount() != null && getScoreCount() != 0) {
+			setScore((float) getTotalScore() / getScoreCount());
+		} else {
+			setScore(0F);
+		}
+	}
 }

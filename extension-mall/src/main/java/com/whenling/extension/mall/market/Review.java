@@ -17,8 +17,15 @@ import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.product.model.Product;
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 评论
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:19:41
+ */
 @Entity
-@Table(name = "xx_review")
+@Table(name = "mall_review")
 public class Review extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -6605617011633585395L;

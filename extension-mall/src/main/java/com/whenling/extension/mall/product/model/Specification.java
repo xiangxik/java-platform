@@ -24,6 +24,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 规格
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:49:43
+ */
 @Entity
 @Table(name = "mall_specification")
 public class Specification extends SortEntity<User, Long> {

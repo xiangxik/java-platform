@@ -1,7 +1,9 @@
 package com.whenling.extension.mall.order.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +13,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 快递单模板
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:20:17
+ */
+@Entity
+@Table(name = "mall_delivery_template")
 public class DeliveryTemplate extends BizEntity<User, Long> {
 
 	private static final long serialVersionUID = -6209123182805019824L;

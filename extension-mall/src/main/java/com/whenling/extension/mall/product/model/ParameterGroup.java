@@ -21,6 +21,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 参数组
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:48:50
+ */
 @Entity
 @Table(name = "mall_parameter_group")
 public class ParameterGroup extends SortEntity<User, Long> {

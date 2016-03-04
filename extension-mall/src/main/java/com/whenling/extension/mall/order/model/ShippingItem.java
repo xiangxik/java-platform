@@ -13,8 +13,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 发货项
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:37:26
+ */
 @Entity
-@Table(name = "xx_shipping_item")
+@Table(name = "mall_shipping_item")
 public class ShippingItem extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 4883958012370518864L;

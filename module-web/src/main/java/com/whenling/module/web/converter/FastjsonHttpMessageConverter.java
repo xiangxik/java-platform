@@ -38,6 +38,7 @@ import com.whenling.module.base.util.PropertyUtil;
 import com.whenling.module.domain.json.IncludesPropertyPreFilter;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.model.Node;
+import com.whenling.module.domain.model.Tree;
 
 /**
  * fastjson转换器
@@ -129,7 +130,15 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 		}
 
 		if (revisePaths.size() > 0) {
-			propertyFilters.put(beanClass, new IncludesPropertyPreFilter(beanClass, revisePaths));
+			PropertyPreFilter preFilter = propertyFilters.get(beanClass);
+			if (preFilter != null) {
+				if (preFilter instanceof IncludesPropertyPreFilter) {
+					((IncludesPropertyPreFilter) preFilter).getIncludes().addAll(revisePaths);
+				}
+			} else {
+				propertyFilters.put(beanClass, new IncludesPropertyPreFilter(beanClass, revisePaths));
+			}
+
 		}
 
 		if (references.size() > 0) {
@@ -162,6 +171,10 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 
 		if (value instanceof Node) {
 			return filterClass(((Node<?>) value).getData());
+		}
+
+		if (value instanceof Tree) {
+			return filterClass(((Tree<?>) value).getRoots());
 		}
 		return null;
 	}

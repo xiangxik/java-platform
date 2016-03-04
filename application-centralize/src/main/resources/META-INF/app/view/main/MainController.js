@@ -1,6 +1,9 @@
 Ext.define("app.view.main.MainController", {
 	extend : "Ext.app.ViewController",
 	alias : "controller.main",
+	mixins : {
+		center : "app.view.main.CenterController"
+	},
 	loadUserReference : function() {
 		var westNav = this.getView().down("mainwestnav");
 		westNav.removeAll(true);
@@ -13,10 +16,10 @@ Ext.define("app.view.main.MainController", {
 				var text = response.responseText;
 				var reference = Ext.decode(text, true);
 
-				if(reference.user) {
+				if (reference.user) {
 					vm.set("user", reference.user);
 				}
-				
+
 				Ext.each(reference.menus, function(menu, index, sets) {
 					westNav.add({
 						title : menu.text,
@@ -34,25 +37,8 @@ Ext.define("app.view.main.MainController", {
 	},
 	onMenuTreeItemClick : function(tree, item) {
 		if (item.isLeaf()) {
-			this.addViewToCenter(item.data);
+			this.menuToCenter(item.data);
 		}
-	},
-	addViewToCenter : function(menu) {
-		var view = this.getView().down("maincenter");
-		var tabId = menu.code;
-		var tab = view.down("> panel#" + tabId);
-		if (!tab) {
-			var config = {};
-			if (menu.config) {
-				Ext.apply(config, menu.config);
-			}
-			config.closable = true;
-			config.id = tabId;
-			config.title = menu.text;
-			config.iconCls = menu.iconCls;
-			tab = view.add(Ext.create(menu.view, config));
-		}
-		view.setActiveTab(tab);
 	},
 	onLoginSubmit : function(button) {
 		var me = this;

@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -143,4 +144,28 @@ public class Brand extends SortEntity<User, Long> {
 		this.promotions = promotions;
 	}
 
+	/**
+	 * 删除前处理
+	 */
+	@PreRemove
+	public void preRemove() {
+		Set<Product> products = getProducts();
+		if (products != null) {
+			for (Product product : products) {
+				product.setBrand(null);
+			}
+		}
+		Set<ProductCategory> productCategories = getProductCategories();
+		if (productCategories != null) {
+			for (ProductCategory productCategory : productCategories) {
+				productCategory.getBrands().remove(this);
+			}
+		}
+		Set<Promotion> promotions = getPromotions();
+		if (promotions != null) {
+			for (Promotion promotion : promotions) {
+				promotion.getBrands().remove(this);
+			}
+		}
+	}
 }

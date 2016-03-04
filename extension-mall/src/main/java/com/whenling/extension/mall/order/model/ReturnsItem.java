@@ -13,8 +13,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.whenling.module.domain.model.BaseEntity;
 
+/**
+ * 退货项
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:37:04
+ */
 @Entity
-@Table(name = "xx_returns_item")
+@Table(name = "mall_returns_item")
 public class ReturnsItem extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -3077717937333049473L;

@@ -13,8 +13,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 友情链接
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:17:36
+ */
 @Entity
-@Table(name = "xx_friend_link")
+@Table(name = "cms_friend_link")
 public class FriendLink extends SortEntity<User, Long> {
 
 	private static final long serialVersionUID = 3564806473801955355L;

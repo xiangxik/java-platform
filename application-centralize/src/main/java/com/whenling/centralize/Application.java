@@ -169,6 +169,10 @@ public class Application implements ApplicationContextAware {
 		return menuService.save(menu);
 	}
 
+	public Menu findMenuByCode(String code) {
+		return menuService.findByCode(code);
+	}
+
 	public String getAuthor() {
 		return "ken";
 	}

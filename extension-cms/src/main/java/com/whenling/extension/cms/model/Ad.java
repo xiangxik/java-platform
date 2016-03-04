@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -19,6 +20,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 广告
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:16:47
+ */
 @Entity
 @Table(name = "cms_ad")
 public class Ad extends SortEntity<User, Long> {
@@ -126,5 +134,25 @@ public class Ad extends SortEntity<User, Long> {
 
 	public void setAdPosition(AdPosition adPosition) {
 		this.adPosition = adPosition;
+	}
+
+	/**
+	 * 判断是否已开始
+	 * 
+	 * @return 是否已开始
+	 */
+	@Transient
+	public boolean hasBegun() {
+		return getBeginDate() == null || new Date().after(getBeginDate());
+	}
+
+	/**
+	 * 判断是否已结束
+	 * 
+	 * @return 是否已结束
+	 */
+	@Transient
+	public boolean hasEnded() {
+		return getEndDate() != null && new Date().after(getEndDate());
 	}
 }

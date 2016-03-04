@@ -37,7 +37,20 @@ public class TreeSerializer implements ObjectSerializer {
 			visit(tree.getRoots(), tree.getChecked());
 		}
 
+		if (tree.isExpandAll()) {
+			expanedAll(tree.getRoots());
+		}
+
 		serializer.write(tree.getRoots());
+	}
+
+	private void expanedAll(List<? extends Node<?>> nodes) {
+		if (nodes != null) {
+			for (Node<?> node : nodes) {
+				node.setExpended(true);
+				expanedAll(node.getChildren());
+			}
+		}
 	}
 
 	private void visit(List<? extends Node<?>> nodes, Set<?> checked) {

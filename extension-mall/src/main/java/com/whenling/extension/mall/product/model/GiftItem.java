@@ -6,7 +6,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -22,7 +21,7 @@ import com.whenling.module.domain.model.BizEntity;
  * @创建时间 2016年3月1日 下午8:47:12
  */
 @Entity
-@Table(name = "xx_gift_item", uniqueConstraints = { @UniqueConstraint(columnNames = { "gift", "promotion" }) })
+@Table(name = "mall_gift_item")
 public class GiftItem extends BizEntity<User, Long> {
 
 	private static final long serialVersionUID = -7880947368809161057L;

@@ -16,6 +16,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 商品标签
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:49:34
+ */
 @Entity
 @Table(name = "cms_product_tag")
 public class ProductTag extends SortEntity<User, Long> {

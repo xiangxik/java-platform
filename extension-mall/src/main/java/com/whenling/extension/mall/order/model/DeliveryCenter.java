@@ -15,6 +15,13 @@ import com.whenling.centralize.model.Areable;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.BizEntity;
 
+/**
+ * 发货点
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:19:51
+ */
 @Entity
 @Table(name = "mall_delivery_center")
 public class DeliveryCenter extends BizEntity<User, Long> implements Areable {

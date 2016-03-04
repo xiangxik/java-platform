@@ -13,8 +13,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
 
+/**
+ * 导航
+ * 
+ * @作者 孔祥溪
+ * @博客 http://ken.whenling.com
+ * @创建时间 2016年3月2日 下午4:17:47
+ */
 @Entity
-@Table(name = "xx_navigation")
+@Table(name = "cms_navigation")
 public class Navigation extends SortEntity<User, Long> {
 
 	private static final long serialVersionUID = -3446258081640040419L;
