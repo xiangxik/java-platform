@@ -15,6 +15,11 @@ Ext.define("app.view.mall.product.ProductCategory", {
 		dataIndex : "name",
 		flex : 3
 	}, {
+		xtype : "gridcolumn",
+		text : "图标",
+		dataIndex : "iconPath",
+		flex : 2
+	}, {
 		text : "操作",
 		xtype : "actioncolumn",
 		flex : 1,

@@ -35,9 +35,10 @@ Ext.define("app.view.mall.product.Product", {
 		falseText : "否"
 	}, {
 		text : "创建日期",
-		dataIndex : "createdDate",
 		xtype : 'datecolumn',
-		format : 'Y年m月d日',
+		format : 'Y年m月d日 H:i:s',
+		dataIndex : "createdDate",
+		width: 140
 	}, {
 		text : "操作",
 		xtype : "actioncolumn",

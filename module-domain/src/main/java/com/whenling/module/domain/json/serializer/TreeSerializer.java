@@ -38,17 +38,17 @@ public class TreeSerializer implements ObjectSerializer {
 		}
 
 		if (tree.isExpandAll()) {
-			expanedAll(tree.getRoots());
+			expandAll(tree.getRoots());
 		}
 
 		serializer.write(tree.getRoots());
 	}
 
-	private void expanedAll(List<? extends Node<?>> nodes) {
+	private void expandAll(List<? extends Node<?>> nodes) {
 		if (nodes != null) {
 			for (Node<?> node : nodes) {
-				node.setExpended(true);
-				expanedAll(node.getChildren());
+				node.setExpanded(true);
+				expandAll(node.getChildren());
 			}
 		}
 	}

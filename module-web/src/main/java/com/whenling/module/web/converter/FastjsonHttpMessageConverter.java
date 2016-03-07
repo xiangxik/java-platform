@@ -35,8 +35,10 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Sets;
 import com.whenling.module.base.util.PropertyUtil;
+import com.whenling.module.domain.json.ExcludesPropertyPreFilter;
 import com.whenling.module.domain.json.IncludesPropertyPreFilter;
 import com.whenling.module.domain.model.BaseEntity;
+import com.whenling.module.domain.model.BizEntity;
 import com.whenling.module.domain.model.Node;
 import com.whenling.module.domain.model.Tree;
 
@@ -54,6 +56,8 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 	private SerializeConfig serializeConfig;
 
 	private ParserConfig parserConfig;
+
+	private static final Map<Class<?>, PropertyPreFilter> DEFAULT_PREFILTERS = new HashMap<>();
 
 	public FastjsonHttpMessageConverter(SerializeConfig serializeConfig, ParserConfig parserConfig) {
 		super(MediaType.APPLICATION_JSON_UTF8, new MediaType("application", "*+json", DEFAULT_CHARSET));
@@ -86,10 +90,11 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 		if (requestAttributes instanceof ServletRequestAttributes) {
-			String[] paths = ((ServletRequestAttributes) requestAttributes).getRequest().getParameterValues("paths");
-			if (paths != null && paths.length > 0) {
-				Class<?> rootClass = filterClass(obj);
-				if (rootClass != null) {
+			Class<?> rootClass = filterClass(obj);
+			if (rootClass != null) {
+				String[] paths = ((ServletRequestAttributes) requestAttributes).getRequest()
+						.getParameterValues("paths");
+				if (paths != null && paths.length > 0) {
 					rootClass = ClassUtils.getUserClass(rootClass);
 					Map<Class<?>, PropertyPreFilter> propertyFilters = new HashMap<>();
 					pathVisit(propertyFilters, Sets.newHashSet(paths), rootClass);
@@ -97,12 +102,28 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 					for (Entry<Class<?>, PropertyPreFilter> entry : propertyFilters.entrySet()) {
 						serializer.getPropertyPreFilters().add(entry.getValue());
 					}
+				} else {
+					setDefaultFilters(serializer, rootClass);
 				}
 			}
 		}
 		serializer.write(obj);
 		writer.flush();
 		out.close();
+	}
+
+	private void setDefaultFilters(JSONSerializer serializer, Class<?> rootClass) {
+
+		if (ClassUtils.isAssignable(BizEntity.class, rootClass)) {
+			PropertyPreFilter propertyPreFilter = DEFAULT_PREFILTERS.get(rootClass);
+			if (propertyPreFilter == null) {
+				propertyPreFilter = new ExcludesPropertyPreFilter(rootClass,
+						Sets.newHashSet("createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate"));
+				DEFAULT_PREFILTERS.put(rootClass, propertyPreFilter);
+			}
+			serializer.getPropertyPreFilters().add(propertyPreFilter);
+		}
+
 	}
 
 	private void pathVisit(final Map<Class<?>, PropertyPreFilter> propertyFilters, final Set<String> paths,

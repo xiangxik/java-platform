@@ -60,9 +60,9 @@ public class NodeSerializer implements ObjectSerializer {
 			out.write(",");
 		}
 
-		if (node.getExpended() != null) {
-			out.writeFieldName("expended");
-			out.write(node.getExpended());
+		if (node.getExpanded() != null) {
+			out.writeFieldName("expanded");
+			out.write(node.getExpanded());
 			out.write(",");
 		}
 

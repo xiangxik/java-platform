@@ -39,6 +39,11 @@ public class ProductCategory extends TreeEntity<User, Long, ProductCategory> {
 	@Column(nullable = false, length = 200)
 	private String name;
 
+	/** 图标 */
+	@Length(max = 200)
+	@Column(length = 200)
+	private String iconPath;
+
 	/** 页面标题 */
 	@Length(max = 200)
 	@Column(length = 200)
@@ -84,6 +89,14 @@ public class ProductCategory extends TreeEntity<User, Long, ProductCategory> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getIconPath() {
+		return iconPath;
+	}
+
+	public void setIconPath(String iconPath) {
+		this.iconPath = iconPath;
 	}
 
 	public String getSeoTitle() {

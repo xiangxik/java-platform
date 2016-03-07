@@ -4,6 +4,9 @@ Ext.define("app.model.ProductCategory", {
 		name : "name",
 		type : "string"
 	}, {
+		name : "iconPath",
+		type : "string"
+	}, {
 		name : "sortNo",
 		type : "int"
 	}, {

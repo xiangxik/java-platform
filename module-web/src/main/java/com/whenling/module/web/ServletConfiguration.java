@@ -25,7 +25,7 @@ import com.whenling.module.base.config.StaticConfigurationSupplier;
  */
 @Configuration
 @ComponentScan(basePackages = { "com.whenling" }, useDefaultFilters = false, includeFilters = {
-		@Filter({ Controller.class }), @Filter({ ServletSupport.class }) })
+		@Filter({ Controller.class }), @Filter({ ServletSupport.class }) }, nameGenerator = FullBeanNameGenerator.class)
 @EnableWebMvc
 @EnableSpringDataWebSupport
 public class ServletConfiguration {

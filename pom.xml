@@ -258,5 +258,6 @@
 		<module>application-centralize</module>
 		<module>extension-cms</module>
 		<module>extension-mall</module>
+		<module>extension-wechat</module>
 	</modules>
 </project>

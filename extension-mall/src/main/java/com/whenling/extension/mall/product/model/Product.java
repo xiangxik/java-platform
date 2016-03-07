@@ -42,8 +42,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.whenling.centralize.model.User;
 import com.whenling.extension.mall.market.Consultation;
-import com.whenling.extension.mall.market.Rank;
 import com.whenling.extension.mall.market.Promotion;
+import com.whenling.extension.mall.market.Rank;
 import com.whenling.extension.mall.market.Review;
 import com.whenling.extension.mall.order.model.OrderItem;
 import com.whenling.module.domain.model.BizEntity;
@@ -170,24 +170,20 @@ public class Product extends BizEntity<User, Long> {
 	private Long point;
 
 	/** 是否上架 */
-	@NotNull
 	@Column(nullable = false)
-	private Boolean isMarketable;
+	private Boolean isMarketable = false;
 
 	/** 是否列出 */
-	@NotNull
 	@Column(nullable = false)
-	private Boolean isList;
+	private Boolean isList = false;
 
 	/** 是否置顶 */
-	@NotNull
 	@Column(nullable = false)
-	private Boolean isTop;
+	private Boolean isTop = false;
 
 	/** 是否为赠品 */
-	@NotNull
 	@Column(nullable = false)
-	private Boolean isGift;
+	private Boolean isGift = false;
 
 	/** 介绍 */
 	@Lob

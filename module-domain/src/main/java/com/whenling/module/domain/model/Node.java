@@ -17,7 +17,7 @@ public class Node<T extends Treeable<T>> {
 
 	private Boolean checked;
 
-	private Boolean expended;
+	private Boolean expanded;
 
 	public Boolean getLeaf() {
 		List<Node<T>> children = getChildren();
@@ -48,12 +48,12 @@ public class Node<T extends Treeable<T>> {
 		this.checked = checked;
 	}
 
-	public Boolean getExpended() {
-		return expended;
+	public Boolean getExpanded() {
+		return expanded;
 	}
 
-	public void setExpended(Boolean expended) {
-		this.expended = expended;
+	public void setExpanded(Boolean expanded) {
+		this.expanded = expanded;
 	}
 
 }

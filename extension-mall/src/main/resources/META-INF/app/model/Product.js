@@ -56,7 +56,8 @@ Ext.define("app.model.Product", {
 		type : "boolean"
 	}, {
 		name : "createdDate",
-		type : "date"
+		type : "date",
+		dateFormat : "time"
 	}, {
 		name : "lastModifiedDate",
 		type : "date"

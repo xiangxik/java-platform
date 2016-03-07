@@ -1,5 +1,6 @@
 package com.whenling.module.web.view;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.ServletContext;
 import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.core.resource.CompositeResourceLoader;
 import org.beetl.core.resource.StartsWithMatcher;
+import org.beetl.core.resource.WebAppResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
@@ -30,8 +33,14 @@ public class ViewConfiguration {
 	@Autowired
 	private ServletContext servletContext;
 
+	@Value("${template.location?:/template/}")
+	private String templateLocation;
+
 	@Value("${viewConfigFile?:com/whenling/module/web/view/beetl.properties}")
 	private String viewConfigFileLocation;
+
+	public final static String VIEW_PREFIX_CLASSPATH = "classpath:";
+	public final static String VIEW_PREFIX_TEMPLATE = "template:";
 
 	@Bean
 	public ViewResolver beetlViewResolver() {
@@ -59,10 +68,14 @@ public class ViewConfiguration {
 	@Bean
 	public CompositeResourceLoader viewResourceLoader() {
 		CompositeResourceLoader compositeResourceLoader = new CompositeResourceLoader();
-		compositeResourceLoader.addResourceLoader(new StartsWithMatcher("/views"),
+		compositeResourceLoader.addResourceLoader(new StartsWithMatcher(VIEW_PREFIX_CLASSPATH).withoutPrefix(),
 				new ClasspathResourceLoader("/views"));
-		compositeResourceLoader.addResourceLoader(new StartsWithMatcher("/com/whenling"),
-				new ClasspathResourceLoader("/com/whenling"));
+		try {
+			compositeResourceLoader.addResourceLoader(new StartsWithMatcher(VIEW_PREFIX_TEMPLATE), new WebAppResourceLoader(
+					new ServletContextResource(servletContext, templateLocation).getFile().getAbsolutePath()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return compositeResourceLoader;
 	}
 

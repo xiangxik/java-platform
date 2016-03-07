@@ -1,7 +1,8 @@
 Ext.define("app.view.mall.product.ProductCategoryForm", {
 	extend : "Ext.form.Panel",
 	alias : "widget.productcategoryform",
-	requires : [ "app.view.mall.product.ProductCategoryController", "app.view.mall.product.ProductCategoryModel", "Ext.ux.TreePicker" ],
+	requires : [ "app.view.mall.product.ProductCategoryController", "app.view.mall.product.ProductCategoryModel", "Ext.ux.TreePicker",
+			"app.ux.form.Image" ],
 	controller : "productcategory",
 	viewModel : "productcategory",
 	bodyPadding : 5,
@@ -21,6 +22,10 @@ Ext.define("app.view.mall.product.ProductCategoryForm", {
 		fieldLabel : "名称",
 		name : "name",
 		allowBlank : false
+	}, {
+		fieldLabel : "图标",
+		xtype : "imagefield",
+		name : "iconPath"
 	}, {
 		fieldLabel : "上级分类",
 		name : "parent",

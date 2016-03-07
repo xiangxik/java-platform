@@ -55,7 +55,7 @@ Ext.define("app.view.mall.product.ProductController", {
 					method : "POST",
 					success : function(response) {
 						Ext.Msg.info("提示", "操作成功");
-						store.remove();
+						store.remove(item);
 					}
 				});
 			}
