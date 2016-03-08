@@ -87,7 +87,6 @@ public class TemplateHttpRequestHandler extends ResourceHttpRequestHandler {
 		}
 
 		if (request.getHeader(HttpHeaders.RANGE) == null) {
-			setETagHeader(request, response);
 			setHeaders(response, resource, mediaType);
 			writeContent(response, resource);
 		} else {

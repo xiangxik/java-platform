@@ -13,20 +13,21 @@
 		<jsp-api.version>2.2</jsp-api.version>
 		<jstl.version>1.2</jstl.version>
 		<taglibs.version>1.1.2</taglibs.version>
-		<slf4j.version>1.7.13</slf4j.version>
-		<logback.version>1.1.3</logback.version>
-		<springframework.version>4.2.4.RELEASE</springframework.version>
-		<spring-data.version>Gosling-SR1</spring-data.version>
-		<spring-data-jpa.version>1.9.2.RELEASE</spring-data-jpa.version>
+		<slf4j.version>1.7.18</slf4j.version>
+		<logback.version>1.1.6</logback.version>
+		<springframework.version>4.2.5.RELEASE</springframework.version>
+		<spring-data-commons.version>1.11.4.RELEASE</spring-data-commons.version>
+		<spring-data-jpa.version>1.9.4.RELEASE</spring-data-jpa.version>
 		<freemarker.version>2.3.23</freemarker.version>
-		<hibernate-entitymanager.verison>5.0.6.Final</hibernate-entitymanager.verison>
-		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
+		<hibernate-entitymanager.verison>5.1.0.Final</hibernate-entitymanager.verison>
+		<hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
 		<guava.version>19.0</guava.version>
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>
 		<httpmime.version>4.5.1</httpmime.version>
 		<commons-io.version>2.4</commons-io.version>
 		<commons-configuration.version>1.10</commons-configuration.version>
+		<querydsl.version>3.7.2</querydsl.version>
 	</properties>
 
 	<dependencyManagement>
@@ -84,10 +85,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-releasetrain</artifactId>
-				<version>${spring-data.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
+				<artifactId>spring-data-commons</artifactId>
+				<version>${spring-data-commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>${spring-data-jpa.version}</version>
 			</dependency>
 
 
@@ -108,6 +112,22 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernate-validator.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-core</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${querydsl.version}</version>
 			</dependency>
 
 			<dependency>
@@ -174,6 +194,28 @@
 					<verbose>true</verbose>
 					<optimize>true</optimize>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-apt</artifactId>
+						<version>${querydsl.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

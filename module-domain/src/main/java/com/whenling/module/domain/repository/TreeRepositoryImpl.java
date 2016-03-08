@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 
 import com.google.common.base.Objects;
 import com.whenling.module.domain.model.Node;
@@ -28,12 +27,8 @@ import com.whenling.module.domain.model.TreeImpl;
 public class TreeRepositoryImpl<T extends TreeEntity<?, I, T>, I extends Serializable> extends BaseRepositoryImpl<T, I>
 		implements TreeRepository<T, I> {
 
-	public TreeRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+	public TreeRepositoryImpl(JpaEntityInformation<T, I> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
-	}
-
-	public TreeRepositoryImpl(Class<T> domainClass, EntityManager em) {
-		this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em);
 	}
 
 	@Override

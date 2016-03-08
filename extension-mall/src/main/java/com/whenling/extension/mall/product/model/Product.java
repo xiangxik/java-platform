@@ -121,6 +121,10 @@ public class Product extends BizEntity<User, Long> {
 	@Column(nullable = false)
 	private String fullName;
 
+	@Length(max = 500)
+	@Column(length = 500)
+	private String description;
+
 	/** 销售价 */
 	@NotNull
 	@Min(0)
@@ -143,6 +147,10 @@ public class Product extends BizEntity<User, Long> {
 	/** 展示图片 */
 	@Column(length = 200)
 	private String image;
+
+	/** 二维码图片 */
+	@Column(length = 200)
+	private String qrCode;
 
 	/** 单位 */
 	@Column(length = 200)
@@ -473,6 +481,14 @@ public class Product extends BizEntity<User, Long> {
 		this.fullName = fullName;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -495,6 +511,14 @@ public class Product extends BizEntity<User, Long> {
 
 	public void setMarketPrice(BigDecimal marketPrice) {
 		this.marketPrice = marketPrice;
+	}
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
 	}
 
 	public String getImage() {

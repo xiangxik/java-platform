@@ -1,8 +1,5 @@
 package com.whenling.extension.mall.product.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,16 +50,17 @@ public class ProductController {
 		}
 
 		Goods goods = product.isNew() ? goodsService.newEntity() : product.getGoods();
-		List<Product> products = new ArrayList<>();
+
+		if (goods.isNew()) {
+			goods = goodsService.save(goods);
+		}
 
 		product.setGoods(goods);
+		StringBuffer fullName = new StringBuffer(product.getName());
+		product.setFullName(fullName.toString());
 		product.setSpecifications(null);
 		product.setSpecificationValues(null);
-		products.add(product);
-
-		goods.getProducts().clear();
-		goods.getProducts().addAll(products);
-		goodsService.save(goods);
+		productService.save(product);
 
 		return Result.success();
 	}

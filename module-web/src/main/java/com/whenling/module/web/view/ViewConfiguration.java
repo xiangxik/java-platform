@@ -6,12 +6,14 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.beetl.core.Function;
 import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.core.resource.CompositeResourceLoader;
 import org.beetl.core.resource.StartsWithMatcher;
 import org.beetl.core.resource.WebAppResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.ViewResolver;
+
+import com.google.common.collect.Maps;
 
 /**
  * 视图配置
@@ -39,6 +43,12 @@ public class ViewConfiguration {
 	@Value("${viewConfigFile?:com/whenling/module/web/view/beetl.properties}")
 	private String viewConfigFileLocation;
 
+	@Autowired(required = false)
+	private ObjectFactory<Map<String, Function>> functionsFactory;
+
+	@Autowired(required = false)
+	private ObjectFactory<Map<String, FunctionPackage>> functionPackagesFactory;
+
 	public final static String VIEW_PREFIX_CLASSPATH = "classpath:";
 	public final static String VIEW_PREFIX_TEMPLATE = "template:";
 
@@ -56,6 +66,18 @@ public class ViewConfiguration {
 	public BeetlGroupUtilConfiguration beetlConfig() {
 		BeetlGroupUtilConfiguration beetlConfig = new BeetlGroupUtilConfiguration();
 
+		Map<String, Function> functions = functionsFactory.getObject();
+		if (functions != null) {
+			beetlConfig.setFunctions(functions);
+		}
+
+		Map<String, FunctionPackage> functionPackages = functionPackagesFactory.getObject();
+		if (functionPackages != null) {
+			beetlConfig.setFunctionPackages(Maps.transformValues(functionPackages, (functionPackage) -> {
+				return functionPackage;
+			}));
+		}
+
 		beetlConfig.setResourceLoader(viewResourceLoader());
 		beetlConfig.setConfigFileResource(new ClassPathResource(viewConfigFileLocation));
 
@@ -71,8 +93,12 @@ public class ViewConfiguration {
 		compositeResourceLoader.addResourceLoader(new StartsWithMatcher(VIEW_PREFIX_CLASSPATH).withoutPrefix(),
 				new ClasspathResourceLoader("/views"));
 		try {
-			compositeResourceLoader.addResourceLoader(new StartsWithMatcher(VIEW_PREFIX_TEMPLATE), new WebAppResourceLoader(
-					new ServletContextResource(servletContext, templateLocation).getFile().getAbsolutePath()));
+			compositeResourceLoader.addResourceLoader(new StartsWithMatcher(VIEW_PREFIX_TEMPLATE),
+					new WebAppResourceLoader(
+							new ServletContextResource(servletContext, templateLocation).getFile().getAbsolutePath()));
+
+			compositeResourceLoader.addResourceLoader(new StartsWithMatcher("/WEB-INF").withPrefix(),
+					new WebAppResourceLoader(servletContext.getRealPath(".")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

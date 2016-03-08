@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mysema.query.types.OrderSpecifier;
+import com.mysema.query.types.Predicate;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.repository.BaseRepository;
 
@@ -122,4 +124,35 @@ public abstract class BaseService<T extends BaseEntity<I>, I extends Serializabl
 		return baseRepository.findAll(pageable);
 	}
 
+	public T findOne(Predicate predicate) {
+		return baseRepository.findOne(predicate);
+	}
+
+	public Iterable<T> findAll(Predicate predicate) {
+		return baseRepository.findAll(predicate);
+	}
+
+	public Iterable<T> findAll(Predicate predicate, Sort sort) {
+		return baseRepository.findAll(predicate, sort);
+	}
+
+	public Iterable<T> findAll(Predicate predicate, OrderSpecifier<?>... orders) {
+		return baseRepository.findAll(predicate, orders);
+	}
+
+	public Iterable<T> findAll(OrderSpecifier<?>... orders) {
+		return baseRepository.findAll(orders);
+	}
+
+	public Page<T> findAll(Predicate predicate, Pageable pageable) {
+		return baseRepository.findAll(predicate, pageable);
+	}
+
+	public long count(Predicate predicate) {
+		return baseRepository.count(predicate);
+	}
+
+	public boolean exists(Predicate predicate) {
+		return baseRepository.exists(predicate);
+	}
 }

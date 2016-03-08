@@ -16,6 +16,8 @@ import javax.imageio.stream.ImageOutputStream;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.util.Assert;
 
+import com.google.common.io.Files;
+
 public class ImageHelper {
 
 	/** 背景颜色 */
@@ -37,6 +39,12 @@ public class ImageHelper {
 			BufferedImage srcBufferedImage = ImageIO.read(srcFile);
 			int srcWidth = srcBufferedImage.getWidth();
 			int srcHeight = srcBufferedImage.getHeight();
+			
+			if(srcWidth < destWidth || srcHeight < destHeight) {
+				Files.copy(srcFile, destFile);
+				return;
+			}
+			
 			int width = destWidth;
 			int height = destHeight;
 			if (srcHeight >= srcWidth) {

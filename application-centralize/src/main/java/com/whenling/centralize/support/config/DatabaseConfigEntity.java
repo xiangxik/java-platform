@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import com.whenling.module.domain.model.BaseEntity;
 
 @Entity
 @Table(name = DefaultDatabaseConfiguration.TABLE)
-public class DatabaseConfigEntity extends AbstractPersistable<Long> {
+public class DatabaseConfigEntity extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 7569248032441650622L;
 

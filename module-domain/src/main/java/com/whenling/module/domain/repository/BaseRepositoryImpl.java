@@ -5,8 +5,7 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 
 import com.whenling.module.domain.exception.DeleteLockedEntityException;
 import com.whenling.module.domain.model.Lockedable;
@@ -20,15 +19,11 @@ import com.whenling.module.domain.model.Lockedable;
  * @param <T>
  * @param <I>
  */
-public class BaseRepositoryImpl<T, I extends Serializable> extends SimpleJpaRepository<T, I>
+public class BaseRepositoryImpl<T, I extends Serializable> extends QueryDslJpaRepository<T, I>
 		implements BaseRepository<T, I> {
 
-	public BaseRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+	public BaseRepositoryImpl(JpaEntityInformation<T, I> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
-	}
-
-	public BaseRepositoryImpl(Class<T> domainClass, EntityManager em) {
-		this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em);
 	}
 
 	@Override

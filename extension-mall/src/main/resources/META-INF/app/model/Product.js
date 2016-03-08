@@ -10,6 +10,9 @@ Ext.define("app.model.Product", {
 		name : "fullName",
 		type : "string"
 	}, {
+		name : "description",
+		type : "string"
+	}, {
 		name : "price",
 		type : "number"
 	}, {
