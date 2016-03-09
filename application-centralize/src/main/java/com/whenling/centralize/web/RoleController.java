@@ -1,14 +1,9 @@
-package com.whenling.centralize.web.role;
-
-import javax.validation.Valid;
+package com.whenling.centralize.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,20 +17,13 @@ import com.whenling.centralize.model.UserRole;
 import com.whenling.centralize.service.MenuService;
 import com.whenling.centralize.service.RoleService;
 import com.whenling.centralize.service.UserRoleService;
-import com.whenling.centralize.web.role.vo.RoleVo;
 import com.whenling.module.domain.model.Result;
 import com.whenling.module.domain.model.Tree;
+import com.whenling.module.web.controller.EntityController;
 
-/**
- * 角色控制器
- * 
- * @作者 孔祥溪
- * @博客 http://ken.whenling.com
- * @创建时间 2016年3月1日 下午4:31:10
- */
 @Controller
 @RequestMapping("/admin/role")
-public class RoleController {
+public class RoleController extends EntityController<Role, Long> {
 
 	@Autowired
 	private RoleService roleService;
@@ -45,20 +33,6 @@ public class RoleController {
 
 	@Autowired
 	private UserRoleService userRoleService;
-
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@ResponseBody
-	public Page<Role> list(Pageable pageable) {
-
-		return roleService.findAll(pageable);
-	}
-
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	@ResponseBody
-	public Role get(@RequestParam(value = "id", required = false) Role role) {
-
-		return role == null ? roleService.newEntity() : role;
-	}
 
 	@RequestMapping(value = "/menuTree", method = RequestMethod.GET)
 	@ResponseBody
@@ -99,34 +73,4 @@ public class RoleController {
 		return Result.success();
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	@ResponseBody
-	public Result save(@ModelAttribute @Valid RoleVo roleVo, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return Result.validateError(bindingResult.getAllErrors());
-		}
-
-		Role role = roleVo.getId() == null ? roleService.newEntity() : roleService.findOne(roleVo.getId());
-		roleVo.applyTo(role);
-		roleService.save(role);
-
-		return Result.success();
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.POST, params = "id")
-	@ResponseBody
-	public Result delete(@RequestParam(value = "id") Role role) {
-		roleService.delete(role);
-		return Result.success();
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.POST, params = "ids")
-	@ResponseBody
-	public Result batchDelete(@RequestParam(value = "ids") Role[] roles) {
-		for (Role role : roles) {
-			roleService.delete(role);
-		}
-
-		return Result.success();
-	}
 }

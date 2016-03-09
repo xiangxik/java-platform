@@ -44,13 +44,26 @@ public abstract class EntityController<T extends BaseEntity<I>, I extends Serial
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public Result save(@ModelAttribute @Valid T entity, BindingResult bindingResult) {
+
+		onBeforeValidate(entity, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return Result.validateError(bindingResult.getAllErrors());
 		}
 
+		onBeforeSave(entity);
 		baseService.save(entity);
+		onAfterSave(entity);
 
 		return Result.success();
+	}
+
+	protected void onBeforeValidate(T entity, BindingResult bindingResult) {
+	}
+
+	protected void onBeforeSave(T entity) {
+	}
+
+	protected void onAfterSave(T entity) {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, params = "id")

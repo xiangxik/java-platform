@@ -15,6 +15,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whenling.module.domain.model.BizEntity;
 import com.whenling.module.domain.model.Lockedable;
@@ -33,6 +37,8 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	private static final long serialVersionUID = 2839091334861650994L;
 
 	/** 账号 */
+	@NotBlank
+	@Length(max = 50)
 	@Column(length = 50)
 	private String username;
 
@@ -50,6 +56,8 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	private String mobile;
 
 	/** 姓名 */
+	@NotBlank
+	@Length(max = 50)
 	@Column(length = 50)
 	private String name;
 
@@ -63,6 +71,7 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	private Sex sex;
 
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 
 	/** 地区名称 */

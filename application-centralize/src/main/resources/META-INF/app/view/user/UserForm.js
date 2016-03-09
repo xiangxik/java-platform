@@ -5,7 +5,7 @@ Ext.define("app.view.user.UserForm", {
 	controller : "user",
 	viewModel : "user",
 	bodyPadding : 5,
-	url : Ext.ctx + "/admin/user/save",
+	url : Ext.ctx + "/admin/user/saveBy",
 	border : false,
 	frame : false,
 	layout : "anchor",

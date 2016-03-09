@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -29,13 +30,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.PropertyFilter;
 import com.alibaba.fastjson.serializer.PropertyPreFilter;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Sets;
 import com.whenling.module.base.util.PropertyUtil;
-import com.whenling.module.domain.json.ExcludesPropertyPreFilter;
 import com.whenling.module.domain.json.IncludesPropertyPreFilter;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.model.BizEntity;
@@ -57,7 +58,18 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 
 	private ParserConfig parserConfig;
 
-	private static final Map<Class<?>, PropertyPreFilter> DEFAULT_PREFILTERS = new HashMap<>();
+	private static final PropertyFilter DEFAULT_PROPERTY_FILTER = new PropertyFilter() {
+		@Override
+		public boolean apply(Object object, String name, Object value) {
+			if (object instanceof BizEntity) {
+				if (ArrayUtils.contains(
+						new String[] { "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate" }, name)) {
+					return false;
+				}
+			}
+			return true;
+		}
+	};
 
 	public FastjsonHttpMessageConverter(SerializeConfig serializeConfig, ParserConfig parserConfig) {
 		super(MediaType.APPLICATION_JSON_UTF8, new MediaType("application", "*+json", DEFAULT_CHARSET));
@@ -103,27 +115,16 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 						serializer.getPropertyPreFilters().add(entry.getValue());
 					}
 				} else {
-					setDefaultFilters(serializer, rootClass);
+
+					serializer.getPropertyFilters().add(DEFAULT_PROPERTY_FILTER);
 				}
+			} else {
+				serializer.getPropertyFilters().add(DEFAULT_PROPERTY_FILTER);
 			}
 		}
 		serializer.write(obj);
 		writer.flush();
 		out.close();
-	}
-
-	private void setDefaultFilters(JSONSerializer serializer, Class<?> rootClass) {
-
-		if (ClassUtils.isAssignable(BizEntity.class, rootClass)) {
-			PropertyPreFilter propertyPreFilter = DEFAULT_PREFILTERS.get(rootClass);
-			if (propertyPreFilter == null) {
-				propertyPreFilter = new ExcludesPropertyPreFilter(rootClass,
-						Sets.newHashSet("createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate"));
-				DEFAULT_PREFILTERS.put(rootClass, propertyPreFilter);
-			}
-			serializer.getPropertyPreFilters().add(propertyPreFilter);
-		}
-
 	}
 
 	private void pathVisit(final Map<Class<?>, PropertyPreFilter> propertyFilters, final Set<String> paths,
