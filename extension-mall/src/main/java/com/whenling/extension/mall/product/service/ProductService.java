@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.io.Files;
 import com.whenling.centralize.support.util.QrCodeHelper;
+import com.whenling.extension.mall.product.model.Goods;
 import com.whenling.extension.mall.product.model.Product;
 import com.whenling.extension.mall.product.model.ProductCategory;
 import com.whenling.extension.mall.product.repo.ProductRepository;
@@ -23,11 +27,20 @@ public class ProductService extends BaseService<Product, Long> {
 
 	public static final String STORE_PATH_PATTERN = "/upload/qrcode/product/";
 
+	@Value("${siteUrl?:http://gzcdcl.whenling.com}")
+	private String siteUrl;
+
 	@Autowired
 	public ProductRepository productRepository;
 
 	@Autowired
 	private StorageService storageService;
+
+	@Autowired
+	private GoodsService goodsService;
+
+	@Autowired
+	private ServletContext servletContext;
 
 	@Override
 	public Product newEntity() {
@@ -61,7 +74,20 @@ public class ProductService extends BaseService<Product, Long> {
 
 	@Override
 	public Product save(Product entity) {
+
 		boolean isNew = entity.isNew();
+
+		Goods goods = isNew ? goodsService.newEntity() : entity.getGoods();
+
+		if (goods.isNew()) {
+			goods = goodsService.save(goods);
+		}
+
+		entity.setGoods(goods);
+		StringBuffer fullName = new StringBuffer(entity.getName());
+		entity.setFullName(fullName.toString());
+		entity.setSpecifications(null);
+		entity.setSpecificationValues(null);
 
 		entity = super.save(entity);
 		if (isNew) {
@@ -74,7 +100,7 @@ public class ProductService extends BaseService<Product, Long> {
 			}
 			QrCodeHelper.writeToFile("/wap/product/detail?id=" + entity.getId(), 240, 240,
 					storageService.getFile(qrCodePath));
-			entity.setQrCode(qrCodePath);
+			entity.setQrCode(siteUrl + servletContext.getContextPath() + qrCodePath);
 			save(entity);
 		}
 

@@ -11,11 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.whenling.centralize.model.User;
 import com.whenling.module.domain.model.SortEntity;
@@ -64,10 +67,18 @@ public class Ad extends SortEntity<User, Long> {
 	@Lob
 	private String content;
 
+	/** 路径 */
+	@Length(max = 200)
+	private String path;
+
 	/** 起始日期 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
 	private Date beginDate;
 
 	/** 结束日期 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
 	private Date endDate;
 
 	/** 链接地址 */
@@ -102,6 +113,14 @@ public class Ad extends SortEntity<User, Long> {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public Date getBeginDate() {

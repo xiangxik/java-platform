@@ -22,11 +22,16 @@ public class CmsExtension extends Extension {
 			Menu contentMenu = app.addMenu("内容管理", "content", null, null, null, null);
 			app.addMenu("模板管理", "template", "Page", "app.view.cms.Template", null, contentMenu);
 		}
+		
+		if(isUpdate) {
+			app.addMenu("广告位管理", "adPosition", "Images", "app.view.cms.AdPosition", null, app.findMenuByCode("content"));
+			app.addMenu("广告管理", "ad", "Image", "app.view.cms.Ad", null, app.findMenuByCode("content"));
+		}
 	}
 
 	@Override
 	public Integer getVersion() {
-		return 1;
+		return 2;
 	}
 
 	@Override
