@@ -25,19 +25,22 @@ Ext.define("app.view.cms.AdPositionForm", {
 		fieldLabel : "宽度",
 		name : "width",
 		xtype : "numberfield",
-		minValue : 0
+		minValue : 0,
+		allowBlank : false
 	}, {
 		fieldLabel : "高度",
 		name : "height",
 		xtype : "numberfield",
-		minValue : 0
+		minValue : 0,
+		allowBlank : false
 	}, {
 		fieldLabel : "描述",
 		name : "description"
 	}, {
 		fieldLabel : "模板",
 		name : "template",
-		xtype : "textarea"
+		xtype : "textarea",
+		allowBlank : false
 	} ],
 	buttonAlign : "left",
 	buttons : [ {

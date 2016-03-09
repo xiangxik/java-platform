@@ -52,7 +52,8 @@ Ext.define("app.view.cms.AdForm", {
 		allowBlank : false,
 		store : Ext.create("app.store.AdPositions"),
 		displayField : 'name',
-		valueField : 'id'
+		valueField : 'id',
+		allowBlank : false
 	}, {
 		fieldLabel : "展示图片",
 		xtype : "imagefield",
