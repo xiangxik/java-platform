@@ -22,14 +22,14 @@
 * module-security: 构成平台的安全包，依赖于module-web。
 * extension-cms: 扩展平台包。包含cms的功能。引入该包即拥有cms功能。
 * extension-mall: 扩展平台包。包含商城及支付等功能。引入该包即拥有商城功能。
-
-### 代码地址
-* https://github.com/xiangxik/java-platform
-* https://git.oschina.net/xiangxik/java-platform
+* extension-wechat: 扩展平台包。包含微信网站的展示和微信相关功能。
 
 ### 详细介绍
 * http://ken.whenling.com
 
 ### 更新日志
+####【2016-03-19】
+* 增加微信包
+* 修改extjs的处理方式
 ####【2016-02-09】V1.0.0.RELEASE
 * 初版发布
