@@ -1,4 +1,4 @@
-Ext.define("app.view.cms.Ad", {
+Ext.define("app.view.cms.AdList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.ad",
 	requires : [ "app.view.cms.AdController", "app.view.cms.AdModel" ],

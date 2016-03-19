@@ -1,6 +1,9 @@
 Ext.define("app.view.menu.MenuForm", {
 	extend : "Ext.form.Panel",
 	alias : "widget.menuform",
+	requires : [ "app.view.menu.MenuController", "app.view.menu.MenuModel", "Ext.ux.TreePicker" ],
+	controller : "menu",
+	viewModel : "menu",
 	bodyPadding : 5,
 	url : Ext.ctx + "/admin/menu/save",
 	border : false,
@@ -26,6 +29,16 @@ Ext.define("app.view.menu.MenuForm", {
 		name : "code",
 		allowBlank : false
 	}, {
+		fieldLabel : "上级菜单",
+		name : "parent",
+		xtype : "treepicker",
+		displayField : "text",
+		valueField : "id",
+		rootVisible : false,
+		store : Ext.create("app.store.Menus", {
+			rootVisible : false
+		})
+	}, {
 		fieldLabel : "图标样式",
 		name : "iconCls"
 	}, {
@@ -35,6 +48,7 @@ Ext.define("app.view.menu.MenuForm", {
 		fieldLabel : "配置参数",
 		name : "config"
 	} ],
+	buttonAlign : "left",
 	buttons : [ {
 		text : "保存",
 		formBind : true,

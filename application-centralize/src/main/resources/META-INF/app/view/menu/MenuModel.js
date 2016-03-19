@@ -3,8 +3,5 @@ Ext.define("app.view.menu.MenuModel", {
 	alias : "viewmodel.menu",
 	stores : {
 		tree : Ext.create("app.store.Menus")
-	},
-	data : {
-		currentItem : {}
 	}
 });

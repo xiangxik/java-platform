@@ -1,4 +1,4 @@
-Ext.define("app.view.cms.AdPosition", {
+Ext.define("app.view.cms.AdPositionList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.adPosition",
 	requires : [ "app.view.cms.AdPositionController", "app.view.cms.AdPositionModel" ],

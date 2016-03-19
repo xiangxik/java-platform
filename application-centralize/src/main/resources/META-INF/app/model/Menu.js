@@ -15,6 +15,10 @@ Ext.define("app.model.Menu", {
 	}, {
 		name : "config",
 		type : "string"
+	}, {
+		name : "parent",
+		mapping : "parent.id",
+		type : "int"
 	} ],
 	constructor : function() {
 		this.callParent(arguments);

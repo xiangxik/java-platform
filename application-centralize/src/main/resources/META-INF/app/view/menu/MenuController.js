@@ -1,43 +1,80 @@
 Ext.define("app.view.menu.MenuController", {
 	extend : "Ext.app.ViewController",
 	alias : "controller.menu",
+	mixins : {
+		center : "app.view.main.CenterController"
+	},
 
 	onItemClick : function(tree, item) {
-		this.getViewModel().set("currentItem", item.data);
-		var menuForm = tree.up("menuview").down("menuform");
-		menuForm.setBind({
-			title : "编辑菜单【{currentItem.text}】"
-		})
-		menuForm.loadRecord(item);
-		menuForm.expand(true);
+		
 	},
 
 	onAdd : function(button) {
-		var menuForm = button.up("menuview").down("menuform");
-		menuForm.setTitle("新建菜单");
-		menuForm.setBind({
-			title : "新建菜单 上级为【{currentItem.text}】"
-		})
-		menuForm.reset(true);
-		menuForm.expand(true);
+		var code = "menuform";
+		var tab = this.tabOnCenter(code);
+		if (!tab) {
+			var view = Ext.create("app.view.menu.MenuForm", {
+				id : code,
+				closable : true,
+				title : "新建菜单",
+				iconCls : "Applicationsidelist"
+			});
+			tab = this.addViewToCenter(code, view);
+		}
+		this.activeTab(tab);
+	},
+	
+	onRowEdit : function(tree, rowIndex, colIndex) {
+		var item = tree.getStore().getAt(rowIndex);
+		var code = "menuform" + item.id;
+		var tab = this.tabOnCenter(code);
+		if (!tab) {
+			var view = Ext.create("app.view.menu.MenuForm", {
+				id : code,
+				closable : true,
+				title : "编辑菜单【" + item.get("text") + "】",
+				iconCls : "Applicationsidelist"
+			});
+			view.loadRecord(item);
+			tab = this.addViewToCenter(code, view);
+		}
+		this.activeTab(tab);
+	},
+	
+	onRowDelete : function(tree, rowIndex, colIndex) {
+		var menu = tree.getStore().getAt(rowIndex);
+		Ext.Msg.confirm("提示", "您确定要删除【" + menu.get("text") + "】？", function(choice) {
+			if (choice === "yes") {
+
+				var store = this.getViewModel().getStore("tree");
+
+				Ext.Ajax.request({
+					url : Ext.ctx + "/admin/menu/delete",
+					params : {
+						id : menu.id
+					},
+					method : "POST",
+					success : function(response) {
+						Ext.Msg.info("提示", "操作成功");
+						store.remove(menu);
+					}
+				});
+			}
+		}, this);
 	},
 
 	onFormSave : function(button) {
-		var menuForm = button.up("menuform");
-		var form = menuForm.getForm();
+		var formPanel = button.up("menuform");
+		var form = formPanel.getForm();
 		var store = this.getViewModel().getStore("tree");
 
+		var me = this;
 		if (form.isValid()) {
-			var currentItem = this.getViewModel().get("currentItem");
 			form.submit({
-				params : {
-					current : currentItem && currentItem.id
-				},
 				success : function(form, action) {
 					Ext.Msg.info("提示", "操作成功");
-					menuForm.reset(true);
-					menuForm.collapse();
 					store.reload();
+					me.closeTab(formPanel);
 				},
 				failure : function(form, action) {
 					Ext.Msg.error("提示", "操作失败");
@@ -47,7 +84,7 @@ Ext.define("app.view.menu.MenuController", {
 	},
 
 	onDelete : function(button) {
-		var menuTree = button.up("menutree");
+		var menu = button.up("menu");
 		var selection = menuTree.getSelection();
 		if (selection.length == 0) {
 			Ext.Msg.alert("提示", "您最少要选择一条数据");

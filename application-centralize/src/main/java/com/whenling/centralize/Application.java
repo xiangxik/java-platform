@@ -101,7 +101,7 @@ public class Application implements ApplicationContextAware {
 
 			userService.save(superAdmin);
 
-			Menu systemMenu = addMenu("系统管理", "system", null, null, null, null);
+			Menu systemMenu = addMenu("系统管理", "system", "Computer", null, null, null);
 
 			Menu personnelMenu = addMenu("企业管理", "enterprise", "Userhome", null, null, systemMenu);
 			addMenu("用户列表", "user", "User", "app.view.user.UserList", null, personnelMenu);

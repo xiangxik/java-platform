@@ -12,7 +12,7 @@ public class MallExtension extends Extension {
 	@Override
 	public void init(Application app, boolean isNew, boolean isUpdate, Integer historyVersion) {
 		if (isNew) {
-			Menu productMenu = app.addMenu("商品管理", "productmanager", null, null, null, null);
+			Menu productMenu = app.addMenu("商品管理", "productmanager", "Brick", null, null, null);
 			app.addMenu("商品分类", "productcategory", "Bricklink", "app.view.mall.product.ProductCategoryList", null,
 					productMenu);
 		}

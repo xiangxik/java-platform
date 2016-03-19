@@ -24,6 +24,7 @@ Ext.define("app.view.main.MainController", {
 					westNav.add({
 						title : menu.text,
 						rootVisible : false,
+						iconCls: menu.iconCls,
 						listeners : {
 							itemclick : 'onMenuTreeItemClick'
 						},

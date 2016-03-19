@@ -1,4 +1,4 @@
-Ext.define("app.view.cms.Template", {
+Ext.define("app.view.cms.TemplateList", {
 	extend : "Ext.panel.Panel",
 	xtype : "widget.cmstemplate",
 	layout : "border",

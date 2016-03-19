@@ -19,7 +19,7 @@ public class CmsExtension extends Extension {
 	@Override
 	public void init(Application app, boolean isNew, boolean isUpdate, Integer historyVersion) {
 		if (isNew) {
-			Menu contentMenu = app.addMenu("内容管理", "content", null, null, null, null);
+			Menu contentMenu = app.addMenu("内容管理", "content", "Pagewhitestack", null, null, null);
 			app.addMenu("模板管理", "template", "Page", "app.view.cms.TemplateList", null, contentMenu);
 		}
 		
