@@ -13,12 +13,12 @@ public class MallExtension extends Extension {
 	public void init(Application app, boolean isNew, boolean isUpdate, Integer historyVersion) {
 		if (isNew) {
 			Menu productMenu = app.addMenu("商品管理", "productmanager", null, null, null, null);
-			app.addMenu("商品分类", "productcategory", "Bricklink", "app.view.mall.product.ProductCategory", null,
+			app.addMenu("商品分类", "productcategory", "Bricklink", "app.view.mall.product.ProductCategoryList", null,
 					productMenu);
 		}
 
 		if (isUpdate) {
-			app.addMenu("商品管理", "product", "Brick", "app.view.mall.product.Product", null,
+			app.addMenu("商品管理", "product", "Brick", "app.view.mall.product.ProductList", null,
 					app.findMenuByCode("productmanager"));
 		}
 	}

@@ -1,7 +1,7 @@
-Ext.define("app.view.mall.product.Product", {
+Ext.define("app.view.mall.product.ProductList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.product",
-	requires : [ "app.view.mall.product.ProductController", "app.view.mall.product.ProductModel" ],
+	requires : [ "app.view.mall.product.ProductController", "app.view.mall.product.ProductModel", "Ext.ux.TreePicker", "app.ux.grid.SearchPanel" ],
 	title : "产品列表",
 	controller : "product",
 	viewModel : "product",
@@ -38,7 +38,7 @@ Ext.define("app.view.mall.product.Product", {
 		xtype : 'datecolumn',
 		format : 'Y年m月d日 H:i:s',
 		dataIndex : "createdDate",
-		width: 140
+		width : 140
 	}, {
 		text : "操作",
 		xtype : "actioncolumn",
@@ -70,6 +70,29 @@ Ext.define("app.view.mall.product.Product", {
 		store : "{list}"
 	},
 	dockedItems : [ {
+		xtype : "searchpanel",
+		dock : "top",
+		bind : {
+			store : "{list}"
+		},
+		items : [ {
+			fieldLabel : "名称",
+			xtype : "textfield",
+			name : "name",
+			columnWidth : .25
+		}, {
+			fieldLabel : "商品分类",
+			name : "productCategory",
+			xtype : "treepicker",
+			displayField : "name",
+			valueField : "id",
+			rootVisible : false,
+			store : Ext.create("app.store.ProductCategories", {
+				rootVisible : true
+			}),
+			columnWidth : .25
+		} ]
+	}, {
 		xtype : "pagingtoolbar",
 		dock : "bottom",
 		displayInfo : true,

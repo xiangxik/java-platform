@@ -1,4 +1,4 @@
-Ext.define("app.view.mall.product.ProductCategory", {
+Ext.define("app.view.mall.product.ProductCategoryTree", {
 	extend : "Ext.tree.Panel",
 	alias : "widget.productcategory",
 	requires : [ "app.view.mall.product.ProductCategoryController", "app.view.mall.product.ProductCategoryModel" ],

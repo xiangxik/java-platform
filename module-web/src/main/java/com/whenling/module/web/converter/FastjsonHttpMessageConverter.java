@@ -198,6 +198,10 @@ public class FastjsonHttpMessageConverter extends AbstractGenericHttpMessageConv
 		if (value instanceof Tree) {
 			return filterClass(((Tree<?>) value).getRoots());
 		}
+
+		if (value instanceof Map) {
+			return ((Map<?, ?>) value).size() > 0 ? filterClass(((Map<?, ?>) value).values().iterator().next()) : null;
+		}
 		return null;
 	}
 

@@ -1,7 +1,7 @@
 Ext.define("app.view.user.UserList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.userlist",
-	requires : [ "app.view.user.UserController", "app.view.user.UserModel" ],
+	requires : [ "app.view.user.UserController", "app.view.user.UserModel", "app.ux.grid.SearchPanel" ],
 	title : "用户列表",
 	controller : "user",
 	viewModel : "user",
@@ -51,7 +51,7 @@ Ext.define("app.view.user.UserList", {
 			iconCls : "Key actionColumnIcon",
 			tooltip : "修改密码",
 			handler : "onRowChangPassword"
-		} , {
+		}, {
 			iconCls : "Delete actionColumnIcon",
 			tooltip : "删除",
 			handler : "onRowDelete"
@@ -74,6 +74,33 @@ Ext.define("app.view.user.UserList", {
 		store : "{list}"
 	},
 	dockedItems : [ {
+		xtype : "searchpanel",
+		dock : "top",
+		bind : {
+			store : "{list}"
+		},
+		items : [ {
+			fieldLabel : "账号",
+			xtype : "textfield",
+			name : "username",
+			columnWidth : .25
+		}, {
+			fieldLabel : "名称",
+			xtype : "textfield",
+			name : "name",
+			columnWidth : .25
+		}, {
+			fieldLabel : "邮箱",
+			xtype : "textfield",
+			name : "email",
+			columnWidth : .25
+		}, {
+			fieldLabel : "手机",
+			xtype : "textfield",
+			name : "mobile",
+			columnWidth : .25
+		} ]
+	}, {
 		xtype : "pagingtoolbar",
 		dock : "bottom",
 		displayInfo : true,

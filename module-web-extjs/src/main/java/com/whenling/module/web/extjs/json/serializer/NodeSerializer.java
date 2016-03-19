@@ -69,6 +69,8 @@ public class NodeSerializer implements ObjectSerializer {
 		List<? extends SerializeFilter> serializeFilters = serializer.getPropertyPreFilters();
 
 		Object data = node.getData();
+
+		// 处理父节点
 		if (data != null && data instanceof Treeable && serializeFilters != null && serializeFilters.size() > 0) {
 			boolean parentProcess = false;
 			for (SerializeFilter filter : serializeFilters) {
@@ -91,6 +93,7 @@ public class NodeSerializer implements ObjectSerializer {
 			}
 		}
 
+		// 处理对象值
 		String dataString = serializeFilters == null ? JSON.toJSONString(data, serializeConfig)
 				: JSON.toJSONString(data, serializeConfig, Iterables.toArray(serializeFilters, SerializeFilter.class));
 		dataString = StringUtils.substring(dataString, 1);

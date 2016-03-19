@@ -10,8 +10,20 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.geo.format.DistanceFormatter;
+import org.springframework.data.geo.format.PointFormatter;
+import org.springframework.data.querydsl.SimpleEntityPathResolver;
+import org.springframework.data.querydsl.binding.QuerydslBindingsFactory;
+import org.springframework.data.repository.support.DomainClassConverter;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.data.web.ProxyingHandlerMethodArgumentResolver;
+import org.springframework.data.web.SortHandlerMethodArgumentResolver;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
@@ -33,6 +45,7 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.whenling.module.domain.service.EntityService;
 import com.whenling.module.web.converter.FastjsonHttpMessageConverter;
+import com.whenling.module.web.method.DefaultPredicateArgumentResolver;
 import com.whenling.module.web.method.EntityModelAttributeMethodProcessor;
 
 /**
@@ -51,6 +64,9 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 
 	@Autowired
 	private ParserConfig parserConfig;
+
+	@Autowired
+	private ApplicationContext context;
 
 	@Autowired
 	@Qualifier("mvcConversionService")
@@ -100,6 +116,67 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 		FastjsonHttpMessageConverter fastjsonMessageConverter = new FastjsonHttpMessageConverter(serializeConfig,
 				parserConfig);
 		converters.add(fastjsonMessageConverter);
+	}
+
+	@Override
+	public void addFormatters(FormatterRegistry registry) {
+		registry.addFormatter(DistanceFormatter.INSTANCE);
+		registry.addFormatter(PointFormatter.INSTANCE);
+
+		if (!(registry instanceof FormattingConversionService)) {
+			return;
+		}
+
+		FormattingConversionService conversionService = (FormattingConversionService) registry;
+
+		DomainClassConverter<FormattingConversionService> converter = new DomainClassConverter<FormattingConversionService>(
+				conversionService);
+		converter.setApplicationContext(context);
+	}
+
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(sortResolver());
+		argumentResolvers.add(pageableResolver());
+
+		ProxyingHandlerMethodArgumentResolver resolver = new ProxyingHandlerMethodArgumentResolver(
+				conversionService.getObject());
+		resolver.setBeanFactory(context);
+		resolver.setResourceLoader(context);
+
+		argumentResolvers.add(resolver);
+
+		argumentResolvers.add(0, querydslPredicateArgumentResolver());
+	}
+
+	@Bean
+	public PageableHandlerMethodArgumentResolver pageableResolver() {
+		PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver = new PageableHandlerMethodArgumentResolver(
+				sortResolver());
+		pageableHandlerMethodArgumentResolver.setPageParameterName("page");
+		pageableHandlerMethodArgumentResolver.setOneIndexedParameters(true);
+		pageableHandlerMethodArgumentResolver.setSizeParameterName("limit");
+		return pageableHandlerMethodArgumentResolver;
+	}
+
+	@Bean
+	public SortHandlerMethodArgumentResolver sortResolver() {
+		return new SortHandlerMethodArgumentResolver();
+	}
+
+	@Lazy
+	@Bean
+	public DefaultPredicateArgumentResolver querydslPredicateArgumentResolver() {
+		return new DefaultPredicateArgumentResolver(querydslBindingsFactory(), conversionService.getObject());
+	}
+
+	@Lazy
+	@Bean
+	public QuerydslBindingsFactory querydslBindingsFactory() {
+		QuerydslBindingsFactory querydslBindingsFactory = new QuerydslBindingsFactory(
+				SimpleEntityPathResolver.INSTANCE);
+		querydslBindingsFactory.setApplicationContext(context);
+		return querydslBindingsFactory;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mysema.query.types.Predicate;
 import com.whenling.module.domain.model.BaseEntity;
 import com.whenling.module.domain.model.Result;
 import com.whenling.module.domain.service.BaseService;
@@ -29,9 +30,8 @@ public abstract class EntityController<T extends BaseEntity<I>, I extends Serial
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public Page<T> list(Pageable pageable) {
-
-		return baseService.findAll(pageable);
+	public Page<T> list(Predicate predicate, Pageable pageable) {
+		return baseService.findAll(predicate, pageable);
 	}
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)

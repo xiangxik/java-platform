@@ -19,6 +19,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whenling.module.domain.model.BizEntity;
 import com.whenling.module.domain.model.Lockedable;
@@ -32,6 +33,7 @@ import com.whenling.module.domain.model.Lockedable;
  */
 @Entity
 @Table(name = "sys_user")
+@JSONType(ignores = { "userRoles" })
 public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 
 	private static final long serialVersionUID = 2839091334861650994L;

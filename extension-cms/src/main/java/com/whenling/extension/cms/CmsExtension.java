@@ -20,12 +20,12 @@ public class CmsExtension extends Extension {
 	public void init(Application app, boolean isNew, boolean isUpdate, Integer historyVersion) {
 		if (isNew) {
 			Menu contentMenu = app.addMenu("内容管理", "content", null, null, null, null);
-			app.addMenu("模板管理", "template", "Page", "app.view.cms.Template", null, contentMenu);
+			app.addMenu("模板管理", "template", "Page", "app.view.cms.TemplateList", null, contentMenu);
 		}
 		
 		if(isUpdate) {
-			app.addMenu("广告位管理", "adPosition", "Images", "app.view.cms.AdPosition", null, app.findMenuByCode("content"));
-			app.addMenu("广告管理", "ad", "Image", "app.view.cms.Ad", null, app.findMenuByCode("content"));
+			app.addMenu("广告位管理", "adPosition", "Images", "app.view.cms.AdPositionList", null, app.findMenuByCode("content"));
+			app.addMenu("广告管理", "ad", "Image", "app.view.cms.AdList", null, app.findMenuByCode("content"));
 		}
 	}
 

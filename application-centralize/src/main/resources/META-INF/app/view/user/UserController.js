@@ -1,37 +1,50 @@
 Ext.define("app.view.user.UserController", {
 	extend : "Ext.app.ViewController",
 	alias : "controller.user",
+	mixins : {
+		center : "app.view.main.CenterController"
+	},
 
-	showEditWindow : function(user) {
-		if (!this.formWindow) {
-			this.formWindow = Ext.create("Ext.window.Window", {
-				iconCls : "User",
-				modal : true,
-				layout : "fit",
-				closeAction : "hide"
+	onAdd : function(button) {
+		var code = "userform";
+		var tab = this.tabOnCenter(code);
+		if (!tab) {
+			var view = Ext.create("app.view.user.UserForm", {
+				id : code,
+				closable : true,
+				title : "新建用户",
+				iconCls : "User"
 			});
+
+			view.insert(2, {
+				fieldLabel : "密码",
+				name : "password",
+				inputType : "password",
+				allowBlank : false
+			});
+
+			tab = this.addViewToCenter(code, view);
 		}
-
-		this.formWindow.setTitle((user ? "编辑" : "新建") + "用户");
-		this.formWindow.removeAll(true);
-
-		var form = Ext.create("app.view.user.UserForm");
-
-		if (user) {
-			form.loadRecord(user);
-		}
-
-		this.formWindow.add(form);
-		this.formWindow.show();
+		this.activeTab(tab);
 	},
 
-	onAdd : function() {
-		this.showEditWindow();
-	},
 	onRowEdit : function(grid, rowIndex, colIndex) {
-		var user = grid.getStore().getAt(rowIndex);
-		this.showEditWindow(user);
+		var item = grid.getStore().getAt(rowIndex);
+		var code = "userform" + item.id;
+		var tab = this.tabOnCenter(code);
+		if (!tab) {
+			var view = Ext.create("app.view.user.UserForm", {
+				id : code,
+				closable : true,
+				title : "编辑用户【" + item.get("name") + "】",
+				iconCls : "User"
+			});
+			view.loadRecord(item);
+			tab = this.addViewToCenter(code, view);
+		}
+		this.activeTab(tab);
 	},
+
 	onRowChangPassword : function(grid, rowIndex, colIndex) {
 
 		if (!this.passwordWindow) {
@@ -51,6 +64,7 @@ Ext.define("app.view.user.UserController", {
 		var user = grid.getStore().getAt(rowIndex);
 		if (user) {
 			form.loadRecord(user);
+			this.passwordWindow.setTitle("修改用户【" + user.get("name") + "】的密码");
 		}
 
 		this.passwordWindow.add(form);
@@ -113,17 +127,17 @@ Ext.define("app.view.user.UserController", {
 	},
 
 	onFormSave : function(button) {
-		var form = button.up("form").getForm();
-		var window = button.up("window");
-
+		var userForm = button.up("userform");
+		var form = userForm.getForm();
 		var store = this.getViewModel().getStore("list");
 
+		var me = this;
 		if (form.isValid()) {
 			form.submit({
 				success : function(form, action) {
 					Ext.Msg.info("提示", "操作成功");
-					window.hide();
 					store.reload();
+					me.closeTab(userForm);
 				},
 				failure : function(form, action) {
 					Ext.Msg.error("提示", "操作失败");

@@ -8,13 +8,11 @@ Ext.define("app.view.role.RoleForm", {
 	url : Ext.ctx + "/admin/role/save",
 	border : false,
 	frame : false,
-	layout : "anchor",
-	defaults : {
-		anchor : "96%"
-	},
+	scrollable : true,
+	layout : "auto",
 	fieldDefaults : {
 		labelAlign : "left",
-		labelWidth : 60
+		labelWidth : 80
 	},
 	defaultType : "textfield",
 	items : [ {
@@ -29,6 +27,7 @@ Ext.define("app.view.role.RoleForm", {
 		name : "code",
 		allowBlank : false
 	} ],
+	buttonAlign : "left",
 	buttons : [ {
 		text : "保存",
 		formBind : true,

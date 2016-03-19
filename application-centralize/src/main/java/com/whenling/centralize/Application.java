@@ -105,12 +105,12 @@ public class Application implements ApplicationContextAware {
 
 			Menu personnelMenu = addMenu("企业管理", "enterprise", "Userhome", null, null, systemMenu);
 			addMenu("用户列表", "user", "User", "app.view.user.UserList", null, personnelMenu);
-			addMenu("角色列表", "role", "Userkey", "app.view.role.Role", null, personnelMenu);
+			addMenu("角色列表", "role", "Userkey", "app.view.role.RoleList", null, personnelMenu);
+			addMenu("菜单管理", "menu", "Applicationsidelist", "app.view.menu.Menu", null, personnelMenu);
 
 			Menu siteMenu = addMenu("站点管理", "site", "Computer", null, null, systemMenu);
 			addMenu("参数设置", "setting", "Cog", "app.view.setting.SettingForm", null, siteMenu);
 			addMenu("模块列表", "module", "Applicationcascade", "app.view.module.ModuleList", null, siteMenu);
-			addMenu("菜单管理", "menu", "Applicationsidelist", "app.view.menu.Menu", null, siteMenu);
 			addMenu("操作日志", "log", "Databasego", "app.view.log.LogList", null, siteMenu);
 		}
 	}

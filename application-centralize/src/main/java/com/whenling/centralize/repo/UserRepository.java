@@ -20,6 +20,11 @@ public interface UserRepository extends BaseRepository<User, Long>, QuerydslBind
 
 	@Override
 	default void customize(QuerydslBindings bindings, QUser root) {
+		bindings.bind(root.username).first((path, value) -> path.contains(value));
+		bindings.bind(root.name).first((path, value) -> path.contains(value));
+		bindings.bind(root.email).first((path, value) -> path.contains(value));
+		bindings.bind(root.mobile).first((path, value) -> path.contains(value));
+
 		bindings.excluding(root.password);
 	}
 }
