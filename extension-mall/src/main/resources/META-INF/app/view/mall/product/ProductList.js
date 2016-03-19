@@ -75,7 +75,7 @@ Ext.define("app.view.mall.product.ProductList", {
 		bind : {
 			store : "{list}"
 		},
-		items : [ {
+		queryItems : [ {
 			fieldLabel : "名称",
 			xtype : "textfield",
 			name : "name",

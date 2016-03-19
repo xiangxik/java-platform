@@ -79,7 +79,7 @@ Ext.define("app.view.user.UserList", {
 		bind : {
 			store : "{list}"
 		},
-		items : [ {
+		queryItems : [ {
 			fieldLabel : "账号",
 			xtype : "textfield",
 			name : "username",
