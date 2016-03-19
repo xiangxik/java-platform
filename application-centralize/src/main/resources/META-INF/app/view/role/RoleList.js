@@ -20,6 +20,14 @@ Ext.define("app.view.role.RoleList", {
 			tooltip : "编辑",
 			handler : "onRowEdit"
 		}, {
+			iconCls : "Lockkey actionColumnIcon",
+			tooltip : "授权",
+			handler : "onRowAuthorize"
+		}, {
+			iconCls : "Usergo actionColumnIcon",
+			tooltip : "用户",
+			handler : "onRowUser"
+		}, {
 			iconCls : "Delete actionColumnIcon",
 			tooltip : "删除",
 			handler : "onRowDelete"

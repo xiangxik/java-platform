@@ -38,6 +38,40 @@ Ext.define("app.view.role.RoleController", {
 		this.activeTab(tab);
 	},
 
+	onRowAuthorize : function(grid, rowIndex, colIndex) {
+		var item = grid.getStore().getAt(rowIndex);
+		var code = "roleauthform" + item.id;
+		var tab = this.tabOnCenter(code);
+		if (!tab) {
+			var view = Ext.create("app.view.role.AuthForm", {
+				id : code,
+				closable : true,
+				title : "编辑角色【" + item.get("name") + "】的权限",
+				iconCls : "Lockkey"
+			});
+			view.loadRecord(item);
+			tab = this.addViewToCenter(code, view);
+		}
+		this.activeTab(tab);
+	},
+
+	onRowUser : function(grid, rowIndex, colIndex) {
+		var item = grid.getStore().getAt(rowIndex);
+		var code = "roleuserlist" + item.id;
+		var tab = this.tabOnCenter(code);
+		if (!tab) {
+			var view = Ext.create("app.view.role.UserList", {
+				id : code,
+				closable : true,
+				title : "编辑角色【" + item.get("name") + "】的用户",
+				iconCls : "Usergo"
+			});
+			view.setRole(item);
+			tab = this.addViewToCenter(code, view);
+		}
+		this.activeTab(tab);
+	},
+
 	onRowDelete : function(grid, rowIndex, colIndex) {
 		var role = grid.getStore().getAt(rowIndex);
 		Ext.Msg.confirm("提示", "您确定要删除【" + role.get("name") + "】？", function(choice) {
@@ -111,6 +145,101 @@ Ext.define("app.view.role.RoleController", {
 				}
 			});
 		}
-	}
+	},
 
+	onAuthSave : function(button) {
+		var me = this;
+
+		var formPanel = button.up("authform");
+		var menuAuth = formPanel.down("treepanel#menuAuth");
+		var role = formPanel.getRecord();
+
+		var menus = [];
+		var menuChecked = menuAuth.getChecked();
+		Ext.each(menuChecked, function(record, index, array) {
+			if (record.get("id") != "root") {
+				menus.push(record.get("id"));
+			}
+		});
+
+		if (formPanel.getForm().isValid()) {
+			formPanel.getForm().submit({
+				params : {
+					id : role.get("id"),
+					menus : menus
+				},
+				success : function(form, action) {
+					Ext.Msg.info("提示", "操作成功");
+					me.closeTab(formPanel);
+				},
+				failure : function(form, action) {
+					Ext.Msg.error("提示", "操作失败");
+				}
+			});
+		}
+	},
+	onUserAdd : function(button) {
+		var roleUserList = button.up("roleuserlist");
+		var dialog = Ext.create("app.view.role.UserSelectDialog");
+		dialog.setUserList(roleUserList);
+		dialog.show();
+	},
+
+	onUserRemove : function(button) {
+		var roleUserList = button.up("roleuserlist");
+		var data = roleUserList.getSelection();
+		if (data.length == 0) {
+			Ext.Msg.alert("提示", "您最少要选择一条数据");
+		} else {
+			var ids = [];
+			Ext.each(data, function(record, index, array) {
+				ids.push(record.id);
+			});
+
+			Ext.Ajax.request({
+				url : Ext.ctx + "/admin/role/userRemove",
+				params : {
+					id : roleUserList.getRole().get("id"),
+					users : ids
+				},
+				method : "POST",
+				timeout : 10000,
+				success : function(response) {
+					Ext.Msg.info("提示", "操作成功");
+					roleUserList.getStore().reload();
+				}
+			});
+		}
+	},
+
+	onUserSelect : function(button) {
+		var dialog = button.up("userselectdialog");
+		var roleUserList = dialog.getUserList();
+		var grid = dialog.child("grid");
+
+		var data = grid.getSelection();
+		if (data.length == 0) {
+			Ext.Msg.alert("提示", "您最少要选择一条数据");
+		} else {
+			var ids = [];
+			Ext.each(data, function(record, index, array) {
+				ids.push(record.id);
+			});
+
+			Ext.Ajax.request({
+				url : Ext.ctx + "/admin/role/user",
+				params : {
+					id : roleUserList.getRole().get("id"),
+					users : ids
+				},
+				method : "POST",
+				timeout : 10000,
+				success : function(response) {
+					Ext.Msg.info("提示", "操作成功");
+					roleUserList.getStore().reload();
+					dialog.close();
+				}
+			});
+		}
+	}
 });

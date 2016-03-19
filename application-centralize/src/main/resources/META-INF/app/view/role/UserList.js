@@ -1,6 +1,9 @@
 Ext.define("app.view.role.UserList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.roleuserlist",
+	requires : [ "app.view.role.RoleController", "app.view.role.RoleModel", "app.ux.grid.SearchPanel" ],
+	controller : "role",
+	viewModel : "role",
 	title : "用户列表",
 	forceFit : true,
 	border : false,
@@ -55,22 +58,51 @@ Ext.define("app.view.role.UserList", {
 	getRole : function() {
 		return this.role;
 	},
-	initComponent : function() {
-		this.callParent(arguments);
-
-		var store = Ext.create("app.store.PageStore", {
-			model : "app.model.User",
-			url : Ext.ctx + "/admin/role/user",
-			extraParams : {
-				id : this.getRole().get("id")
-			}
-		});
-		this.setStore(store);
-		this.addDocked({
-			xtype : "pagingtoolbar",
-			dock : "bottom",
-			displayInfo : true,
-			store : store
-		});
+	setRole : function(role) {
+		this.role = role;
+	},
+	listeners : {
+		beforerender : function(grid, opts) {
+			var store = Ext.create("app.store.PageStore", {
+				model : "app.model.User",
+				url : Ext.ctx + "/admin/role/user",
+				extraParams : {
+					id : this.getRole().get("id")
+				}
+			});
+			this.setStore(store);
+			this.addDocked({
+				xtype : "searchpanel",
+				dock : "top",
+				store : store,
+				queryItems : [ {
+					fieldLabel : "账号",
+					xtype : "textfield",
+					name : "username",
+					columnWidth : .25
+				}, {
+					fieldLabel : "名称",
+					xtype : "textfield",
+					name : "name",
+					columnWidth : .25
+				}, {
+					fieldLabel : "邮箱",
+					xtype : "textfield",
+					name : "email",
+					columnWidth : .25
+				}, {
+					fieldLabel : "手机",
+					xtype : "textfield",
+					name : "mobile",
+					columnWidth : .25
+				} ]
+			});
+			this.addDocked({
+				xtype : "pagingtoolbar",
+				dock : "bottom",
+				displayInfo : true,
+				store : store
+			});
+		}
 	}
 });
