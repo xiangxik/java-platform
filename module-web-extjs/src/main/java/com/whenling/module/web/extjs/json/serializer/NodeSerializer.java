@@ -13,6 +13,7 @@ import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializeWriter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.whenling.module.domain.json.IncludesPropertyPreFilter;
 import com.whenling.module.domain.model.Node;
@@ -53,6 +54,12 @@ public class NodeSerializer implements ObjectSerializer {
 		out.writeFieldName("leaf");
 		out.write(node.getLeaf());
 		out.write(",");
+
+		if (!Strings.isNullOrEmpty(node.getIcon())) {
+			out.writeFieldName("icon");
+			out.writeString(node.getIcon());
+			out.write(",");
+		}
 
 		if (node.getChecked() != null) {
 			out.writeFieldName("checked");

@@ -31,6 +31,7 @@ Ext.define('app.ux.grid.SearchPanel', {
 			fieldset.add({
 				xtype : "fieldcontainer",
 				layout : "hbox",
+				margin: "0 0 0 8",
 				defaults:{
 					margin: "0 0 0 8"
 				},

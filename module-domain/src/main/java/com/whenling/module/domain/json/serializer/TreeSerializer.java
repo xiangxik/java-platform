@@ -5,10 +5,13 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 import com.whenling.module.domain.model.Node;
 import com.whenling.module.domain.model.Tree;
 
@@ -34,7 +37,11 @@ public class TreeSerializer implements ObjectSerializer {
 
 		Tree<?> tree = (Tree<?>) object;
 		if (tree.isCheckable()) {
-			visit(tree.getRoots(), tree.getChecked());
+			visitCheck(tree.getRoots(), tree.getChecked());
+		}
+
+		if (!Strings.isNullOrEmpty(tree.getIconProperty())) {
+			visitIcon(tree.getRoots(), tree.getIconProperty());
 		}
 
 		if (tree.isExpandAll()) {
@@ -46,19 +53,32 @@ public class TreeSerializer implements ObjectSerializer {
 
 	private void expandAll(List<? extends Node<?>> nodes) {
 		if (nodes != null) {
-			for (Node<?> node : nodes) {
+			nodes.forEach((node) -> {
 				node.setExpanded(true);
 				expandAll(node.getChildren());
-			}
+			});
 		}
 	}
 
-	private void visit(List<? extends Node<?>> nodes, Set<?> checked) {
+	private void visitIcon(List<? extends Node<?>> nodes, String iconProperty) {
 		if (nodes != null) {
-			for (Node<?> node : nodes) {
+			nodes.forEach((node) -> {
+				try {
+					node.setIcon(BeanUtils.getProperty(node.getData(), iconProperty));
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				visitIcon(node.getChildren(), iconProperty);
+			});
+		}
+	}
+
+	private void visitCheck(List<? extends Node<?>> nodes, Set<?> checked) {
+		if (nodes != null) {
+			nodes.forEach((node) -> {
 				node.setChecked(isChecked(node, checked));
-				visit(node.getChildren(), checked);
-			}
+				visitCheck(node.getChildren(), checked);
+			});
 		}
 	}
 

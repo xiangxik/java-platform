@@ -26,4 +26,8 @@ public interface Tree<T extends Treeable<T>> {
 	void makeCheckable();
 
 	void makeExpandAll();
+
+	void setIconProperty(String propertyName);
+
+	String getIconProperty();
 }

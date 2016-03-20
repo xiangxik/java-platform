@@ -11,6 +11,7 @@ Ext.define("app.view.cms.TemplateList", {
 	items : [ {
 		region : "west",
 		xtype : "treepanel",
+		iconCls : "Page",
 		bind : {
 			store : "{files}"
 		},
@@ -23,18 +24,7 @@ Ext.define("app.view.cms.TemplateList", {
 		collapsible : true,
 		border : false,
 		frame : false,
-		split : true,
-		tbar : [ {
-			xtype : "button",
-			text : "添加",
-			iconCls : "Add",
-			handler : "onAdd"
-		}, {
-			xtype : "button",
-			text : "删除",
-			iconCls : "Delete",
-			handler : "onDelete"
-		} ]
+		split : true
 	}, {
 		region : "center",
 		xtype : "form",

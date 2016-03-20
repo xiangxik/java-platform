@@ -1,4 +1,4 @@
-package com.whenling.extension.cms.web.template;
+package com.whenling.extension.cms.web;
 
 import java.io.File;
 import java.io.IOException;

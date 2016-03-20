@@ -19,6 +19,8 @@ public class Node<T extends Treeable<T>> {
 
 	private Boolean expanded;
 
+	private String icon;
+
 	public Boolean getLeaf() {
 		List<Node<T>> children = getChildren();
 		return children == null || children.size() == 0;
@@ -54,6 +56,14 @@ public class Node<T extends Treeable<T>> {
 
 	public void setExpanded(Boolean expanded) {
 		this.expanded = expanded;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 }

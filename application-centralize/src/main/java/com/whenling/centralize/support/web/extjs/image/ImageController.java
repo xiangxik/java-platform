@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.beetl.core.BeetlKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -113,7 +114,12 @@ public class ImageController {
 	@RequestMapping(method = RequestMethod.GET, params = "action=imagesList")
 	@ResponseBody
 	public Page<ImageInfo> browser(String path, Pageable pageable) {
-		return imageInfoService.findAll(pageable);
+		return imageInfoService.findAll(pageable).map((info) -> {
+			String baseName = FilenameUtils.getBaseName(info.getName());
+			info.setName(StringUtils.abbreviateMiddle(baseName, "...", 12) + "."
+					+ FilenameUtils.getExtension(info.getName()));
+			return info;
+		});
 	}
 
 }

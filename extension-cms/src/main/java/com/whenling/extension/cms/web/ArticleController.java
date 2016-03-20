@@ -1,4 +1,4 @@
-package com.whenling.extension.cms.web.article;
+package com.whenling.extension.cms.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

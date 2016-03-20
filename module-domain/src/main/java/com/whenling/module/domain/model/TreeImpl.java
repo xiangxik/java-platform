@@ -17,6 +17,7 @@ public class TreeImpl<T extends Treeable<T>> implements Tree<T> {
 	private Set<T> checked;
 	private boolean checkable = false;
 	private boolean expendAll = false;
+	private String iconProperty;
 
 	public TreeImpl(List<Node<T>> roots) {
 		this.roots = roots;
@@ -55,6 +56,16 @@ public class TreeImpl<T extends Treeable<T>> implements Tree<T> {
 	@Override
 	public boolean isExpandAll() {
 		return expendAll;
+	}
+
+	@Override
+	public void setIconProperty(String propertyName) {
+		this.iconProperty = propertyName;
+	}
+
+	@Override
+	public String getIconProperty() {
+		return this.iconProperty;
 	}
 
 }
