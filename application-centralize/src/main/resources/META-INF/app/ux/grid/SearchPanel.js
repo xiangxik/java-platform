@@ -31,13 +31,14 @@ Ext.define('app.ux.grid.SearchPanel', {
 			fieldset.add({
 				xtype : "fieldcontainer",
 				layout : "hbox",
-				margin: "0 0 0 8",
-				defaults:{
-					margin: "0 0 0 8"
+				margin : "0 0 0 8",
+				defaults : {
+					margin : "0 0 0 8"
 				},
 				items : [
 						{
 							text : "搜索",
+							iconCls : "Magnifier",
 							xtype : "button",
 							handler : function() {
 								var formPanel = this.up("form");
@@ -65,6 +66,7 @@ Ext.define('app.ux.grid.SearchPanel', {
 							}
 						}, {
 							text : "重置",
+							iconCls : "Arrowredo",
 							xtype : "button",
 							handler : function() {
 								var formPanel = this.up("form");

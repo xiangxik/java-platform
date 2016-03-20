@@ -3,10 +3,13 @@ package com.whenling.centralize.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.whenling.centralize.MainSetting;
 
 /**
  * 系统控制器
@@ -19,13 +22,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/appinfo")
 public class SystemController {
 
+	@Autowired
+	private MainSetting mainSetting;
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> get() {
 		Map<String, Object> appInfo = new HashMap<>();
-		appInfo.put("name", "通用后台管理系统");
-		appInfo.put("company", "广州当凌信息科技有限公司");
-		appInfo.put("version", "1.0");
+		appInfo.put("name", mainSetting.getName());
+		appInfo.put("company", mainSetting.getCompany());
+		appInfo.put("version", mainSetting.getVersion());
 		return appInfo;
 	}
 }
