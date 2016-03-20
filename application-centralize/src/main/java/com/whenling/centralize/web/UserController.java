@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+import com.whenling.centralize.model.Menu;
 import com.whenling.centralize.model.User;
-import com.whenling.centralize.service.MenuService;
 import com.whenling.centralize.service.UserService;
 import com.whenling.centralize.support.web.CurrentUser;
 import com.whenling.module.domain.model.Result;
+import com.whenling.module.domain.model.Tree;
 import com.whenling.module.web.controller.EntityController;
 
 @Controller
@@ -31,9 +32,6 @@ public class UserController extends EntityController<User, Long> {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private MenuService menuService;
 
 	@Override
 	public Result save(User entity, BindingResult bindingResult) {
@@ -79,7 +77,9 @@ public class UserController extends EntityController<User, Long> {
 	@ResponseBody
 	public Map<String, Object> getReference(@CurrentUser(required = true) User user) {
 		Map<String, Object> reference = new HashMap<>();
-		reference.put("menus", menuService.findTree(null));
+		Tree<Menu> menus = userService.getMenus(user);
+		menus.makeExpandAll();
+		reference.put("menus", menus);
 		reference.put("user", user);
 		return reference;
 	}

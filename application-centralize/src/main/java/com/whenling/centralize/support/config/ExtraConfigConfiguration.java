@@ -15,7 +15,7 @@ public class ExtraConfigConfiguration {
 
 	@Bean
 	public DatabaseConfiguration mainConfig() {
-		return new DefaultDatabaseConfiguration(dataSource, "main");
+		return new DefaultDatabaseConfiguration(dataSource, "main", "基础配置");
 	}
 
 }

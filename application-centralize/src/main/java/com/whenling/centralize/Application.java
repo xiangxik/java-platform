@@ -26,6 +26,7 @@ import com.whenling.centralize.service.ExtensionService;
 import com.whenling.centralize.service.MenuService;
 import com.whenling.centralize.service.RoleService;
 import com.whenling.centralize.service.UserService;
+import com.whenling.centralize.support.config.ConfigModel;
 
 /**
  * 应用
@@ -52,6 +53,8 @@ public class Application implements ApplicationContextAware {
 	@Autowired
 	private RoleService roleService;
 
+	private List<ConfigModel> configurations = new ArrayList<>();
+
 	@PostConstruct
 	public void init() {
 		ExtensionEntity app = extensionService.findApplication();
@@ -65,9 +68,7 @@ public class Application implements ApplicationContextAware {
 			app.setCreatedBy(getAuthor());
 			app.setCreatedDate(new Date());
 			app.setType(Type.Application);
-		}
 
-		if (isUpdate) {
 			app.setCode("main");
 			app.setName("主应用");
 			app.setVersion(getVersion());
@@ -76,6 +77,14 @@ public class Application implements ApplicationContextAware {
 
 			extensionService.save(app);
 		}
+
+		if (isUpdate) {
+
+		}
+
+		addSetting("mainConfig", "系统名称", MainSetting.KEY_NAME, "通用后台管理系统");
+		addSetting("mainConfig", "公司名称", MainSetting.KEY_COMPANY, "广州当凌信息科技有限公司");
+		addSetting("mainConfig", "系统版本", MainSetting.KEY_VERSION, "1.0");
 
 		initExtension();
 	}
@@ -173,12 +182,20 @@ public class Application implements ApplicationContextAware {
 		return menuService.findByCode(code);
 	}
 
+	public void addSetting(String configName, String display, String key, Object defaultValue) {
+		configurations.add(new ConfigModel(configName, display, key, defaultValue));
+	}
+
+	public List<ConfigModel> getSettings() {
+		return this.configurations;
+	}
+
 	public String getAuthor() {
 		return "ken";
 	}
 
 	public Integer getVersion() {
-		return 1;
+		return 2;
 	}
 
 	private static ApplicationContext applicationContext;

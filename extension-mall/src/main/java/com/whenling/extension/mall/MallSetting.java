@@ -12,15 +12,20 @@ import com.whenling.centralize.Application;
 @Component
 public class MallSetting {
 
+	public static final String KEY_IS_TAX_PRICE_ENABLED = "isTaxPriceEnabled";
+	public static final String KEY_TAX_RATE = "taxRate";
+	public static final String KEY_PRICE_ROUND_TYPE = "priceRoundType";
+	public static final String KEY_PRICE_SCALE = "priceScale";
+
 	@Resource(name = "mallConfig")
-	private Configuration configuration;
+	private Configuration mallConfig;
 
 	public Boolean getIsTaxPriceEnabled() {
-		return configuration.getBoolean("isTaxPriceEnabled");
+		return mallConfig.getBoolean(KEY_IS_TAX_PRICE_ENABLED);
 	}
 
 	public Double getTaxRate() {
-		return configuration.getDouble("taxRate");
+		return mallConfig.getDouble(KEY_TAX_RATE);
 	}
 
 	/**
@@ -39,11 +44,11 @@ public class MallSetting {
 	}
 
 	public RoundType getPriceRoundType() {
-		return RoundType.valueOf(configuration.getString("priceRoundType"));
+		return RoundType.valueOf(mallConfig.getString(KEY_PRICE_ROUND_TYPE));
 	}
 
 	public Integer getPriceScale() {
-		return configuration.getInt("priceScale");
+		return mallConfig.getInt(KEY_PRICE_SCALE);
 	}
 
 	/**

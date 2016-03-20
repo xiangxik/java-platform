@@ -44,7 +44,12 @@ public class TreeRepositoryImpl<T extends TreeEntity<?, I, T>, I extends Seriali
 	@Override
 	public Tree<T> findTree(T current) {
 		List<T> allChildren = current == null ? findAll() : findAllChildren(current);
-		List<Node<T>> directSubordinates = findDirectSubordinates(current, allChildren);
+		return toTree(current, allChildren);
+	}
+
+	@Override
+	public Tree<T> toTree(T current, List<T> nodes) {
+		List<Node<T>> directSubordinates = findDirectSubordinates(current, nodes);
 		if (current != null) {
 			Node<T> root = toNode(current, directSubordinates);
 			directSubordinates = new ArrayList<>();

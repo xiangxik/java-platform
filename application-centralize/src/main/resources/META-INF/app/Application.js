@@ -10,6 +10,20 @@ Ext.define('app.Application', {
 	},
 
 	onExtraApply : function() {
+
+		Ext.override(Ext.form.field.Base, {
+			initComponent : function() {
+				if (this.allowBlank !== undefined && !this.allowBlank) {
+					if (this.afterLabelTextTpl) {
+						this.afterLabelTextTpl.push("<span style=\"color:red;font-weight:bold\" data-qtip=\"必填选项\">*</span>");
+					} else {
+						this.afterLabelTextTpl = [ "<span style=\"color:red;font-weight:bold\" data-qtip=\"必填选项\">*</span>" ];
+					}
+				}
+				this.callParent(arguments);
+			}
+		});
+
 		Ext.apply(Ext.Msg, {
 			info : function(title, content, opts) {
 				var configs = {

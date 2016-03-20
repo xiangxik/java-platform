@@ -1,6 +1,7 @@
 package com.whenling.centralize.service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.util.SimpleByteSource;
@@ -8,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.google.common.collect.Lists;
 import com.whenling.centralize.model.Menu;
 import com.whenling.centralize.model.User;
 import com.whenling.centralize.repo.UserRepository;
 import com.whenling.centralize.support.security.DatabaseRealm;
+import com.whenling.module.domain.model.Tree;
 import com.whenling.module.domain.service.BaseService;
 import com.whenling.module.security.shiro.Principal;
 
@@ -72,8 +75,12 @@ public class UserService extends BaseService<User, Long> {
 		return user;
 	}
 
-	public List<Menu> getMenus(User user) {
-		return menuService.findRoots();
+	public Tree<Menu> getMenus(User user) {
+		Set<Menu> menus = new HashSet<>();
+		user.getUserRoles().forEach(userRole -> {
+			menus.addAll(userRole.getRole().getMenus());
+		});
+		return menuService.toTree(null, Lists.newArrayList(menus));
 	}
 
 }

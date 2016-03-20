@@ -1,7 +1,7 @@
 Ext.define("app.view.cms.AdList", {
 	extend : "Ext.grid.Panel",
 	alias : "widget.ad",
-	requires : [ "app.view.cms.AdController", "app.view.cms.AdModel" ],
+	requires : [ "app.view.cms.AdController", "app.view.cms.AdModel", "app.ux.grid.SearchPanel" ],
 	title : "广告列表",
 	controller : "ad",
 	viewModel : "ad",
@@ -63,6 +63,18 @@ Ext.define("app.view.cms.AdList", {
 		store : "{list}"
 	},
 	dockedItems : [ {
+		xtype : "searchpanel",
+		dock : "top",
+		bind : {
+			store : "{list}"
+		},
+		queryItems : [ {
+			fieldLabel : "标题",
+			xtype : "textfield",
+			name : "title",
+			columnWidth : .25
+		} ]
+	}, {
 		xtype : "pagingtoolbar",
 		dock : "bottom",
 		displayInfo : true,

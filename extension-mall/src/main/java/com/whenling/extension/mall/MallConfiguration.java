@@ -17,7 +17,7 @@ public class MallConfiguration {
 
 	@Bean
 	public DatabaseConfiguration mallConfig() {
-		return new DefaultDatabaseConfiguration(dataSource, "mall");
+		return new DefaultDatabaseConfiguration(dataSource, "mall", "商城配置");
 	}
 
 }

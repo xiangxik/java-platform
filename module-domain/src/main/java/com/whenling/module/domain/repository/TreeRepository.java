@@ -26,4 +26,5 @@ public interface TreeRepository<T extends TreeEntity<?, I, T>, I extends Seriali
 
 	Tree<T> findTree(T current);
 
+	Tree<T> toTree(T current, List<T> nodes);
 }

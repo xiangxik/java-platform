@@ -30,6 +30,10 @@ public abstract class TreeService<T extends TreeEntity<?, I, T>, I extends Seria
 		return getTreeRepository().findTree(current);
 	}
 
+	public Tree<T> toTree(T current, List<T> nodes) {
+		return getTreeRepository().toTree(current, nodes);
+	}
+
 	protected TreeRepository<T, I> getTreeRepository() {
 		return ((TreeRepository<T, I>) baseRepository);
 	}
