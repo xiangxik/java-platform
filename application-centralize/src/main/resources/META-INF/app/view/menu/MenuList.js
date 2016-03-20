@@ -31,6 +31,10 @@ Ext.define("app.view.menu.MenuList", {
 		dataIndex : "config",
 		flex : 2
 	}, {
+		text : "排序号",
+		dataIndex : "sortNo",
+		flex : 1
+	}, {
 		text : "操作",
 		xtype : "actioncolumn",
 		flex : 1,

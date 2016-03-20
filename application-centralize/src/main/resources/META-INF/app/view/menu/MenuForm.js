@@ -47,6 +47,11 @@ Ext.define("app.view.menu.MenuForm", {
 	}, {
 		fieldLabel : "配置参数",
 		name : "config"
+	}, {
+		fieldLabel : "排序号",
+		xtype : "numberfield",
+		allowDecimals : false,
+		name : "sortNo"
 	} ],
 	buttonAlign : "left",
 	buttons : [ {

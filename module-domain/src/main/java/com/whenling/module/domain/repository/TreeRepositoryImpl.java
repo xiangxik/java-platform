@@ -2,6 +2,7 @@ package com.whenling.module.domain.repository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 
 import com.google.common.base.Objects;
 import com.whenling.module.domain.model.Node;
+import com.whenling.module.domain.model.SortNoComparator;
 import com.whenling.module.domain.model.Tree;
 import com.whenling.module.domain.model.TreeEntity;
 import com.whenling.module.domain.model.TreeImpl;
@@ -49,6 +51,7 @@ public class TreeRepositoryImpl<T extends TreeEntity<?, I, T>, I extends Seriali
 
 	@Override
 	public Tree<T> toTree(T current, List<T> nodes) {
+		Collections.sort(nodes, SortNoComparator.COMPARATOR);
 		List<Node<T>> directSubordinates = findDirectSubordinates(current, nodes);
 		if (current != null) {
 			Node<T> root = toNode(current, directSubordinates);

@@ -16,6 +16,9 @@ Ext.define("app.model.Menu", {
 		name : "config",
 		type : "string"
 	}, {
+		name : "sortNo",
+		type : "int"
+	}, {
 		name : "parent",
 		mapping : "parent.id",
 		type : "int"
