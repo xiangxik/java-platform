@@ -113,6 +113,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 		converters.add(new ResourceHttpMessageConverter());
 		converters.add(new SourceHttpMessageConverter<Source>());
 		converters.add(new AllEncompassingFormHttpMessageConverter());
+	}
+
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		FastjsonHttpMessageConverter fastjsonMessageConverter = new FastjsonHttpMessageConverter(serializeConfig,
 				parserConfig);
 		converters.add(fastjsonMessageConverter);

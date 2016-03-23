@@ -78,8 +78,7 @@ Ext.define("app.view.mall.product.ProductList", {
 		queryItems : [ {
 			fieldLabel : "名称",
 			xtype : "textfield",
-			name : "name",
-			columnWidth : .25
+			name : "name"
 		}, {
 			fieldLabel : "商品分类",
 			name : "productCategory",
@@ -89,8 +88,7 @@ Ext.define("app.view.mall.product.ProductList", {
 			rootVisible : false,
 			store : Ext.create("app.store.ProductCategories", {
 				rootVisible : true
-			}),
-			columnWidth : .25
+			})
 		} ]
 	}, {
 		xtype : "pagingtoolbar",

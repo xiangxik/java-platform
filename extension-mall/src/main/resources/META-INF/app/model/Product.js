@@ -63,7 +63,8 @@ Ext.define("app.model.Product", {
 		dateFormat : "time"
 	}, {
 		name : "lastModifiedDate",
-		type : "date"
+		type : "date",
+		dateFormat : "time"
 	}, {
 		name : "keyword",
 		type : "string"

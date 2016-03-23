@@ -71,8 +71,7 @@ Ext.define("app.view.cms.AdList", {
 		queryItems : [ {
 			fieldLabel : "标题",
 			xtype : "textfield",
-			name : "title",
-			columnWidth : .25
+			name : "title"
 		} ]
 	}, {
 		xtype : "pagingtoolbar",

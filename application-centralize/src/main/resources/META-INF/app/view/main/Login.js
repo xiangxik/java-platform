@@ -42,14 +42,12 @@ Ext.define("app.view.main.Login", {
 		items : [ {
 			xtype : 'textfield',
 			name : 'username',
-			fieldLabel : '用户名',
-			allowBlank : false
+			fieldLabel : '用户名'
 		}, {
 			xtype : 'textfield',
 			name : 'password',
 			inputType : 'password',
-			fieldLabel : '密码',
-			allowBlank : false
+			fieldLabel : '密码'
 		}, {
 			xtype : "fieldcontainer",
 			fieldLabel : '验证码',

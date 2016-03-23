@@ -82,23 +82,19 @@ Ext.define("app.view.user.UserList", {
 		queryItems : [ {
 			fieldLabel : "账号",
 			xtype : "textfield",
-			name : "username",
-			columnWidth : .25
+			name : "username"
 		}, {
 			fieldLabel : "名称",
 			xtype : "textfield",
-			name : "name",
-			columnWidth : .25
+			name : "name"
 		}, {
 			fieldLabel : "邮箱",
 			xtype : "textfield",
-			name : "email",
-			columnWidth : .25
+			name : "email"
 		}, {
 			fieldLabel : "手机",
 			xtype : "textfield",
-			name : "mobile",
-			columnWidth : .25
+			name : "mobile"
 		} ]
 	}, {
 		xtype : "pagingtoolbar",

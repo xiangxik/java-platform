@@ -76,6 +76,9 @@ public class UserService extends BaseService<User, Long> {
 	}
 
 	public Tree<Menu> getMenus(User user) {
+		if (user.isSuperAdmin()) {
+			return menuService.findTree(null);
+		}
 		Set<Menu> menus = new HashSet<>();
 		user.getUserRoles().forEach(userRole -> {
 			menus.addAll(userRole.getRole().getMenus());
