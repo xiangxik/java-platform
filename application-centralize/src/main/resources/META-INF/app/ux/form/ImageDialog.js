@@ -166,8 +166,8 @@ Ext
 															+ '删除图片'
 															+ '" href="#" img_id="{id}" class="x-htmleditor-imageupload-delete"></a></tpl></td><td><div class="x-htmleditor-imageupload-thumbcontainer"><img src="{thumbnail}"/></div></td></tr><tr><td colspan="2" style="text-align:center;font-size:12px">{name}</td></tr></table></tpl>',
 													listConfig : {
-														loadingText : 'Searching...',
-														emptyText : 'No matching posts found.',
+														loadingText : '搜索中...',
+														emptyText : '没有找到匹配的数据',
 														listeners : {
 															el : {
 																click : {
