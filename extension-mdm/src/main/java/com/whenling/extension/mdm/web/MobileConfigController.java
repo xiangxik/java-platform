@@ -10,18 +10,21 @@ import java.security.cert.X509Certificate;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.ServletContextResource;
 
 import com.google.common.io.Files;
 import com.whenling.extension.mdm.support.openssl.OpenSSLExecutor;
@@ -43,6 +46,27 @@ public class MobileConfigController extends BaseController {
 	@Autowired
 	private OpenSSLExecutor executor;
 
+	@Autowired
+	private ServletContext servletContext;
+
+	@Value("${mdm.checkInURL?:https://www.whenling.com:8443/checkin}")
+	private String checkInURL;
+
+	@Value("${mdm.serverURL?:https://www.whenling.com:8443/server}")
+	private String serverURL;
+
+	@Value("${mdm.clientP12Path?:/WEB-INF/ssl/client.p12}")
+	private String clientP12Path;
+
+	@Value("${mdm.serverCertPath?:/WEB-INF/ssl/www.whenling.com.crt}")
+	private String serverCertPath;
+
+	@Value("${mdm.serverKeyNoPassPath?:/WEB-INF/ssl/www.whenling.com.nopass.key}")
+	private String serverKeyNoPassPath;
+
+	@Value("${mdm.rootBundlePath?:/WEB-INF/ssl/root_bundle.crt}")
+	private String rootBundlePath;
+
 	private static AtomicLong unique_num = new AtomicLong(0l);
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -62,15 +86,13 @@ public class MobileConfigController extends BaseController {
 					Base64.encodeBase64String(ca.getEncoded()));
 
 			String identityCertificateUUID = UUID.randomUUID().toString();
-			String checkInURL = "https://www.whenling.com:8443/checkin";
-			String serverURL = "https://www.whenling.com:8443/server";
 			MDMConfig mdmConfig = new MDMConfig(identityCertificateUUID, serverURL, topic);
 			mdmConfig.setPayloadDisplayName("MDM配置");
 			mdmConfig.setSignMessage(false);
 			mdmConfig.setCheckInURL(checkInURL);
 			mdmConfig.setCheckOutWhenRemoved(true);
 
-			Resource clientCertificate = new ClassPathResource("/ssl/client.p12");
+			Resource clientCertificate = new ServletContextResource(servletContext, clientP12Path);
 			Pkcs12CertificateConfig pkcs12CertificateConfig = new Pkcs12CertificateConfig("client.p12",
 					Base64.encodeBase64String(IOUtils.toByteArray(clientCertificate.getInputStream())), "asd123");
 			pkcs12CertificateConfig.setPayloadUUID(identityCertificateUUID);
@@ -111,14 +133,14 @@ public class MobileConfigController extends BaseController {
 
 		Files.write(IOUtils.toByteArray(in), noSigned);
 
-		Resource serverCert = new ClassPathResource("/ssl/www.whenling.com.crt");
-		Resource serverKeyNoPass = new ClassPathResource("/ssl/www.whenling.com.nopass.key");
-		Resource caPem = new ClassPathResource("/ssl/root_bundle.crt");
+		Resource serverCert = new ServletContextResource(servletContext, serverCertPath);
+		Resource serverKeyNoPass = new ServletContextResource(servletContext, serverKeyNoPassPath);
+		Resource rootBundle = new ServletContextResource(servletContext, rootBundlePath);
 
 		executor.exec(
 				String.format("smime -sign -in %s -out %s -signer %s -inkey %s -certfile %s -outform der -nodetach",
 						noSignedFilename, signedFilename, serverCert.getFile().getAbsolutePath(),
-						serverKeyNoPass.getFile().getAbsolutePath(), caPem.getFile().getAbsolutePath()));
+						serverKeyNoPass.getFile().getAbsolutePath(), rootBundle.getFile().getAbsolutePath()));
 
 		byte[] result = IOUtils.toByteArray(new FileInputStream(signed));
 
