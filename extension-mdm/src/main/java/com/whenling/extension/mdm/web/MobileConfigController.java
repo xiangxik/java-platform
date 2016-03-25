@@ -71,7 +71,7 @@ public class MobileConfigController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public byte[] get(HttpServletResponse response) {
+	public void get(HttpServletResponse response) {
 
 		Resource customerCertificate = new ClassPathResource("/cert/customer_certificate.pem");
 		ConfigurationProfileConfig configurationProfileConfig = new ConfigurationProfileConfig();
@@ -108,8 +108,8 @@ public class MobileConfigController extends BaseController {
 
 			response.setContentType("application/x-apple-aspen-config");
 
-			return signature(IOUtils.toInputStream(xmlConfig));
-
+			byte[] result = signature(IOUtils.toInputStream(xmlConfig));
+			IOUtils.write(result, response.getOutputStream());
 		} catch (CertificateException | IOException e) {
 			throw new RuntimeException(e);
 		}
