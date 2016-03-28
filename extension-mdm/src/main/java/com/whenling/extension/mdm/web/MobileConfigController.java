@@ -91,7 +91,7 @@ public class MobileConfigController extends BaseController {
 
 			String identityCertificateUUID = UUID.randomUUID().toString();
 			MDMConfig mdmConfig = new MDMConfig(identityCertificateUUID, serverURL, topic);
-			mdmConfig.setPayloadDisplayName("MDM配置");
+			mdmConfig.setPayloadDisplayName("移动设备管理配置");
 			mdmConfig.setSignMessage(false);
 			mdmConfig.setCheckInURL(checkIn);
 			mdmConfig.setCheckOutWhenRemoved(true);
@@ -105,8 +105,8 @@ public class MobileConfigController extends BaseController {
 			configurationProfileConfig.setPayloadContent(
 					new ConfigPayload[] { pkcs1CertificateConfig, mdmConfig, pkcs12CertificateConfig });
 			configurationProfileConfig.setPayloadIdentifier("com.whenling.mdm");
-			configurationProfileConfig.setPayloadDisplayName("移动城堡设备管理配置文件");
-			configurationProfileConfig.setPayloadDescription("由广州当凌信息科技有限公司开发和管理的设备管理配置文件");
+			configurationProfileConfig.setPayloadDisplayName("移动城堡配置");
+			configurationProfileConfig.setPayloadDescription("由广州当凌信息科技有限公司开发");
 
 			String xmlConfig = payloadStream.toXML(configurationProfileConfig);
 
