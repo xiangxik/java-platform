@@ -20,7 +20,6 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
@@ -28,6 +27,7 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Strings;
+import com.whenling.module.base.SpringContext;
 import com.whenling.module.domain.model.Result;
 import com.whenling.module.web.util.WebHelper;
 
@@ -41,9 +41,6 @@ import com.whenling.module.web.util.WebHelper;
 public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-
-	@Autowired
-	private SerializeConfig serializeConfig;
 
 	@Override
 	protected void saveRequestAndRedirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
@@ -101,7 +98,7 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 				: Charset.forName(characterEncoding);
 		OutputStreamWriter out = new OutputStreamWriter(response.getOutputStream(), charset);
 		SerializeWriter writer = new SerializeWriter(out);
-		JSONSerializer serializer = new JSONSerializer(writer, this.serializeConfig);
+		JSONSerializer serializer = new JSONSerializer(writer, SpringContext.getBean(SerializeConfig.class));
 		serializer.config(SerializerFeature.DisableCircularReferenceDetect, true);
 		serializer.write(result);
 		writer.flush();

@@ -41,6 +41,10 @@ public class UserService extends BaseService<User, Long> {
 		return userRepository.findByUsername(username);
 	}
 
+	public User findByMobile(String mobile) {
+		return userRepository.findByMobile(mobile);
+	}
+
 	public User getCurrentUser() {
 		Object principal = SecurityUtils.getSubject().getPrincipal();
 		if (principal != null && principal instanceof Principal) {

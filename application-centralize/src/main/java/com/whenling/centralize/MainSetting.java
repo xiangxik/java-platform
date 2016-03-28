@@ -5,6 +5,8 @@ import javax.annotation.Resource;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.stereotype.Component;
 
+import com.whenling.module.base.SpringContext;
+
 @Component
 public class MainSetting {
 
@@ -28,6 +30,6 @@ public class MainSetting {
 	}
 
 	public static MainSetting get() {
-		return Application.getBean(MainSetting.class);
+		return SpringContext.getBean(MainSetting.class);
 	}
 }

@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.stereotype.Component;
 
-import com.whenling.centralize.Application;
+import com.whenling.module.base.SpringContext;
 
 @Component
 public class MallSetting {
@@ -74,6 +74,6 @@ public class MallSetting {
 	}
 
 	public static MallSetting get() {
-		return Application.getBean(MallSetting.class);
+		return SpringContext.getBean(MallSetting.class);
 	}
 }

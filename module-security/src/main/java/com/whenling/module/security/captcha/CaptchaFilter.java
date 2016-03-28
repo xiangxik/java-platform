@@ -3,6 +3,8 @@ package com.whenling.module.security.captcha;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
@@ -39,7 +41,7 @@ public class CaptchaFilter extends OncePerRequestFilter {
 
 	public static final String PARAM_CAPTCHA = "captcha";
 
-	private String[] distinguishPaths = new String[] { "/admin" };
+	private List<String> distinguishPaths = new ArrayList<>();
 
 	@Autowired
 	private CaptchaService captchaService;
@@ -90,6 +92,10 @@ public class CaptchaFilter extends OncePerRequestFilter {
 			}
 		}
 		return false;
+	}
+
+	public List<String> getDistinguishPaths() {
+		return distinguishPaths;
 	}
 
 	private boolean isSubmission(HttpServletRequest request, HttpServletResponse response) {

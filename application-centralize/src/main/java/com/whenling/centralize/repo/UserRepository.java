@@ -18,6 +18,8 @@ public interface UserRepository extends BaseRepository<User, Long>, QuerydslBind
 
 	User findByUsername(String username);
 
+	User findByMobile(String mobile);
+
 	@Override
 	default void customize(QuerydslBindings bindings, QUser root) {
 		bindings.bind(root.username).first((path, value) -> path.contains(value));

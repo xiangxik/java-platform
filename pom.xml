@@ -302,5 +302,6 @@
 		<module>extension-mall</module>
 		<module>extension-wechat</module>
 		<module>extension-mdm</module>
+		<module>extension-jms</module>
 	</modules>
 </project>

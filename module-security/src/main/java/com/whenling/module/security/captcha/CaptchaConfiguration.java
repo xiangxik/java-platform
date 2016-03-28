@@ -68,7 +68,7 @@ public class CaptchaConfiguration {
 		ColorGenerator colorGenerator = new RandomRangeColorGenerator(new int[] { 0, 255 }, new int[] { 0, 255 },
 				new int[] { 0, 255 });
 		return new ComposedWordToImage(new RandomFontGenerator(12, 20, new Font[] { new Font("Arial", 0, 1) }),
-				new UniColorBackgroundGenerator(60, 22, colorGenerator), new SimpleTextPaster(4, 4, colorGenerator));
+				new UniColorBackgroundGenerator(90, 34, colorGenerator), new SimpleTextPaster(4, 4, colorGenerator));
 	}
 
 	@Bean
