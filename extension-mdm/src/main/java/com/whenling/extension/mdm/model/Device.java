@@ -1,7 +1,10 @@
 package com.whenling.extension.mdm.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.whenling.centralize.model.User;
@@ -34,6 +37,10 @@ public class Device extends BizEntity<User, Long> {
 
 	@Lob
 	private String unlockToken;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "owner_id", nullable = false)
+	private User owner;
 
 	public String getName() {
 		return name;
@@ -145,6 +152,14 @@ public class Device extends BizEntity<User, Long> {
 
 	public void setSIMCarrierNetwork(String sIMCarrierNetwork) {
 		SIMCarrierNetwork = sIMCarrierNetwork;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 }

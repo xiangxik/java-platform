@@ -38,8 +38,13 @@ public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodAr
 
 		User user = userService.getCurrentUser();
 		if (user == null) {
-			Assert.isTrue(!required);
+			if (currentUser.defaultAdmin()) {
+				user = userService.findSuperAdmin();
+			}
+		}
 
+		if (user == null) {
+			Assert.isTrue(!required);
 			return null;
 		}
 

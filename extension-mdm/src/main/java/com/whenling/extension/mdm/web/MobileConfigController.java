@@ -21,12 +21,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.ServletContextResource;
 
 import com.google.common.io.Files;
+import com.whenling.centralize.model.User;
 import com.whenling.extension.mdm.support.openssl.OpenSSLExecutor;
 import com.whenling.extension.mdm.support.payload.config.ConfigPayload;
 import com.whenling.extension.mdm.support.payload.config.ConfigurationProfileConfig;
@@ -69,9 +71,9 @@ public class MobileConfigController extends BaseController {
 
 	private static AtomicLong unique_num = new AtomicLong(0l);
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/{owner}", method = RequestMethod.GET)
 	@ResponseBody
-	public void get(HttpServletResponse response) {
+	public void getByOwner(@PathVariable("owner") User owner, HttpServletResponse response) {
 
 		Resource customerCertificate = new ClassPathResource("/cert/customer_certificate.pem");
 		ConfigurationProfileConfig configurationProfileConfig = new ConfigurationProfileConfig();
@@ -85,11 +87,13 @@ public class MobileConfigController extends BaseController {
 			Pkcs1CertificateConfig pkcs1CertificateConfig = new Pkcs1CertificateConfig(payloadCertificateFileName,
 					Base64.encodeBase64String(ca.getEncoded()));
 
+			String checkIn = owner == null ? checkInURL : checkInURL + "/" + owner.getId();
+
 			String identityCertificateUUID = UUID.randomUUID().toString();
 			MDMConfig mdmConfig = new MDMConfig(identityCertificateUUID, serverURL, topic);
 			mdmConfig.setPayloadDisplayName("MDM配置");
 			mdmConfig.setSignMessage(false);
-			mdmConfig.setCheckInURL(checkInURL);
+			mdmConfig.setCheckInURL(checkIn);
 			mdmConfig.setCheckOutWhenRemoved(true);
 
 			Resource clientCertificate = new ServletContextResource(servletContext, clientP12Path);
@@ -114,6 +118,12 @@ public class MobileConfigController extends BaseController {
 			throw new RuntimeException(e);
 		}
 
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public void get(HttpServletResponse response) {
+		getByOwner(null, response);
 	}
 
 	private byte[] signature(InputStream in) throws IOException {

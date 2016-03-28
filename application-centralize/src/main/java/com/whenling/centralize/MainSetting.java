@@ -13,6 +13,7 @@ public class MainSetting {
 	public static final String KEY_NAME = "name";
 	public static final String KEY_COMPANY = "company";
 	public static final String KEY_VERSION = "version";
+	public static final String KEY_SITEURL = "siteUrl";
 
 	@Resource(name = "mainConfig")
 	private Configuration mainConfig;
@@ -27,6 +28,10 @@ public class MainSetting {
 
 	public String getVersion() {
 		return mainConfig.getString(KEY_VERSION);
+	}
+
+	public String getSiteUrl() {
+		return mainConfig.getString(KEY_SITEURL);
 	}
 
 	public static MainSetting get() {

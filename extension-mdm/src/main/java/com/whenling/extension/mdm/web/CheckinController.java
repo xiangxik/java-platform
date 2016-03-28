@@ -4,11 +4,14 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.whenling.centralize.model.User;
+import com.whenling.centralize.support.web.CurrentUser;
 import com.whenling.extension.mdm.model.Device;
 import com.whenling.extension.mdm.service.DeviceService;
 import com.whenling.extension.mdm.support.apns.CommandService;
@@ -29,7 +32,14 @@ public class CheckinController {
 
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
-	public Payload put(@RequestBody PayloadContext map) throws IOException {
+	public Payload put(@CurrentUser(defaultAdmin = true, required = true) User user, @RequestBody PayloadContext map)
+			throws IOException {
+		return putByOwner(user, map);
+	}
+
+	@RequestMapping(value = "/{owner}", method = RequestMethod.PUT)
+	@ResponseBody
+	public Payload putByOwner(@PathVariable("owner") User owner, @RequestBody PayloadContext map) throws IOException {
 
 		String messageType = map.getString("MessageType");
 		String udid = map.getString("UDID");
@@ -47,6 +57,7 @@ public class CheckinController {
 			device.setOSVersion(map.getString("OSVersion"));
 			device.setProductName(map.getString("ProductName"));
 			device.setSerialNumber(map.getString("SerialNumber"));
+			device.setOwner(owner);
 
 			deviceService.save(device);
 
@@ -86,4 +97,5 @@ public class CheckinController {
 
 		return null;
 	}
+
 }

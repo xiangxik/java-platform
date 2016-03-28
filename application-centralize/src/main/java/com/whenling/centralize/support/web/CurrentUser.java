@@ -23,4 +23,6 @@ public @interface CurrentUser {
 	 * @return
 	 */
 	boolean required() default false;
+
+	boolean defaultAdmin() default false;
 }

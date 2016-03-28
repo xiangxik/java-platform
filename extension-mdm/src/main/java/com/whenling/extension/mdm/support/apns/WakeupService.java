@@ -30,7 +30,7 @@ public class WakeupService {
 		customerP12 = new ClassPathResource("/cert/customer.p12");
 	}
 
-	public void wake(Device... devices) {
+	public void revive(Device... devices) {
 		for (Device device : devices) {
 			try {
 				WakeupTask wakeupTask = new WakeupTask(customerP12.getInputStream(), "asd123", device.getPushMagic(),

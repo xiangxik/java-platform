@@ -20,12 +20,12 @@ public class CommandService {
 
 	public void send(CommandPayload command, Device... devices) {
 		push(command, null, devices);
-		wakeupService.wake(devices);
+		wakeupService.revive(devices);
 	}
 
 	public void send(CommandPayload command, CommandCallback callback, Device... devices) {
 		push(command, callback, devices);
-		wakeupService.wake(devices);
+		wakeupService.revive(devices);
 	}
 
 	public CommandContext get(String uuid) {

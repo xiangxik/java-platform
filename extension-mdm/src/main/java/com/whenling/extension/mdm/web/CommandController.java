@@ -38,10 +38,10 @@ public class CommandController extends BaseController {
 	@Autowired
 	private DeviceService deviceService;
 
-	@RequestMapping(value = "/wake", method = RequestMethod.GET)
+	@RequestMapping(value = "/revive", method = RequestMethod.GET)
 	@ResponseBody
-	public Result wakeup(@RequestParam("id") Device device) {
-		wakeupService.wake(device);
+	public Result revive(@RequestParam("id") Device device) {
+		wakeupService.revive(device);
 		return Result.success();
 	}
 
@@ -104,7 +104,7 @@ public class CommandController extends BaseController {
 	@ResponseBody
 	public Result deviceLocation(@RequestParam("id") Device device) {
 		commandService.send(new DeviceLocation(), (dev, status, map) -> {
-			
+
 		} , device);
 		return Result.success();
 	}
