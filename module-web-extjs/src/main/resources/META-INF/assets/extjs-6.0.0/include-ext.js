@@ -80,7 +80,7 @@
         //loadCss(extPackagesRoot + '/packages/ux/classic/' + themeName + '/resources/ux-all' + cssSuffix);
     }
 
-    extPrefix = useDebug ? '/ext-all-debug' : '/ext-all-debug';
+    extPrefix = useDebug ? '/ext-all' : '/ext-all';
     
     document.write('<script type="text/javascript" src="' + extDir + extPrefix + rtlSuffix + '.js"></script>');
 

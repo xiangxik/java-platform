@@ -17,4 +17,8 @@ public class ApplicationFunctionPackage implements FunctionPackage {
 		return userService.getCurrentUser();
 	}
 
+	public Long getCurrentUserId() {
+		return userService.getCurrentUserId();
+	}
+
 }

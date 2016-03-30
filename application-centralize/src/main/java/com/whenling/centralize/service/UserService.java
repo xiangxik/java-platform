@@ -60,6 +60,15 @@ public class UserService extends BaseService<User, Long> {
 		return null;
 	}
 
+	public Long getCurrentUserId() {
+		Object principal = SecurityUtils.getSubject().getPrincipal();
+		if (principal != null && principal instanceof Principal) {
+			Long currentUserId = ((Principal) principal).getId();
+			return currentUserId;
+		}
+		return null;
+	}
+
 	/**
 	 * 修改密码。新用户oldPassword传入null
 	 * 
