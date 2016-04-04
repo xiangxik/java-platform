@@ -12,9 +12,10 @@
 * 包含通用的后台管理功能
 
 ### 工程用途说明
-* application-centralize: 平台包，项目引入该包即可包含了主要功能，依赖于全部module包。
+* application-centralize: 平台包，项目引入该包即可包含了主要功能，依赖于全部关键module包。
 * module-base: 构成平台的基础包。
 * module-domain: 构成平台的领域数据操作包，依赖于module-base。
+* module-cache: 构成平台的缓存功能包，依赖于module-domain。
 * module-web: 构成平台的web功能包，依赖于module-domain。
 * module-web-bootstrap: 构成平台的bootstrap包，依赖于module-web。
 * module-web-easyui: 构成平台的easyui包，依赖于module-web。
@@ -23,6 +24,11 @@
 * extension-cms: 扩展平台包。包含cms的功能。引入该包即拥有cms功能。
 * extension-mall: 扩展平台包。包含商城及支付等功能。引入该包即拥有商城功能。
 * extension-wechat: 扩展平台包。包含微信网站的展示和微信相关功能。
+
+### 未完善工程
+* module-netty
+* module-redis
+* module-mongodb
 
 ### 详细介绍
 * http://ken.whenling.com

@@ -1,4 +1,4 @@
-package com.whenling.module.domain.cache;
+package com.whenling.module.cache;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -25,7 +25,7 @@ import org.springframework.core.io.ClassPathResource;
 @EnableCaching
 public class CacheConfiguration implements CachingConfigurer {
 
-	@Value("${cacheConfigFile?:com/whenling/module/domain/cache/ehcache.xml}")
+	@Value("${cacheConfigFile?:com/whenling/module/cache/ehcache.xml}")
 	private String cacheConfigFileLocation;
 
 	@Bean

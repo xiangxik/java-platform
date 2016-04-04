@@ -1,4 +1,4 @@
-package com.whenling.module.domain.cache;
+package com.whenling.module.cache;
 
 import java.util.ArrayList;
 import java.util.Collection;

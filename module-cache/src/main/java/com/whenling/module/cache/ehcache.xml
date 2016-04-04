@@ -17,8 +17,4 @@
 	<cache name="Configuration" maxElementsInMemory="5000" eternal="true"
 		overflowToDisk="true" />
 		
-	<!-- 文章点击数缓存 -->
-	<cache name="articleHits" maxElementsInMemory="500" eternal="true" overflowToDisk="true" />
-		
-
 </ehcache>

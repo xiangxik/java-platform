@@ -302,5 +302,9 @@
 		<module>extension-mall</module>
 		<module>extension-wechat</module>
 		<module>extension-jms</module>
+		<module>module-redis</module>
+		<module>module-mongodb</module>
+		<module>module-netty</module>
+		<module>module-cache</module>
 	</modules>
 </project>

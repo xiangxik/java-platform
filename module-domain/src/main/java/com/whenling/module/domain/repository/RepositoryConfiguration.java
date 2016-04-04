@@ -39,6 +39,54 @@ public class RepositoryConfiguration {
 	@Value("${jdbc.password?:123456}")
 	private String jdbcPassword;
 
+	@Value("${hibernate.hbm2ddl.auto?:update}")
+	private String hibernateHbm2ddlAuto;
+
+	@Value("${hibernate.dialect?:org.hibernate.dialect.MySQL5Dialect}")
+	private String hibernateDialect;
+
+	@Value("${hibernate.show_sql:?true}")
+	private String hibernateShowSql;
+
+	@Value("${hibernate.format_sql?:true}")
+	private String hibernateFormatSql;
+
+	@Value("${hibernate.current_session_context_class?:org.springframework.orm.hibernate5.SpringSessionContext}")
+	private String hibernateCurrentSessionContextClass;
+
+	@Value("${javax.persistence.validation.mode?:none}")
+	private String javaxPersistenceValidationMode;
+
+	@Value("${hibernate.query.substitutions?:true 1, false 0}")
+	private String hibernateQuerySubstitutions;
+
+	@Value("${hibernate.default_batch_fetch_size?:16}")
+	private String hibernateDefaultBatchFetchSize;
+
+	@Value("${hibernate.max_fetch_depth?:4}")
+	private String hibernateMaxFetchDepth;
+
+	@Value("${hibernate.enable_lazy_load_no_trans?:true}")
+	private String hibernateEnableLazyLoadNoTrans;
+
+	@Value("${hibernate.bytecode.use_reflection_optimizer?:true}")
+	private String hibernateBytecodeUseReflectionOptimizer;
+
+	@Value("${hibernate.cache.use_second_level_cache?:false}")
+	private String hibernateCacheUseSecondLevelCache;
+
+	@Value("${hibernate.cache.region.factory_class?:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}")
+	private String hibernateCacheRegionFactoryClass;
+
+	@Value("${javax.persistence.sharedCache.mode?:ALL}")
+	private String javaxPersistenceSharedCacheMode;
+
+	@Value("${hibernate.generate_statistics?:false}")
+	private String hibernateGenerateStatistics;
+
+	@Value("${hibernate.cache.use_query_cache:?false}")
+	private String hibernateCacheUseQueryCache;
+
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
@@ -54,27 +102,25 @@ public class RepositoryConfiguration {
 
 		Properties jpaProperties = new Properties();
 		jpaProperties.put("hibernate.id.new_generator_mappings", false);
-		jpaProperties.put("hibernate.hbm2ddl.auto", "update");
-		jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		jpaProperties.put("hibernate.show_sql", "true");
-		jpaProperties.put("hibernate.format_sql", "true");
-		jpaProperties.put("hibernate.current_session_context_class",
-				"org.springframework.orm.hibernate5.SpringSessionContext");
+		jpaProperties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+		jpaProperties.put("hibernate.dialect", hibernateDialect);
+		jpaProperties.put("hibernate.show_sql", hibernateShowSql);
+		jpaProperties.put("hibernate.format_sql", hibernateFormatSql);
+		jpaProperties.put("hibernate.current_session_context_class", hibernateCurrentSessionContextClass);
 
-		jpaProperties.put("javax.persistence.validation.mode", "none");
-		jpaProperties.put("hibernate.query.substitutions", "true 1, false 0");
-		jpaProperties.put("hibernate.default_batch_fetch_size", "16");
-		jpaProperties.put("hibernate.max_fetch_depth", "4");
-		jpaProperties.put("hibernate.enable_lazy_load_no_trans", "true");
-		jpaProperties.put("hibernate.bytecode.use_reflection_optimizer", "true");
+		jpaProperties.put("javax.persistence.validation.mode", javaxPersistenceValidationMode);
+		jpaProperties.put("hibernate.query.substitutions", hibernateQuerySubstitutions);
+		jpaProperties.put("hibernate.default_batch_fetch_size", hibernateDefaultBatchFetchSize);
+		jpaProperties.put("hibernate.max_fetch_depth", hibernateMaxFetchDepth);
+		jpaProperties.put("hibernate.enable_lazy_load_no_trans", hibernateEnableLazyLoadNoTrans);
+		jpaProperties.put("hibernate.bytecode.use_reflection_optimizer", hibernateBytecodeUseReflectionOptimizer);
 
-		jpaProperties.put("hibernate.cache.use_second_level_cache", "true");
-		jpaProperties.put("hibernate.cache.region.factory_class",
-				"org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
-		jpaProperties.put("javax.persistence.sharedCache.mode", "ALL");
-		jpaProperties.put("hibernate.generate_statistics", "true");
+		jpaProperties.put("hibernate.cache.use_second_level_cache", hibernateCacheUseSecondLevelCache);
+		jpaProperties.put("hibernate.cache.region.factory_class", hibernateCacheRegionFactoryClass);
+		jpaProperties.put("javax.persistence.sharedCache.mode", javaxPersistenceSharedCacheMode);
+		jpaProperties.put("hibernate.generate_statistics", hibernateGenerateStatistics);
 
-		jpaProperties.put("hibernate.cache.use_query_cache", "false");
+		jpaProperties.put("hibernate.cache.use_query_cache", hibernateCacheUseQueryCache);
 		factory.setJpaProperties(jpaProperties);
 
 		return factory;
