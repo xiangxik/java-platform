@@ -83,7 +83,7 @@ public class ImageController {
 			}
 		}
 
-		return Result.success().setData(imageInfos.size() == 1 ? imageInfos.get(0) : imageInfos)
+		return Result.success().data(imageInfos.size() == 1 ? imageInfos.get(0) : imageInfos)
 				.addExtraProperties("total", imageInfos.size()).addExtraProperties("errors", "");
 	}
 

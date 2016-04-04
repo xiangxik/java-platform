@@ -68,19 +68,19 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 		if (WebHelper.isAjax((HttpServletRequest) request)) {
 			Result result = Result.failure();
 			if (e instanceof IncorrectCredentialsException) {
-				result.setMessage("密码错误");
+				result.message("密码错误");
 			} else if (e instanceof ExpiredCredentialsException) {
-				result.setMessage("密码已过期");
+				result.message("密码已过期");
 			} else if (e instanceof UnknownAccountException) {
-				result.setMessage("该账号不存在");
+				result.message("该账号不存在");
 			} else if (e instanceof DisabledAccountException) {
-				result.setMessage("该账号已禁用");
+				result.message("该账号已禁用");
 			} else if (e instanceof LockedAccountException) {
-				result.setMessage("该账号已锁定");
+				result.message("该账号已锁定");
 			} else if (e instanceof AccountException) {
-				result.setMessage("账号错误");
+				result.message("账号错误");
 			} else if (e instanceof CredentialsException) {
-				result.setMessage("密码错误");
+				result.message("密码错误");
 			}
 			try {
 				writeObject(request, response, result);

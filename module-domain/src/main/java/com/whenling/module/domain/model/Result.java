@@ -15,35 +15,35 @@ import com.google.common.base.Strings;
 public class Result {
 
 	public static Result success() {
-		return new Result().setCode(Code.success);
+		return new Result().code(Code.success);
 	}
 
 	public static Result failure() {
-		return new Result().setCode(Code.failure);
+		return new Result().code(Code.failure);
 	}
 
 	public static Result validateError(Object data) {
-		return new Result().setCode(Code.validateError).setData(data);
+		return new Result().code(Code.validateError).data(data);
 	}
 
 	public static Result permissionDenide() {
-		return new Result().setCode(Code.permissionDenide);
+		return new Result().code(Code.permissionDenide);
 	}
 
 	public static Result notLogin() {
-		return new Result().setCode(Code.notLogin);
+		return new Result().code(Code.notLogin);
 	}
 
 	public static Result exception() {
-		return new Result().setCode(Code.exception);
+		return new Result().code(Code.exception);
 	}
 
 	public static Result captchaError() {
-		return new Result().setCode(Code.captchaError);
+		return new Result().code(Code.captchaError);
 	}
 
 	public static Result unknown() {
-		return new Result().setCode(Code.unknown);
+		return new Result().code(Code.unknown);
 	}
 
 	private Code code = Code.success;
@@ -56,7 +56,7 @@ public class Result {
 		return code;
 	}
 
-	public Result setCode(Code code) {
+	public Result code(Code code) {
 		this.code = code;
 		return this;
 	}
@@ -65,7 +65,7 @@ public class Result {
 		return Strings.isNullOrEmpty(message) ? this.code.getMessage() : message;
 	}
 
-	public Result setMessage(String message) {
+	public Result message(String message) {
 		this.message = message;
 		return this;
 	}
@@ -74,7 +74,7 @@ public class Result {
 		return data;
 	}
 
-	public Result setData(Object data) {
+	public Result data(Object data) {
 		this.data = data;
 		return this;
 	}
@@ -83,7 +83,7 @@ public class Result {
 		return extraProperties;
 	}
 
-	public Result setExtraProperties(Map<String, Object> extraProperties) {
+	public Result extraProperties(Map<String, Object> extraProperties) {
 		this.extraProperties = extraProperties;
 		return this;
 	}

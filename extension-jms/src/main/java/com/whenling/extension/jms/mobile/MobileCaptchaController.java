@@ -36,7 +36,7 @@ public class MobileCaptchaController {
 
 		if (matched) {
 			if (userService.findByMobile(phoneNumber) != null) {
-				return Result.exception().setMessage("该手机号码已使用");
+				return Result.exception().message("该手机号码已使用");
 			}
 			long seconds = -1l;
 			Date date = CACHE.getIfPresent(phoneNumber);
@@ -45,7 +45,7 @@ public class MobileCaptchaController {
 					mobileCaptchaService.sendCaptchaCode(phoneNumber);
 				} catch (MobileCaptchaException e) {
 					if (e instanceof ExceedMaxDailyTimesException) {
-						return Result.exception().setMessage("超出每天发送的最大次数");
+						return Result.exception().message("超出每天发送的最大次数");
 					}
 				}
 				CACHE.put(phoneNumber, new Date());
@@ -54,9 +54,9 @@ public class MobileCaptchaController {
 				seconds = (now.getTime() - date.getTime()) / 1000;
 			}
 
-			return Result.success().setData(seconds);
+			return Result.success().data(seconds);
 		} else {
-			return Result.exception().setMessage("填写的手机号码有误");
+			return Result.exception().message("填写的手机号码有误");
 		}
 
 	}
