@@ -78,6 +78,10 @@ public class ViewConfiguration {
 			}));
 		}
 
+//		Map<String, Format> formats = new HashMap<>();
+//		formats.put(DateTime.class.getName(), new DateTimeFormat());
+//		beetlConfig.setFormats(formats);
+
 		beetlConfig.setResourceLoader(viewResourceLoader());
 		beetlConfig.setConfigFileResource(new ClassPathResource(viewConfigFileLocation));
 
