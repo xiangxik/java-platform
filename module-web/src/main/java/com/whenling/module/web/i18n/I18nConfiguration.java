@@ -15,7 +15,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class I18nConfiguration extends WebMvcConfigurerAdapter {
 
-	@Value("${i18n.messages?:message,application,i18n}")
+	@Value("${i18n.messages?:message,application,validation}")
 	private String i18nMessages;
 
 	@Bean
