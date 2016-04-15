@@ -91,6 +91,7 @@ public class Application {
 		addSetting("mainConfig", "公司名称", MainSetting.KEY_COMPANY, "广州当凌信息科技有限公司");
 		addSetting("mainConfig", "系统版本", MainSetting.KEY_VERSION, "1.0");
 		addSetting("mainConfig", "网站地址", MainSetting.KEY_SITEURL, "http://www.whenling.com");
+		addSetting("mainConfig", "网站SSL地址", MainSetting.KEY_SSLURL, "https://www.whenling.com");
 
 		initExtension();
 	}

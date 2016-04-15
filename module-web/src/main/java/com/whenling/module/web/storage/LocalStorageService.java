@@ -2,10 +2,12 @@ package com.whenling.module.web.storage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +33,13 @@ public class LocalStorageService implements StorageService {
 		File destFile = new File(servletContext.getRealPath(path));
 		Files.createParentDirs(destFile);
 		Files.copy(file, destFile);
+	}
+
+	@Override
+	public void store(String path, InputStream inputStream) throws IOException {
+		File destFile = new File(servletContext.getRealPath(path));
+		Files.createParentDirs(destFile);
+		Files.write(IOUtils.toByteArray(inputStream), destFile);
 	}
 
 	@Override

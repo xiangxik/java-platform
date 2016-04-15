@@ -2,6 +2,7 @@ package com.whenling.module.web.storage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,15 @@ public interface StorageService {
 	 * @throws IOException
 	 */
 	void store(String path, File file) throws IOException;
+	
+	/**
+	 * 输入流存储
+	 * 
+	 * @param path
+	 * @param file
+	 * @throws IOException
+	 */
+	void store(String path, InputStream inputStream) throws IOException;
 
 	/**
 	 * 根据路径获得文件

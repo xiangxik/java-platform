@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -19,9 +20,10 @@ import com.whenling.module.base.config.StaticConfigurationSupplier;
  * @创建时间 2016年1月6日 上午12:00:05
  */
 @Configuration
-@ComponentScan(basePackages = { "com.whenling" }, useDefaultFilters = false, includeFilters = {
-		@Filter({ Controller.class }), @Filter({ ServletSupport.class }) }, nameGenerator = FullBeanNameGenerator.class)
+@ComponentScan(basePackages = { "com.whenling" }, useDefaultFilters = false, includeFilters = { @Filter({ Controller.class }),
+		@Filter({ ServletSupport.class }) }, nameGenerator = FullBeanNameGenerator.class)
 @EnableWebMvc
+@EnableAspectJAutoProxy
 public class ServletConfiguration {
 
 	@Bean

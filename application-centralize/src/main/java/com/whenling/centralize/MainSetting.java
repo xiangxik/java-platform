@@ -14,6 +14,7 @@ public class MainSetting {
 	public static final String KEY_COMPANY = "company";
 	public static final String KEY_VERSION = "version";
 	public static final String KEY_SITEURL = "siteUrl";
+	public static final String KEY_SSLURL = "sslUrl";
 
 	@Resource(name = "mainConfig")
 	private Configuration mainConfig;
@@ -32,6 +33,10 @@ public class MainSetting {
 
 	public String getSiteUrl() {
 		return mainConfig.getString(KEY_SITEURL);
+	}
+
+	public String getSslUrl() {
+		return mainConfig.getString(KEY_SSLURL);
 	}
 
 	public static MainSetting get() {

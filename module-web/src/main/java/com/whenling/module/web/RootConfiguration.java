@@ -3,6 +3,7 @@ package com.whenling.module.web;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION),
 		@ComponentScan.Filter(value = EnableWebMvc.class, type = FilterType.ANNOTATION),
 		@ComponentScan.Filter(value = ServletSupport.class, type = FilterType.ANNOTATION) })
+@EnableAspectJAutoProxy
 public class RootConfiguration {
 
 	@Bean
