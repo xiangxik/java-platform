@@ -11,7 +11,7 @@ public class BooleanFormat implements Format {
 	@Override
 	public Object format(Object data, String pattern) {
 		if (data == null) {
-			return null;
+			data = false;
 		}
 		if (data instanceof Boolean) {
 			if (Strings.isNullOrEmpty(pattern)) {
