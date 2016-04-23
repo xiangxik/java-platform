@@ -306,5 +306,6 @@
 		<module>module-mongodb</module>
 		<module>module-netty</module>
 		<module>module-cache</module>
+		<module>plugin</module>
 	</modules>
 </project>
