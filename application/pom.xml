@@ -5,19 +5,25 @@
 		<artifactId>java-platform</artifactId>
 		<version>1.0.0.RELEASE</version>
 	</parent>
-	<artifactId>plugin</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>application</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.whenling</groupId>
-			<artifactId>application</artifactId>
+			<artifactId>module-security</artifactId>
 			<version>1.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.whenling</groupId>
+			<artifactId>module-web-extjs</artifactId>
+			<version>1.0.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.2.1</version>
 		</dependency>
 	</dependencies>
 
-	<modules>
-		<module>plugin-base</module>
-		<module>plugin-payment</module>
-	</modules>
 </project>

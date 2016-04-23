@@ -5,19 +5,19 @@
 		<artifactId>java-platform</artifactId>
 		<version>1.0.0.RELEASE</version>
 	</parent>
-	<artifactId>plugin</artifactId>
+	<artifactId>module</artifactId>
 	<packaging>pom</packaging>
-
-	<dependencies>
-		<dependency>
-			<groupId>com.whenling</groupId>
-			<artifactId>application</artifactId>
-			<version>1.0.0.RELEASE</version>
-		</dependency>
-	</dependencies>
-
 	<modules>
-		<module>plugin-base</module>
-		<module>plugin-payment</module>
+		<module>module-base</module>
+		<module>module-domain</module>
+		<module>module-web</module>
+		<module>module-security</module>
+		<module>module-web-extjs</module>
+		<module>module-web-easyui</module>
+		<module>module-web-bootstrap</module>
+		<module>module-redis</module>
+		<module>module-mongodb</module>
+		<module>module-netty</module>
+		<module>module-cache</module>
 	</modules>
 </project>

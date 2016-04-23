@@ -5,7 +5,7 @@
 		<artifactId>java-platform</artifactId>
 		<version>1.0.0.RELEASE</version>
 	</parent>
-	<artifactId>plugin</artifactId>
+	<artifactId>extension</artifactId>
 	<packaging>pom</packaging>
 
 	<dependencies>
@@ -17,7 +17,9 @@
 	</dependencies>
 
 	<modules>
-		<module>plugin-base</module>
-		<module>plugin-payment</module>
+		<module>extension-cms</module>
+		<module>extension-mall</module>
+		<module>extension-wechat</module>
+		<module>extension-jms</module>
 	</modules>
 </project>

@@ -2,22 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.whenling</groupId>
-		<artifactId>java-platform</artifactId>
+		<artifactId>extension</artifactId>
 		<version>1.0.0.RELEASE</version>
 	</parent>
-	<artifactId>plugin</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>extension-cms</artifactId>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.whenling</groupId>
-			<artifactId>application</artifactId>
-			<version>1.0.0.RELEASE</version>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.3</version>
 		</dependency>
 	</dependencies>
-
-	<modules>
-		<module>plugin-base</module>
-		<module>plugin-payment</module>
-	</modules>
 </project>
