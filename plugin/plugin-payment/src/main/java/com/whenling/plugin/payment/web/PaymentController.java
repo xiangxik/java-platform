@@ -66,8 +66,6 @@ public class PaymentController extends BaseController {
 		payment.setMember(user);
 		paymentService.save(payment);
 
-		paymentService.save(payment);
-
 		model.addAttribute("requestUrl", paymentPlugin.getRequestUrl());
 		model.addAttribute("requestMethod", paymentPlugin.getRequestMethod());
 		model.addAttribute("requestCharset", paymentPlugin.getRequestCharset());
