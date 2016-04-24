@@ -93,6 +93,8 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private Set<UserRole> userRoles = new HashSet<>();
 
+	private String rank;
+
 	public enum Sex {
 		/** 男 */
 		male,
@@ -214,6 +216,14 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	@Override
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
 	}
 
 }
