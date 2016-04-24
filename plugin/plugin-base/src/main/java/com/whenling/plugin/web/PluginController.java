@@ -30,7 +30,7 @@ public class PluginController<T extends Plugin> {
 	@RequestMapping(value = "/install", method = RequestMethod.POST)
 	public @ResponseBody Result install() {
 		if (!plugin.getIsInstalled()) {
-			PluginConfig pluginConfig = new PluginConfig();
+			PluginConfig pluginConfig = pluginConfigService.newEntity();
 			pluginConfig.setPluginId(plugin.getId());
 			pluginConfig.setIsEnabled(false);
 			pluginConfigService.save(pluginConfig);
@@ -54,10 +54,9 @@ public class PluginController<T extends Plugin> {
 	 * 设置
 	 */
 	@RequestMapping(value = "/setting", method = RequestMethod.GET)
-	public String setting(ModelMap model) {
+	public @ResponseBody PluginConfig setting(ModelMap model) {
 		PluginConfig pluginConfig = plugin.getPluginConfig();
-		model.addAttribute("pluginConfig", pluginConfig);
-		return plugin.getSettingView();
+		return pluginConfig;
 	}
 
 	/**

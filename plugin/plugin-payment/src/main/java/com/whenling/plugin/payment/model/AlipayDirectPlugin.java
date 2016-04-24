@@ -105,7 +105,7 @@ public class AlipayDirectPlugin extends PaymentPlugin {
 
 	@Override
 	public String getSettingView() {
-		return null;
+		return "app.view.plugin.AlipayDirectForm";
 	}
 
 	@Override
@@ -115,17 +115,17 @@ public class AlipayDirectPlugin extends PaymentPlugin {
 
 	@Override
 	public String getInstallUrl() {
-		return null;
+		return "/admin/payment/alipay_direct/install";
 	}
 
 	@Override
 	public String getUninstallUrl() {
-		return null;
+		return "/admin/payment/alipay_direct/uninstall";
 	}
 
 	@Override
 	public String getSettingUrl() {
-		return null;
+		return "/admin/payment/alipay_direct/setting";
 	}
 
 	/**

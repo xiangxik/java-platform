@@ -37,13 +37,17 @@ Ext.define("app.view.plugin.PaymentPluginList", {
 		xtype : "actioncolumn",
 		width : 80,
 		items : [ {
+			iconCls : "Applicationadd actionColumnIcon",
+			tooltip : "安装",
+			handler : "onRowInstall"
+		}, {
+			iconCls : "Applicationdelete actionColumnIcon",
+			tooltip : "卸载",
+			handler : "onRowUninstall"
+		}, {
 			iconCls : "Pencil actionColumnIcon",
 			tooltip : "编辑",
 			handler : "onRowEdit"
-		}, {
-			iconCls : "Delete actionColumnIcon",
-			tooltip : "删除",
-			handler : "onRowDelete"
 		} ]
 	} ],
 	bind : {

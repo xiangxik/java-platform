@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.whenling.plugin.model.PluginModel;
 import com.whenling.plugin.payment.model.PaymentPlugin;
 
 @Controller
@@ -23,7 +24,7 @@ public class PaymentPluginController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public Page<PaymentPlugin> list(Pageable pageable) {
-		return new PageImpl<>(paymentPlugins);
+	public Page<PluginModel> list(Pageable pageable) {
+		return new PageImpl<>(paymentPlugins).map(PluginModel::convert);
 	}
 }

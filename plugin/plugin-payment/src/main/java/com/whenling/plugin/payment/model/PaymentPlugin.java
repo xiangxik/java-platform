@@ -83,9 +83,6 @@ public abstract class PaymentPlugin extends Plugin {
 	 */
 	public String getPaymentName() {
 		PluginConfig pluginConfig = getPluginConfig();
-		if (pluginConfig == null) {
-			return null;
-		}
 		return pluginConfig != null ? pluginConfig.getAttribute(PAYMENT_NAME_ATTRIBUTE_NAME) : null;
 	}
 
@@ -96,9 +93,6 @@ public abstract class PaymentPlugin extends Plugin {
 	 */
 	public FeeType getFeeType() {
 		PluginConfig pluginConfig = getPluginConfig();
-		if (pluginConfig == null) {
-			return null;
-		}
 		String feeTypeAttributeValue = pluginConfig.getAttribute(FEE_TYPE_ATTRIBUTE_NAME);
 		return pluginConfig != null && !Strings.isNullOrEmpty(feeTypeAttributeValue) ? FeeType.valueOf(feeTypeAttributeValue) : null;
 	}
@@ -110,9 +104,6 @@ public abstract class PaymentPlugin extends Plugin {
 	 */
 	public BigDecimal getFee() {
 		PluginConfig pluginConfig = getPluginConfig();
-		if (pluginConfig == null) {
-			return null;
-		}
 		return pluginConfig != null ? new BigDecimal(pluginConfig.getAttribute(FEE_ATTRIBUTE_NAME)) : null;
 	}
 
@@ -123,9 +114,6 @@ public abstract class PaymentPlugin extends Plugin {
 	 */
 	public String getLogo() {
 		PluginConfig pluginConfig = getPluginConfig();
-		if (pluginConfig == null) {
-			return null;
-		}
 		return pluginConfig != null ? pluginConfig.getAttribute(LOGO_ATTRIBUTE_NAME) : null;
 	}
 
@@ -136,9 +124,6 @@ public abstract class PaymentPlugin extends Plugin {
 	 */
 	public String getDescription() {
 		PluginConfig pluginConfig = getPluginConfig();
-		if (pluginConfig == null) {
-			return null;
-		}
 		return pluginConfig != null ? pluginConfig.getAttribute(DESCRIPTION_ATTRIBUTE_NAME) : null;
 	}
 

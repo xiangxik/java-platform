@@ -1,34 +1,27 @@
 Ext.define("app.model.PaymentPlugin", {
-	extend : "app.model.Entity",
-	fields : [ {
-		name : "name",
-		type : "string"
-	}, {
-		name : "version",
-		type : "string"
-	}, {
-		name : "author",
-		type : "string"
-	}, {
-		name : "settingView",
-		type : "string"
-	}, {
-		name : "siteUrl",
-		type : "string"
-	}, {
-		name : "installUrl",
-		type : "string"
-	}, {
-		name : "uninstallUrl",
-		type : "string"
-	}, {
-		name : "sortNo",
-		type : "int"
-	}, {
-		name : "isInstalled",
-		type : "boolean"
-	}, {
-		name : "isEnabled",
-		type : "boolean"
-	} ]
+	extend : "app.model.Plugin",
+	constructor : function() {
+		this.callParent(arguments);
+		var fields = this.getFields();
+		fields.push({
+			name : "paymentName",
+			type : "string"
+		});
+		fields.push({
+			name : "feeType",
+			type : "string"
+		});
+		fields.push({
+			name : "fee",
+			type : "number"
+		});
+		fields.push({
+			name : "logo",
+			type : "string"
+		});
+		fields.push({
+			name : "description",
+			type : "string"
+		});
+	}
 });
