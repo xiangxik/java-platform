@@ -1,7 +1,10 @@
 # Static modular java development platform
 Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, querydsl, Shiro, fastjson, Beetl, redis etc. open source technology, build the modular extension of Java framework, and can choose to use extjs6, easyUI, bootstrap with the public function of the backstage management.
 
-## feature
+# 静态模块化java开发平台
+基于servlet3.1的模块化规范，采用spring, spring mvc, jpa, spring data, querydsl, shiro, fastjson, beetl, redis等开源技术，搭建了一套可模块化扩展的java框架，并可选择地使用extjs6、easyui、bootstrap实现了后台管理的公共功能。
+
+## Feature
 * based on the latest Java technology
 * use Java8 syntax
 * Custom modular, custom configuration
@@ -10,6 +13,16 @@ Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, qu
 * use javaconfig. no spring configuration file
 * use querydsl general query
 * contains general background management functions
+
+### 特点
+* 基于目前最新的一些java技术
+* 采用Java8的语法
+* 自定义模块化，自定义配置
+* 主要模块化的思想是来自于servlet3.1规范的web集成机制
+* 可扩展模块，通过引入jar包来决定是否采用该功能
+* 采用spring javaconfig.达到0spring配置文件
+* 采用querydsl通用查询
+* 包含通用的后台管理功能
 
 ## Engineering application description
 * application: platform package, the project can be introduced into the package can contain the main function, depends on all the key module package.
@@ -30,38 +43,6 @@ Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, qu
 * plugin-base: plug-in package.
 * plugin-payment: payment package.
 
-## Unfinished project
-* module-netty
-* module-mongodb
-
-## Detailed introduction
-* http://ken.whenling.com
-
-## Update log
-
-##### [2016-04-26]
-* add plugins
-
-##### [2016-03-19]
-* WeChat pack
-* modify extjs processing mode
-
-##### [2016-02-09] V1.0.0.RELEASE
-* the first edition released
-
-# 静态模块化java开发平台
-基于servlet3.1的模块化规范，采用spring, spring mvc, jpa, spring data, querydsl, shiro, fastjson, beetl, redis等开源技术，搭建了一套可模块化扩展的java框架，并可选择地使用extjs6、easyui、bootstrap实现了后台管理的公共功能。
-
-### 特点
-* 基于目前最新的一些java技术
-* 采用Java8的语法
-* 自定义模块化，自定义配置
-* 主要模块化的思想是来自于servlet3.1规范的web集成机制
-* 可扩展模块，通过引入jar包来决定是否采用该功能
-* 采用spring javaconfig.达到0spring配置文件
-* 采用querydsl通用查询
-* 包含通用的后台管理功能
-
 ### 工程用途说明
 * application: 平台包，项目引入该包即可包含了主要功能，依赖于全部关键module包。
 * module-base: 构成平台的基础包。
@@ -81,12 +62,31 @@ Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, qu
 * plugin-base: 插件基础包。
 * plugin-payment: 支付插件包。
 
+## Unfinished project
+* module-netty
+* module-mongodb
+
 ### 未完善工程
 * module-netty
 * module-mongodb
 
+## Detailed introduction
+* http://ken.whenling.com
+
 ### 详细介绍
 * http://ken.whenling.com
+
+## Update log
+
+##### [2016-04-26]
+* add plugins
+
+##### [2016-03-19]
+* WeChat pack
+* modify extjs processing mode
+
+##### [2016-02-09] V1.0.0.RELEASE
+* the first edition released
 
 ### 更新日志
 
