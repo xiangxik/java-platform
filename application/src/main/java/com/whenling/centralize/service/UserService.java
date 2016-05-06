@@ -37,6 +37,9 @@ public class UserService extends BaseService<User, Long> {
 	@Autowired
 	private MenuService menuService;
 
+	@Autowired
+	private UserRankService userRankService;
+
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
@@ -84,8 +87,7 @@ public class UserService extends BaseService<User, Long> {
 		Object salt = new SimpleByteSource(user.getUsername());
 
 		if (!user.isNew()) {
-			Assert.isTrue(databaseRealm.doCredentialsMatch(oldPassword, new SimpleByteSource(user.getUsername()),
-					user.getPassword()));
+			Assert.isTrue(databaseRealm.doCredentialsMatch(oldPassword, new SimpleByteSource(user.getUsername()), user.getPassword()));
 		}
 
 		user.setPassword(databaseRealm.hashProvidedCredentials(newPassword, salt).toString());
@@ -101,6 +103,14 @@ public class UserService extends BaseService<User, Long> {
 			menus.addAll(userRole.getRole().getMenus());
 		});
 		return menuService.toTree(null, Lists.newArrayList(menus));
+	}
+
+	@Override
+	public User save(User entity) {
+		if (entity.isNew() && entity.getRank() == null) {
+			entity.setRank(userRankService.getDefault());
+		}
+		return super.save(entity);
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -93,7 +94,9 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private Set<UserRole> userRoles = new HashSet<>();
 
-	private String rank;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "rank_id", nullable = false)
+	private UserRank rank;
 
 	public enum Sex {
 		/** 男 */
@@ -198,6 +201,14 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 		this.userRoles = userRoles;
 	}
 
+	public UserRank getRank() {
+		return rank;
+	}
+
+	public void setRank(UserRank rank) {
+		this.rank = rank;
+	}
+
 	@Override
 	public Area getArea() {
 		return area;
@@ -216,14 +227,6 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	@Override
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
-	}
-
-	public String getRank() {
-		return rank;
-	}
-
-	public void setRank(String rank) {
-		this.rank = rank;
 	}
 
 }
