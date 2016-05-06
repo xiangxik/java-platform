@@ -15,7 +15,7 @@ public class SnServiceImpl implements SnService {
 	public long nextValue(String type) {
 		return stringRedisTemplate.execute((RedisCallback<Long>) action -> {
 			byte[] typeKey = type.getBytes();
-			return action.decr(typeKey);
+			return action.incr(typeKey);
 		});
 	}
 

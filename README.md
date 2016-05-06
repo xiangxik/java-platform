@@ -1,3 +1,54 @@
+# Static modular java development platform
+Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, querydsl, Shiro, fastjson, Beetl, redis etc. open source technology, build the modular extension of Java framework, and can choose to use extjs6, easyUI, bootstrap with the public function of the backstage management.
+
+## feature
+* based on the latest Java technology
+* use Java8 syntax
+* Custom modular, custom configuration
+* major modular ideas are derived from the web specification of the servlet3.1 integration mechanism
+* extensible module, by introducing the jar package to decide whether to use the function
+* use javaconfig. no spring configuration file
+* use querydsl general query
+* contains general background management functions
+
+## Engineering application description
+* application: platform package, the project can be introduced into the package can contain the main function, depends on all the key module package.
+* module-base: constitute the basis of the package package.
+* module-domain: platform in the field of data manipulation package, depends on the module-base.
+* module-cache: constitute the platform cache function package, depends on the module-domain.
+* mongodb module-mongodb: function package.
+* netty module-netty: function package.
+* redis module-redis: function package.
+* web constitute the platform of the module-web: function package, dependent on the module-domain.
+* bootstrap constitute the platform of the module-web-bootstrap: package, depends on the module-web.
+* easyUI constitute the platform of the module-web-easyui: package, depends on the module-web.
+* extjs constitute the platform of the module-web-extjs: package, depends on the module-web.
+* module-security: constitute the platform security package, depends on the module-web.
+* extension-cms: extend the platform package. Contains the function of CMS. The package is the CMS function.
+* extension-mall: expansion platform package, including the mall and the payment and other functions. The introduction of the package that has the function of the mall.
+* extension-wechat: expansion platform package. WeChat website contains the display and WeChat related functions.
+* plugin-base: plug-in package.
+* plugin-payment: payment package.
+
+## Unfinished project
+* module-netty
+* module-mongodb
+
+## Detailed introduction
+* http://ken.whenling.com
+
+## Update log
+
+##### [2016-04-26]
+* add plugins
+
+##### [2016-03-19]
+* WeChat pack
+* modify extjs processing mode
+
+##### [2016-02-09] V1.0.0.RELEASE
+* the first edition released
+
 # 静态模块化java开发平台
 基于servlet3.1的模块化规范，采用spring, spring mvc, jpa, spring data, querydsl, shiro, fastjson, beetl, redis等开源技术，搭建了一套可模块化扩展的java框架，并可选择地使用extjs6、easyui、bootstrap实现了后台管理的公共功能。
 
@@ -39,12 +90,12 @@
 
 ### 更新日志
 
-####【2016-04-26】
+#####【2016-04-26】
 * 增加插件方式
 
-####【2016-03-19】
+#####【2016-03-19】
 * 增加微信包
 * 修改extjs的处理方式
 
-####【2016-02-09】V1.0.0.RELEASE
+#####【2016-02-09】V1.0.0.RELEASE
 * 初版发布

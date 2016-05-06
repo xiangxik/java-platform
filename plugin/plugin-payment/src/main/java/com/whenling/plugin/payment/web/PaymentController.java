@@ -16,13 +16,13 @@ import com.whenling.plugin.payment.model.PaymentPlugin.NotifyMethod;
 import com.whenling.plugin.payment.service.PaymentService;
 
 @Controller
-@RequestMapping("/center/payment")
+@RequestMapping("/payment")
 public class PaymentController extends BaseController {
 
 	@Autowired
 	private PaymentService paymentService;
 
-	@RequestMapping(value = "/notify/{notifyMethod}/{sn}", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/notify/{notifyMethod}/{sn}", method = { RequestMethod.PUT, RequestMethod.GET, RequestMethod.POST })
 	public String notify(@PathVariable NotifyMethod notifyMethod, @PathVariable String sn, Model model, HttpServletRequest request) {
 		Payment payment = paymentService.findBySn(sn);
 		if (payment != null) {
