@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Strings;
 import com.whenling.centralize.model.User;
 import com.whenling.centralize.repo.UserRepository;
-import com.whenling.module.security.shiro.HashedCredentialsGeneratorAndMatcher;
+import com.whenling.module.security.shiro.RetryLimitMd5CredentialsMatcher;
 import com.whenling.module.security.shiro.Principal;
 
 /**
@@ -33,14 +33,15 @@ public class DatabaseRealm extends AuthorizingRealm {
 	@Autowired
 	private UserRepository userRepository;
 
-	public DatabaseRealm() {
+	@Autowired
+	public DatabaseRealm(RetryLimitMd5CredentialsMatcher retryLimitMd5CredentialsMatcher) {
 		setCachingEnabled(true);
 		setAuthenticationCachingEnabled(true);
 		setAuthenticationCacheName("authenticationCache");
 		setAuthorizationCachingEnabled(true);
 		setAuthorizationCacheName("authorizationCache");
 
-		setCredentialsMatcher(new HashedCredentialsGeneratorAndMatcher());
+		setCredentialsMatcher(retryLimitMd5CredentialsMatcher);
 	}
 
 	@Override
@@ -64,8 +65,8 @@ public class DatabaseRealm extends AuthorizingRealm {
 				return null;
 			}
 
-			return new SimpleAuthenticationInfo(new Principal(user.getId(), username), user.getPassword(),
-					new SimpleByteSource(user.getUsername()), getName());
+			return new SimpleAuthenticationInfo(new Principal(user.getId(), username), user.getPassword(), new SimpleByteSource(user.getUsername()),
+					getName());
 		}
 		return null;
 	}
@@ -77,8 +78,7 @@ public class DatabaseRealm extends AuthorizingRealm {
 	}
 
 	public Hash hashProvidedCredentials(Object credentials, Object salt) {
-		return ((HashedCredentialsGeneratorAndMatcher) getCredentialsMatcher()).hashProvidedCredentials(credentials,
-				salt);
+		return ((RetryLimitMd5CredentialsMatcher) getCredentialsMatcher()).hashProvidedCredentials(credentials, salt);
 	}
 
 	class SimpleAuthenticationToken implements AuthenticationToken {

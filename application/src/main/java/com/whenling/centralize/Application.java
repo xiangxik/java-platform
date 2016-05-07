@@ -21,9 +21,11 @@ import com.whenling.centralize.model.Menu;
 import com.whenling.centralize.model.Role;
 import com.whenling.centralize.model.User;
 import com.whenling.centralize.model.User.Sex;
+import com.whenling.centralize.model.UserRank;
 import com.whenling.centralize.service.ExtensionService;
 import com.whenling.centralize.service.MenuService;
 import com.whenling.centralize.service.RoleService;
+import com.whenling.centralize.service.UserRankService;
 import com.whenling.centralize.service.UserService;
 import com.whenling.centralize.support.config.ConfigModel;
 
@@ -53,6 +55,9 @@ public class Application {
 	@Autowired
 	private RoleService roleService;
 
+	@Autowired
+	private UserRankService userRankService;
+
 	private final static Map<String, Filter> securityFilters = new HashMap<>();
 	private final static Map<String, String> securityFilterChainDefinitionMap = new HashMap<>();
 	private final static List<Filter> filters = new ArrayList<>();
@@ -81,6 +86,17 @@ public class Application {
 			app.setLastModifiedDate(new Date());
 
 			extensionService.save(app);
+
+			UserRank defaultRank = userRankService.newEntity();
+			defaultRank.setCode("base");
+			defaultRank.setName("基础会员");
+			defaultRank.setIsDefault(true);
+			defaultRank.setSortNo(1);
+			userRankService.save(defaultRank);
+			userService.findAll().forEach(user -> {
+				user.setRank(defaultRank);
+				userService.save(user);
+			});
 		}
 
 		if (isUpdate) {
@@ -202,7 +218,7 @@ public class Application {
 	}
 
 	public Integer getVersion() {
-		return 2;
+		return 5;
 	}
 
 	public static List<Filter> getFilters() {

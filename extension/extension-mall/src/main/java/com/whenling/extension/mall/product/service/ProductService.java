@@ -27,7 +27,7 @@ public class ProductService extends BaseService<Product, Long> {
 
 	public static final String STORE_PATH_PATTERN = "/upload/qrcode/product/";
 
-	@Value("${siteUrl?:http://gzcdcl.whenling.com}")
+	@Value("${siteUrl?:http://www.gzcdcl.com}")
 	private String siteUrl;
 
 	@Autowired
@@ -98,13 +98,29 @@ public class ProductService extends BaseService<Product, Long> {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			QrCodeHelper.writeToFile("/wap/product/detail?id=" + entity.getId(), 240, 240,
-					storageService.getFile(qrCodePath));
+			String url = siteUrl + servletContext.getContextPath() + "/wap/product/detail?id=" + entity.getId();
+			QrCodeHelper.writeToFile(url, 240, 240, storageService.getFile(qrCodePath));
 			entity.setQrCode(siteUrl + servletContext.getContextPath() + qrCodePath);
 			save(entity);
 		}
 
 		return entity;
+	}
+
+	public void generateQrCode() {
+		for (Product product : findAll()) {
+			String qrCodePath = STORE_PATH_PATTERN + UUID.randomUUID() + ".png";
+			File qrCodeFile = storageService.getFile(qrCodePath);
+			try {
+				Files.createParentDirs(qrCodeFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String url = siteUrl + servletContext.getContextPath() + "/wap/product/detail?id=" + product.getId();
+			QrCodeHelper.writeToFile(url, 240, 240, storageService.getFile(qrCodePath));
+			product.setQrCode(siteUrl + servletContext.getContextPath() + qrCodePath);
+			save(product);
+		}
 	}
 
 	public Page<Product> findByProductCategory(ProductCategory productCategory, Pageable pageable) {

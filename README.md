@@ -4,6 +4,9 @@ Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, qu
 # 静态模块化java开发平台
 基于servlet3.1的模块化规范，采用spring, spring mvc, jpa, spring data, querydsl, shiro, fastjson, beetl, redis等开源技术，搭建了一套可模块化扩展的java框架，并可选择地使用extjs6、easyui、bootstrap实现了后台管理的公共功能。
 
+# Overview（概览）
+![Alt Overview（概览）](http://ken.whenling.com/img/javaplatform/overview.jpg)
+
 ## Feature
 * based on the latest Java technology
 * use Java8 syntax
