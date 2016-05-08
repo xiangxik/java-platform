@@ -15,6 +15,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.whenling</groupId>
+			<artifactId>module-cache</artifactId>
+			<version>1.0.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.octo.captcha</groupId>
 			<artifactId>jcaptcha</artifactId>
 			<version>1.0</version>

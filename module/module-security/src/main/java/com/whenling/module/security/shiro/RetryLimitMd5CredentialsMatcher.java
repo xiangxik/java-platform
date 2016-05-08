@@ -1,7 +1,5 @@
 package com.whenling.module.security.shiro;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -9,10 +7,10 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * hash认证匹配
@@ -21,15 +19,15 @@ import org.springframework.stereotype.Component;
  * @博客 http://ken.whenling.com
  * @创建时间 2016年3月1日 下午7:08:02
  */
-@Component
 public class RetryLimitMd5CredentialsMatcher extends HashedCredentialsMatcher {
 
-	@Value("${password.maxRetryCount?:10}")
 	private Integer maxRetryCount;
 
-	private Map<String, AtomicInteger> passwordRetryCache = new HashMap<>();
+	private Cache<String, AtomicInteger> passwordRetryCache;
 
-	public RetryLimitMd5CredentialsMatcher() {
+	public RetryLimitMd5CredentialsMatcher(CacheManager cacheManager, Integer maxRetryCount) {
+		passwordRetryCache = cacheManager.getCache("password_retry");
+		this.maxRetryCount = maxRetryCount;
 		setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
 	}
 

@@ -92,8 +92,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/", "classpath:/META-INF/assets/")
-				.setCachePeriod(60 * 60 * 24 * 30);
+		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/", "classpath:/META-INF/assets/").setCachePeriod(60 * 60 * 24 * 30);
 
 		registry.addResourceHandler("/upload/**").addResourceLocations("/upload/");
 	}
@@ -117,8 +116,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-		FastjsonHttpMessageConverter fastjsonMessageConverter = new FastjsonHttpMessageConverter(serializeConfig,
-				parserConfig);
+		FastjsonHttpMessageConverter fastjsonMessageConverter = new FastjsonHttpMessageConverter(serializeConfig, parserConfig);
 		converters.add(fastjsonMessageConverter);
 	}
 
@@ -133,8 +131,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 
 		FormattingConversionService conversionService = (FormattingConversionService) registry;
 
-		DomainClassConverter<FormattingConversionService> converter = new DomainClassConverter<FormattingConversionService>(
-				conversionService);
+		DomainClassConverter<FormattingConversionService> converter = new DomainClassConverter<FormattingConversionService>(conversionService);
 		converter.setApplicationContext(context);
 	}
 
@@ -143,8 +140,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 		argumentResolvers.add(sortResolver());
 		argumentResolvers.add(pageableResolver());
 
-		ProxyingHandlerMethodArgumentResolver resolver = new ProxyingHandlerMethodArgumentResolver(
-				conversionService.getObject());
+		ProxyingHandlerMethodArgumentResolver resolver = new ProxyingHandlerMethodArgumentResolver(conversionService.getObject());
 		resolver.setBeanFactory(context);
 		resolver.setResourceLoader(context);
 
@@ -155,8 +151,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 
 	@Bean
 	public PageableHandlerMethodArgumentResolver pageableResolver() {
-		PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver = new PageableHandlerMethodArgumentResolver(
-				sortResolver());
+		PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver = new PageableHandlerMethodArgumentResolver(sortResolver());
 		pageableHandlerMethodArgumentResolver.setPageParameterName("page");
 		pageableHandlerMethodArgumentResolver.setOneIndexedParameters(true);
 		pageableHandlerMethodArgumentResolver.setSizeParameterName("limit");
@@ -177,8 +172,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 	@Lazy
 	@Bean
 	public QuerydslBindingsFactory querydslBindingsFactory() {
-		QuerydslBindingsFactory querydslBindingsFactory = new QuerydslBindingsFactory(
-				SimpleEntityPathResolver.INSTANCE);
+		QuerydslBindingsFactory querydslBindingsFactory = new QuerydslBindingsFactory(SimpleEntityPathResolver.INSTANCE);
 		querydslBindingsFactory.setApplicationContext(context);
 		return querydslBindingsFactory;
 	}
@@ -188,17 +182,14 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Initial
 		List<HandlerMethodArgumentResolver> argumentResolvers = handlerAdapter.getArgumentResolvers();
 		List<HandlerMethodArgumentResolver> newArgumentResolvers = new ArrayList<>(argumentResolvers);
 		int indexArg = findIndexOfModelAttributeMethodProcessor(argumentResolvers);
-		newArgumentResolvers.set(indexArg, new EntityModelAttributeMethodProcessor(entityService.getObject(),
-				conversionService.getObject(), false));
+		newArgumentResolvers.set(indexArg, new EntityModelAttributeMethodProcessor(entityService.getObject(), conversionService.getObject(), false));
 		handlerAdapter.setArgumentResolvers(newArgumentResolvers);
 
-		List<HandlerMethodArgumentResolver> initBinderArgumentResolvers = handlerAdapter
-				.getInitBinderArgumentResolvers();
-		List<HandlerMethodArgumentResolver> newInitBinderArgumentResolvers = new ArrayList<>(
-				initBinderArgumentResolvers);
+		List<HandlerMethodArgumentResolver> initBinderArgumentResolvers = handlerAdapter.getInitBinderArgumentResolvers();
+		List<HandlerMethodArgumentResolver> newInitBinderArgumentResolvers = new ArrayList<>(initBinderArgumentResolvers);
 		int indexBinder = findIndexOfModelAttributeMethodProcessor(handlerAdapter.getInitBinderArgumentResolvers());
-		newInitBinderArgumentResolvers.set(indexBinder, new EntityModelAttributeMethodProcessor(
-				entityService.getObject(), conversionService.getObject(), false));
+		newInitBinderArgumentResolvers.set(indexBinder,
+				new EntityModelAttributeMethodProcessor(entityService.getObject(), conversionService.getObject(), false));
 		handlerAdapter.setInitBinderArgumentResolvers(newInitBinderArgumentResolvers);
 	}
 

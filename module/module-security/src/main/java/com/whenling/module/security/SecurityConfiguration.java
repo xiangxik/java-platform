@@ -1,6 +1,6 @@
 package com.whenling.module.security;
 
-import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -14,13 +14,12 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import net.sf.ehcache.CacheManager;
+import com.whenling.module.security.shiro.cache.infinispan.ShiroCacheManager;
 
 /**
  * 安全配置
@@ -31,9 +30,6 @@ import net.sf.ehcache.CacheManager;
  */
 @Configuration
 public class SecurityConfiguration {
-
-	@Autowired
-	private CacheManager cacheManager;
 
 	@Value("#{T(org.apache.shiro.codec.Base64).decode('asdqwe123')}")
 	private byte[] cipherKey;
@@ -111,9 +107,8 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-	public org.apache.shiro.cache.CacheManager shiroCacheManager() {
-		EhCacheManager shiroCacheManager = new EhCacheManager();
-		shiroCacheManager.setCacheManager(cacheManager);
+	public CacheManager shiroCacheManager() {
+		ShiroCacheManager shiroCacheManager = new ShiroCacheManager();
 		return shiroCacheManager;
 	}
 

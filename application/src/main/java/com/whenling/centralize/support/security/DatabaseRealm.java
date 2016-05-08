@@ -6,19 +6,22 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.util.SimpleByteSource;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
 import com.whenling.centralize.model.User;
 import com.whenling.centralize.repo.UserRepository;
-import com.whenling.module.security.shiro.RetryLimitMd5CredentialsMatcher;
 import com.whenling.module.security.shiro.Principal;
+import com.whenling.module.security.shiro.RetryLimitMd5CredentialsMatcher;
 
 /**
  * 数据库域
@@ -28,25 +31,22 @@ import com.whenling.module.security.shiro.Principal;
  * @创建时间 2016年3月1日 下午7:06:54
  */
 @Component
-public class DatabaseRealm extends AuthorizingRealm {
+public class DatabaseRealm extends AuthorizingRealm implements InitializingBean {
 
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
-	public DatabaseRealm(RetryLimitMd5CredentialsMatcher retryLimitMd5CredentialsMatcher) {
-		setCachingEnabled(true);
-		setAuthenticationCachingEnabled(true);
-		setAuthenticationCacheName("authenticationCache");
-		setAuthorizationCachingEnabled(true);
-		setAuthorizationCacheName("authorizationCache");
+	private CacheManager cacheManager;
 
-		setCredentialsMatcher(retryLimitMd5CredentialsMatcher);
-	}
+	@Value("${password.maxRetryCount?:10}")
+	private Integer maxRetryCount;
+
+	public static final String CACHE_AUTHENTICATION = "authenticationCache";
+	public static final String CACHE_AUTHORIZATION = "authorizationCache";
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-
 		return null;
 	}
 
@@ -103,6 +103,17 @@ public class DatabaseRealm extends AuthorizingRealm {
 			return credentials;
 		}
 
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		setCachingEnabled(true);
+		setCacheManager(cacheManager);
+		setAuthenticationCachingEnabled(true);
+		setAuthenticationCacheName(CACHE_AUTHENTICATION);
+		setAuthorizationCachingEnabled(true);
+		setAuthorizationCacheName(CACHE_AUTHORIZATION);
+		setCredentialsMatcher(new RetryLimitMd5CredentialsMatcher(cacheManager, maxRetryCount));
 	}
 
 }

@@ -13,9 +13,9 @@
 			<version>1.0.0.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-			<version>5.0.6.Final</version>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-core</artifactId>
+			<version>8.2.1.Final</version>
 		</dependency>
 	</dependencies>
 </project>
