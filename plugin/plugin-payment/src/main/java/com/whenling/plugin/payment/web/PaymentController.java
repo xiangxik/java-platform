@@ -3,6 +3,7 @@ package com.whenling.plugin.payment.web;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import com.whenling.plugin.payment.service.PaymentService;
 @RequestMapping("/payment")
 public class PaymentController extends BaseController {
 
+	@Value("${payment.notifyRedirectUrl?:/center}")
+	private String notifyRedirectUrl;
+	
 	@Autowired
 	private PaymentService paymentService;
 
@@ -35,6 +39,7 @@ public class PaymentController extends BaseController {
 			}
 			model.addAttribute("payment", payment);
 		}
+		model.addAttribute("notifyRedirectUrl", notifyRedirectUrl);
 
 		return classpath("/payment/notify");
 	}

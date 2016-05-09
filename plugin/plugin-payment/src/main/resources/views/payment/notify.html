@@ -1,3 +1,10 @@
 <? if(notifyMessage!=null){ ?>
 ${notifyMessage}
+<? } else { ?>
+支付成功，将跳转回管理中心...
+<script type="text/javascript">
+setTimeout(function() {
+	window.location.href = "${base}${notifyRedirectUrl}";
+}, 2000);
+</script>
 <? } ?>

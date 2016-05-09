@@ -5,7 +5,7 @@
 <title>支付</title>
 </head>
 <body onload="javascript: document.forms[0].submit();">
-	<form action="${requestUrl}" <? if(requestMethod!=null){ ?> method="${requestMethod}"<?}?><? if(requestCharset!=null){ ?> accept-charset="${requestCharset}"<?}?>>
+	<form action="${requestUrl}" method="${requestMethod!}" accept-charset="${requestCharset!}">
 		<? for(entry in parameterMap){ ?>
 			<input type="hidden" name="${entry.key}" value="${entry.value}" />
 		<? } ?>
