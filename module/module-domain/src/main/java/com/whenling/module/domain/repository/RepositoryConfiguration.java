@@ -72,11 +72,14 @@ public class RepositoryConfiguration {
 	@Value("${hibernate.bytecode.use_reflection_optimizer?:true}")
 	private String hibernateBytecodeUseReflectionOptimizer;
 
-	@Value("${hibernate.cache.use_second_level_cache?:false}")
+	@Value("${hibernate.cache.use_second_level_cache?:true}")
 	private String hibernateCacheUseSecondLevelCache;
 
-	@Value("${hibernate.cache.region.factory_class?:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}")
-	private String hibernateCacheRegionFactoryClass;
+	@Value("${hibernate.cache.region.factory_class?:org.hibernate.cache.infinispan.InfinispanRegionFactory}")
+	private String hibernateCacheInfinispanRegionFactoryClass;
+
+	@Value("${hibernate.cache.infinispan.cfg?:/com/whenling/module/cache/infinispan/infinispan.xml}")
+	private String hibernateCacheInfinispanCfg;
 
 	@Value("${javax.persistence.sharedCache.mode?:ALL}")
 	private String javaxPersistenceSharedCacheMode;
@@ -116,7 +119,8 @@ public class RepositoryConfiguration {
 		jpaProperties.put("hibernate.bytecode.use_reflection_optimizer", hibernateBytecodeUseReflectionOptimizer);
 
 		jpaProperties.put("hibernate.cache.use_second_level_cache", hibernateCacheUseSecondLevelCache);
-		jpaProperties.put("hibernate.cache.region.factory_class", hibernateCacheRegionFactoryClass);
+		jpaProperties.put("hibernate.cache.region.factory_class", hibernateCacheInfinispanRegionFactoryClass);
+//		jpaProperties.put("hibernate.cache.infinispan.cfg", hibernateCacheInfinispanCfg);
 		jpaProperties.put("javax.persistence.sharedCache.mode", javaxPersistenceSharedCacheMode);
 		jpaProperties.put("hibernate.generate_statistics", hibernateGenerateStatistics);
 
