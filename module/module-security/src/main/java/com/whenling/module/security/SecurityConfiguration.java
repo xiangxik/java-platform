@@ -3,7 +3,9 @@ package com.whenling.module.security;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
@@ -38,7 +40,7 @@ public class SecurityConfiguration {
 	public SecurityManager securityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setCacheManager(shiroCacheManager());
-		// securityManager.setSessionManager(sessionManager());
+		securityManager.setSessionManager(sessionManager());
 		securityManager.setRememberMeManager(rememberMeManager());
 		// securityManager.setRealm(databaseRealm());
 		return securityManager;
@@ -53,8 +55,16 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
+	public Cookie sessionIdCookie() {
+		SimpleCookie cookie = new SimpleCookie("sid");
+		cookie.setMaxAge(-1);
+		return cookie;
+	}
+
+	@Bean
 	public Cookie rememberMeCookie() {
 		SimpleCookie cookie = new SimpleCookie("rememberMe");
+		cookie.setHttpOnly(true);
 		cookie.setMaxAge(31536000);
 		return cookie;
 	}
@@ -64,8 +74,9 @@ public class SecurityConfiguration {
 		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 		sessionManager.setGlobalSessionTimeout(1000 * 60 * 30);
 		sessionManager.setDeleteInvalidSessions(true);
-		// sessionManager.setSessionValidationSchedulerEnabled(false);
-		// sessionManager.setSessionValidationScheduler(sessionValidationScheduler);
+		sessionManager.setSessionValidationSchedulerEnabled(true);
+		SessionValidationScheduler sessionValidationScheduler = new ExecutorServiceSessionValidationScheduler(sessionManager);
+		sessionManager.setSessionValidationScheduler(sessionValidationScheduler);
 		sessionManager.setSessionDAO(sessionDAO());
 		sessionManager.setSessionIdCookieEnabled(true);
 		sessionManager.setSessionIdCookie(sessionIdCookie());
@@ -75,7 +86,7 @@ public class SecurityConfiguration {
 	@Bean
 	public SessionDAO sessionDAO() {
 		EnterpriseCacheSessionDAO sessionDAO = new EnterpriseCacheSessionDAO();
-		sessionDAO.setActiveSessionsCacheName("shiro-activieSessionCache");
+		sessionDAO.setActiveSessionsCacheName("sessionCache");
 		sessionDAO.setSessionIdGenerator(sessionIdGenerator());
 		return sessionDAO;
 	}
@@ -84,13 +95,6 @@ public class SecurityConfiguration {
 	public SessionIdGenerator sessionIdGenerator() {
 		JavaUuidSessionIdGenerator sessionIdGenerator = new JavaUuidSessionIdGenerator();
 		return sessionIdGenerator;
-	}
-
-	@Bean
-	public Cookie sessionIdCookie() {
-		SimpleCookie cookie = new SimpleCookie("sid");
-		cookie.setMaxAge(-1);
-		return cookie;
 	}
 
 	@Bean

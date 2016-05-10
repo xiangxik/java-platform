@@ -2,23 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.whenling</groupId>
-		<artifactId>java-platform</artifactId>
+		<artifactId>plugin</artifactId>
 		<version>1.0.0.RELEASE</version>
 	</parent>
-	<artifactId>plugin</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>plugin-oauth</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.whenling</groupId>
-			<artifactId>application</artifactId>
+			<artifactId>plugin-base</artifactId>
 			<version>1.0.0.RELEASE</version>
 		</dependency>
 	</dependencies>
-
-	<modules>
-		<module>plugin-base</module>
-		<module>plugin-payment</module>
-		<module>plugin-oauth</module>
-	</modules>
 </project>
