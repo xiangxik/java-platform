@@ -6,4 +6,12 @@
 		<version>1.0.0.RELEASE</version>
 	</parent>
 	<artifactId>plugin-base</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+	</dependencies>
 </project>

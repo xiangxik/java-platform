@@ -113,6 +113,7 @@ public class DatabaseRealm extends AuthorizingRealm implements InitializingBean 
 		setAuthenticationCacheName(CACHE_AUTHENTICATION);
 		setAuthorizationCachingEnabled(true);
 		setAuthorizationCacheName(CACHE_AUTHORIZATION);
+		setAuthenticationTokenClass(UsernamePasswordToken.class);
 		setCredentialsMatcher(new RetryLimitMd5CredentialsMatcher(cacheManager, maxRetryCount));
 	}
 

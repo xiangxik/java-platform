@@ -71,10 +71,6 @@ Ext.define("app.view.main.Login", {
 				xtype : "component",
 				html : "<a href='javascript:;' onclick='onRefreshCaptcha()'>看不清，点击刷新</a>",
 			} ]
-		}, {
-			xtype : 'checkbox',
-			name : 'rememberMe',
-			fieldLabel : "记住我"
 		} ]
 	} ],
 	listeners : {
