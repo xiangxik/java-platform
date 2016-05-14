@@ -1,10 +1,10 @@
-Ext.define("app.view.plugin.GithubOauthForm", {
+Ext.define("app.view.plugin.QQOauthForm", {
 	extend : "Ext.form.Panel",
 	requires : [ "app.view.plugin.OauthPluginController", "app.view.plugin.OauthPluginModel" ],
 	controller : "oauthplugin",
 	viewModel : "oauthplugin",
 	bodyPadding : 5,
-	url : Ext.ctx + "/admin/oauth/github/update",
+	url : Ext.ctx + "/admin/oauth/qq/update",
 	border : false,
 	frame : false,
 	scrollable : true,

@@ -41,20 +41,17 @@ public class OauthController extends BaseController {
 	}
 
 	@RequestMapping(value = "/api/{oauthPluginId}", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
-	public String callback(@PathVariable("oauthPluginId") String oauthPluginId, String code, HttpServletRequest request) {
+	public String getAccessTokenAndProcess(@PathVariable("oauthPluginId") String oauthPluginId, String code, HttpServletRequest request) {
 		OauthPlugin oauthPlugin = oauthService.getOauthPlugin(oauthPluginId);
 		String accessToken = oauthPlugin.getAccessToken(code);
-		OauthUser oauthUser = oauthPlugin.accessApi(accessToken);
-
+		OauthUser oauthUser = oauthPlugin.getOauthUser(accessToken);
 		if (oauthUser.isNew() || oauthUser.getOwner() == null) {
-
 			User user = userService.newEntity();
 			user.setUsername(oauthUser.getUsername());
 			user.setName(oauthUser.getName());
 			user.setAvatar(oauthUser.getAvatarUrl());
 			userService.changePassword(user, null, "");
 			userService.save(user);
-
 			oauthUser.setOwner(user);
 			oauthUserService.save(oauthUser);
 			login(oauthUser, request);

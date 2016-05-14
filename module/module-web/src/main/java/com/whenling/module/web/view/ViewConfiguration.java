@@ -78,9 +78,9 @@ public class ViewConfiguration {
 			}));
 		}
 
-//		Map<String, Format> formats = new HashMap<>();
-//		formats.put(DateTime.class.getName(), new DateTimeFormat());
-//		beetlConfig.setFormats(formats);
+		// Map<String, Format> formats = new HashMap<>();
+		// formats.put(DateTime.class.getName(), new DateTimeFormat());
+		// beetlConfig.setFormats(formats);
 
 		beetlConfig.setResourceLoader(viewResourceLoader());
 		beetlConfig.setConfigFileResource(new ClassPathResource(viewConfigFileLocation));
@@ -98,8 +98,7 @@ public class ViewConfiguration {
 				new ClasspathResourceLoader("/views"));
 		try {
 			compositeResourceLoader.addResourceLoader(new StartsWithMatcher(VIEW_PREFIX_TEMPLATE),
-					new WebAppResourceLoader(
-							new ServletContextResource(servletContext, templateLocation).getFile().getAbsolutePath()));
+					new WebAppResourceLoader(new ServletContextResource(servletContext, templateLocation).getFile().getAbsolutePath()));
 
 			compositeResourceLoader.addResourceLoader(new StartsWithMatcher("/WEB-INF").withPrefix(),
 					new WebAppResourceLoader(servletContext.getRealPath(".")));

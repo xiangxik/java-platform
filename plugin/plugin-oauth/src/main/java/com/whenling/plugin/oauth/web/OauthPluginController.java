@@ -25,6 +25,7 @@ public class OauthPluginController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public Page<PluginModel> list(Pageable pageable) {
+		oauthPlugins.sort(null);
 		return new PageImpl<>(oauthPlugins).map(PluginModel::convert);
 	}
 
