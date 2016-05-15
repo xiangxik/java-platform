@@ -12,19 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.whenling.plugin.model.PluginModel;
 import com.whenling.plugin.oauth.model.OauthPlugin;
+import com.whenling.plugin.oauth.service.OauthService;
 
 @Controller
 @RequestMapping("/admin/oauth/plugin")
 public class OauthPluginController {
 
 	@Autowired
-	private List<OauthPlugin> oauthPlugins = new ArrayList<OauthPlugin>();
+	private OauthService oauthService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public Page<PluginModel> list(Pageable pageable) {
+		Iterable<OauthPlugin> it = oauthService.getOauthPlugins();
+		List<OauthPlugin> oauthPlugins = it == null ? new ArrayList<>() : Lists.newArrayList(it);
 		oauthPlugins.sort(null);
 		return new PageImpl<>(oauthPlugins).map(PluginModel::convert);
 	}

@@ -1,14 +1,13 @@
 package com.whenling.centralize;
 
+import java.util.List;
+
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.whenling.module.web.RootConfiguration;
@@ -41,14 +40,12 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
 
 	@Override
 	protected Filter[] getServletFilters() {
-		DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy("shiroFilter");
-		shiroFilter.setTargetFilterLifecycle(true);
-
-		DelegatingFilterProxy captchaFilter = new DelegatingFilterProxy("captchaFilter");
-		captchaFilter.setTargetFilterLifecycle(true);
-
-		return new Filter[] { new CharacterEncodingFilter("UTF-8", true), new RequestContextFilter(), captchaFilter,
-				shiroFilter };
+		List<Filter> applicationFilters = Application.getFilters();
+		Filter[] filters = new Filter[applicationFilters.size()];
+		for (int i = 0; i < applicationFilters.size(); i++) {
+			filters[i] = applicationFilters.get(i);
+		}
+		return filters;
 	}
 
 	@Override

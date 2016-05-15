@@ -4,6 +4,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.CacheManager;
@@ -62,7 +63,7 @@ public class DatabaseRealm extends AuthorizingRealm implements InitializingBean 
 
 			User user = userRepository.findByUsername(username);
 			if (user == null) {
-				return null;
+				throw new UnknownAccountException();
 			}
 
 			return new SimpleAuthenticationInfo(new Principal(user.getId(), username), user.getPassword(), new SimpleByteSource(user.getUsername()),

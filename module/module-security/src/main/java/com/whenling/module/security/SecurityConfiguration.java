@@ -40,8 +40,8 @@ public class SecurityConfiguration {
 	public SecurityManager securityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setCacheManager(shiroCacheManager());
-		securityManager.setSessionManager(sessionManager());
-		securityManager.setRememberMeManager(rememberMeManager());
+//		securityManager.setSessionManager(sessionManager());
+//		securityManager.setRememberMeManager(rememberMeManager());
 		// securityManager.setRealm(databaseRealm());
 		return securityManager;
 	}
@@ -54,12 +54,12 @@ public class SecurityConfiguration {
 		return rememberMeManager;
 	}
 
-	@Bean
-	public Cookie sessionIdCookie() {
-		SimpleCookie cookie = new SimpleCookie("sid");
-		cookie.setMaxAge(-1);
-		return cookie;
-	}
+	// @Bean
+	// public Cookie sessionIdCookie() {
+	// SimpleCookie cookie = new SimpleCookie("sid");
+	// cookie.setMaxAge(-1);
+	// return cookie;
+	// }
 
 	@Bean
 	public Cookie rememberMeCookie() {
@@ -78,8 +78,8 @@ public class SecurityConfiguration {
 		SessionValidationScheduler sessionValidationScheduler = new ExecutorServiceSessionValidationScheduler(sessionManager);
 		sessionManager.setSessionValidationScheduler(sessionValidationScheduler);
 		sessionManager.setSessionDAO(sessionDAO());
-		sessionManager.setSessionIdCookieEnabled(true);
-		sessionManager.setSessionIdCookie(sessionIdCookie());
+//		sessionManager.setSessionIdCookieEnabled(true);
+//		sessionManager.setSessionIdCookie(sessionIdCookie());
 		return sessionManager;
 	}
 

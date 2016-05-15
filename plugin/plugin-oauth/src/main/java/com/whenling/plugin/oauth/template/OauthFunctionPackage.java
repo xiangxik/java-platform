@@ -1,6 +1,5 @@
 package com.whenling.plugin.oauth.template;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +9,20 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.whenling.module.web.view.FunctionPackage;
 import com.whenling.plugin.oauth.model.OauthPlugin;
+import com.whenling.plugin.oauth.service.OauthService;
 
 @Component("oauthFun")
 public class OauthFunctionPackage implements FunctionPackage {
 
 	@Autowired
-	private List<OauthPlugin> oauthPlugins = new ArrayList<OauthPlugin>();
+	private OauthService oauthService;;
 
 	public List<OauthPlugin> getPlugins() {
+		Iterable<OauthPlugin> it = oauthService.getOauthPlugins();
+		if (it == null) {
+			return null;
+		}
+		List<OauthPlugin> oauthPlugins = Lists.newArrayList(it);
 		oauthPlugins.sort(null);
 		return oauthPlugins;
 	}

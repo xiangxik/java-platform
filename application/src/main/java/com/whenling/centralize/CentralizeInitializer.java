@@ -33,16 +33,17 @@ public class CentralizeInitializer implements WebApplicationInitializer {
 		filterChainDefinitionMap.put("/admin/**", DefaultFilter.authc.name());
 
 		List<Filter> filters = Application.getFilters();
-		filters.add(new CharacterEncodingFilter("UTF-8", true));
-		filters.add(new RequestContextFilter());
+
+		DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy("shiroFilter");
+		shiroFilter.setTargetFilterLifecycle(true);
+		filters.add(shiroFilter);
 
 		DelegatingFilterProxy captchaFilter = new DelegatingFilterProxy("captchaFilter");
 		captchaFilter.setTargetFilterLifecycle(true);
 		filters.add(captchaFilter);
 
-		DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy("shiroFilter");
-		shiroFilter.setTargetFilterLifecycle(true);
-		filters.add(shiroFilter);
+		filters.add(new RequestContextFilter());
+		filters.add(new CharacterEncodingFilter("UTF-8", true));
 	}
 
 }
