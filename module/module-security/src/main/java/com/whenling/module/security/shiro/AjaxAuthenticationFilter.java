@@ -29,6 +29,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Strings;
 import com.whenling.module.base.SpringContext;
 import com.whenling.module.domain.model.Result;
+import com.whenling.module.security.RobotPrevention;
 import com.whenling.module.web.util.WebHelper;
 
 /**
@@ -42,6 +43,24 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 
 	public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
+	private RobotPrevention robotPrevention;
+
+	public void setRobotPrevention(RobotPrevention robotPrevention) {
+		this.robotPrevention = robotPrevention;
+	}
+
+	@Override
+	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+		if (this.robotPrevention != null) {
+			if (this.robotPrevention.validateRequest(request, response)) {
+				return super.executeLogin(request, response);
+			} else {
+				throw new AuthenticationException();
+			}
+		}
+		return super.executeLogin(request, response);
+	}
+
 	@Override
 	protected void saveRequestAndRedirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
 		if (WebHelper.isAjax((HttpServletRequest) request)) {
@@ -53,8 +72,7 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 	}
 
 	@Override
-	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request,
-			ServletResponse response) throws Exception {
+	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 		if (WebHelper.isAjax((HttpServletRequest) request)) {
 			writeObject(request, response, Result.success());
 			return false;
@@ -63,8 +81,7 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 	}
 
 	@Override
-	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request,
-			ServletResponse response) {
+	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 		if (WebHelper.isAjax((HttpServletRequest) request)) {
 			Result result = Result.failure();
 			if (e instanceof IncorrectCredentialsException) {
@@ -94,8 +111,7 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
 
 	protected void writeObject(ServletRequest request, ServletResponse response, Object result) throws IOException {
 		String characterEncoding = ((HttpServletRequest) request).getCharacterEncoding();
-		Charset charset = Strings.isNullOrEmpty(characterEncoding) ? DEFAULT_CHARSET
-				: Charset.forName(characterEncoding);
+		Charset charset = Strings.isNullOrEmpty(characterEncoding) ? DEFAULT_CHARSET : Charset.forName(characterEncoding);
 		OutputStreamWriter out = new OutputStreamWriter(response.getOutputStream(), charset);
 		SerializeWriter writer = new SerializeWriter(out);
 		JSONSerializer serializer = new JSONSerializer(writer, SpringContext.getBean(SerializeConfig.class));

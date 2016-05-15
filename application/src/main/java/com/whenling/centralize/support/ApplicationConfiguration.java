@@ -21,7 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.whenling.centralize.Application;
 import com.whenling.centralize.service.UserService;
 import com.whenling.centralize.support.web.CurrentUserHandlerMethodArgumentResolver;
-import com.whenling.module.security.captcha.CaptchaFilter;
+import com.whenling.module.security.captcha.CaptchaRobotPrevention;
 import com.whenling.module.security.shiro.AjaxAuthenticationFilter;
 
 @Configuration
@@ -36,16 +36,11 @@ public class ApplicationConfiguration {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private CaptchaFilter captchaFilter;
-
 	@PostConstruct
 	public void init() {
 		if (securityManager instanceof DefaultWebSecurityManager) {
 			((DefaultWebSecurityManager) securityManager).setRealms(realms);
 		}
-
-		captchaFilter.getDistinguishPaths().add("/admin");
 	}
 
 	@Bean(name = "shiroFilter")
@@ -57,7 +52,9 @@ public class ApplicationConfiguration {
 		shiroFilterFactoryBean.setUnauthorizedUrl("/error");
 
 		Map<String, Filter> filters = Application.getSecurityfilters();
-		filters.put(DefaultFilter.authc.name(), new AjaxAuthenticationFilter());
+		AjaxAuthenticationFilter ajaxAuthenticationFilter = new AjaxAuthenticationFilter();
+		ajaxAuthenticationFilter.setRobotPrevention(new CaptchaRobotPrevention());
+		filters.put(DefaultFilter.authc.name(), ajaxAuthenticationFilter);
 		shiroFilterFactoryBean.setFilters(filters);
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(Application.getSecurityFilterChainDefinitionMap());

@@ -38,10 +38,6 @@ public class CentralizeInitializer implements WebApplicationInitializer {
 		shiroFilter.setTargetFilterLifecycle(true);
 		filters.add(shiroFilter);
 
-		DelegatingFilterProxy captchaFilter = new DelegatingFilterProxy("captchaFilter");
-		captchaFilter.setTargetFilterLifecycle(true);
-		filters.add(captchaFilter);
-
 		filters.add(new RequestContextFilter());
 		filters.add(new CharacterEncodingFilter("UTF-8", true));
 	}
