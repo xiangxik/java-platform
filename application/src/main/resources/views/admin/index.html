@@ -4,19 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>后台管理系统</title>
-<link rel="stylesheet" type="text/css" href="${base}/assets/font-awesome-4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${base}/assets/extjs-6.0.0/resources/icon.css">
+<link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${base}/assets/ext/resources/icon.css">
 <link rel="stylesheet" type="text/css" href="${base}/assets/platform/css/common.css">
 <link rel="stylesheet" type="text/css" href="${base}/app/resources/ux.css">
-<script type="text/javascript" src="${base}/assets/extjs-6.0.0/include-ext.js?theme=gray"></script>
-<script type="text/javascript" src="${base}/assets/extjs-6.0.0/classic/locale/locale-zh_CN.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${base}/assets/ext-6.0.1/classic/theme-classic/resources/theme-classic-all.css">
+<link rel="stylesheet" type="text/css" href="${base}/assets/ext-6.0.1/packages/ux/classic/classic/resources/ux-all.css">
+
+<script type="text/javascript" src="${base}/assets/ext-6.0.1/ext-all.js"></script>
+<script type="text/javascript" src="${base}/assets/ext-6.0.1/packages/ux/classic/ux-debug.js"></script>
+<script type="text/javascript" src="${base}/assets/ext-6.0.1/classic/theme-classic/theme-classic.js"></script>
+<script type="text/javascript" src="${base}/assets/ext-6.0.1/packages/ux/classic/ux-debug.js"></script>
+
 <script type="text/javascript">
+	Ext.base = "${base}/assets/ext-6.0.1/";
+	Ext.ctx = "${base}";
 	Ext.application({
 		name : 'app',
 		appFolder : "${base}/app",
-		paths : {
-			"Ext.ux" : "${base}/assets/extjs-6.0.0/ux"
-		},
 		extend : "app.Application"
 	});
 </script>

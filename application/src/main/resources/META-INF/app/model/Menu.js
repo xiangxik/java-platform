@@ -1,5 +1,5 @@
 Ext.define("app.model.Menu", {
-	extend : "app.model.Entity",
+	extend : "app.model.TreeEntity",
 	fields : [ {
 		name : "text",
 		type : "string"
@@ -27,7 +27,7 @@ Ext.define("app.model.Menu", {
 		this.callParent(arguments);
 		app.model.Menu.setProxy({
 			type : "ajax",
-			url : Ext.ctx + "/admin/menu/get",
+			url : Ext.ctx + "/admin/menu/list",
 			extraParams : {
 				paths : this.paths
 			}
