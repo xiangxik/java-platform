@@ -27,7 +27,7 @@ Ext.define("app.model.Menu", {
 		this.callParent(arguments);
 		app.model.Menu.setProxy({
 			type : "ajax",
-			url : Ext.ctx + "/admin/menu/list",
+			url : Ext.ctx + "/admin/menu/tree",
 			extraParams : {
 				paths : this.paths
 			}

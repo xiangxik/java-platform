@@ -1,5 +1,5 @@
 Ext.define("app.model.ProductCategory", {
-	extend : "app.model.Entity",
+	extend : "app.model.TreeEntity",
 	fields : [ {
 		name : "name",
 		type : "string"
@@ -27,7 +27,7 @@ Ext.define("app.model.ProductCategory", {
 		this.callParent(arguments);
 		app.model.ProductCategory.setProxy({
 			type : "ajax",
-			url : Ext.ctx + "/admin/productCategory/get",
+			url : Ext.ctx + "/admin/productCategory/tree",
 			extraParams : {
 				paths : this.paths
 			}
