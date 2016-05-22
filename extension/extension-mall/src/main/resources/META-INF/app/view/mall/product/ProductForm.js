@@ -1,8 +1,8 @@
 Ext.define("app.view.mall.product.ProductForm", {
 	extend : "Ext.form.Panel",
 	alias : "widget.productform",
-	requires : [ "app.view.mall.product.ProductController", "app.view.mall.product.ProductModel", "Ext.ux.TreePicker",
-			"app.ux.form.htmleditor.Table", "app.ux.form.htmleditor.Image", "app.ux.form.Image" ],
+	requires : [ "app.view.mall.product.ProductController", "app.view.mall.product.ProductModel", "Ext.ux.TreePicker", "app.ux.form.htmleditor.Table",
+			"app.ux.form.htmleditor.Image", "app.ux.form.Image" ],
 	controller : "product",
 	viewModel : "product",
 	border : false,
@@ -46,33 +46,34 @@ Ext.define("app.view.mall.product.ProductForm", {
 			}, {
 				fieldLabel : "名称",
 				name : "name",
-				maxLength: 100,
+				maxLength : 100,
 				allowBlank : false
 			}, {
 				fieldLabel : "简要描述",
-				xtype:"textareafield",
+				xtype : "textareafield",
 				name : "description",
-				maxLength: 250
+				maxLength : 250
 			}, {
 				fieldLabel : "编号",
-				maxLength: 50,
+				maxLength : 50,
 				name : "sn"
 			}, {
 				fieldLabel : "销售价",
 				name : "price",
-				xtype: "numberfield",
-				minValue: 0,
+				xtype : "numberfield",
+				minValue : 0,
 				allowBlank : false
 			}, {
 				fieldLabel : "成本价",
-				xtype: "numberfield",
-				minValue: 0,
+				xtype : "numberfield",
+				minValue : 0,
 				name : "cost"
 			}, {
 				fieldLabel : "市场价",
-				xtype: "numberfield",
-				minValue: 0,
-				name : "marketPrice"
+				xtype : "numberfield",
+				minValue : 0,
+				name : "marketPrice",
+				allowBlank : false
 			}, {
 				fieldLabel : "展示图片",
 				xtype : "imagefield",
@@ -80,21 +81,21 @@ Ext.define("app.view.mall.product.ProductForm", {
 			}, {
 				fieldLabel : "单位",
 				name : "unit",
-				maxLength: 100
+				maxLength : 100
 			}, {
 				fieldLabel : "重量",
 				name : "weight",
-				xtype: "numberfield",
-				minValue: 0
+				xtype : "numberfield",
+				minValue : 0
 			}, {
 				fieldLabel : "库存",
 				name : "stock",
-				xtype: "numberfield",
-				minValue: 0
+				xtype : "numberfield",
+				minValue : 0
 			}, {
 				fieldLabel : "库存备注",
 				name : "stockMemo",
-				maxLength: 100
+				maxLength : 100
 			}, {
 				xtype : "fieldcontainer",
 				fieldLabel : "设置",
@@ -123,29 +124,29 @@ Ext.define("app.view.mall.product.ProductForm", {
 			}, {
 				fieldLabel : "赠送积分",
 				name : "point",
-				xtype: "numberfield",
+				xtype : "numberfield",
 				allowBlank : false,
-				minValue: 0
+				minValue : 0
 			}, {
 				fieldLabel : "备注",
 				name : "memo",
-				maxLength: 100
+				maxLength : 100
 			}, {
 				fieldLabel : "搜索关键字",
 				name : "keyword",
-				maxLength: 100
+				maxLength : 100
 			}, {
 				fieldLabel : "页面标题",
 				name : "seoTitle",
-				maxLength: 100
+				maxLength : 100
 			}, {
 				fieldLabel : "页面关键字",
 				name : "seoKeywords",
-				maxLength: 100
+				maxLength : 100
 			}, {
 				fieldLabel : "页面描述",
 				name : "seoDescription",
-				maxLength: 100
+				maxLength : 100
 			} ]
 		}, {
 			title : "商品介绍",

@@ -83,8 +83,8 @@ public class ImageController {
 			}
 		}
 
-		return Result.success().data(imageInfos.size() == 1 ? imageInfos.get(0) : imageInfos)
-				.addExtraProperties("total", imageInfos.size()).addExtraProperties("errors", "");
+		return Result.success().data(imageInfos.size() == 1 ? imageInfos.get(0) : imageInfos).addExtraProperties("total", imageInfos.size())
+				.addExtraProperties("errors", "");
 	}
 
 	@RequestMapping(method = RequestMethod.POST, params = "action=delete")
@@ -116,8 +116,7 @@ public class ImageController {
 	public Page<ImageInfo> browser(String path, Pageable pageable) {
 		return imageInfoService.findAll(pageable).map((info) -> {
 			String baseName = FilenameUtils.getBaseName(info.getName());
-			info.setName(StringUtils.abbreviateMiddle(baseName, "...", 12) + "."
-					+ FilenameUtils.getExtension(info.getName()));
+			info.setName(StringUtils.abbreviateMiddle(baseName, "...", 12) + "." + FilenameUtils.getExtension(info.getName()));
 			return info;
 		});
 	}
