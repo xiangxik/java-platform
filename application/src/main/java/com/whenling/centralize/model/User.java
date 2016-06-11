@@ -95,7 +95,7 @@ public class User extends BizEntity<User, Long> implements Lockedable, Areable {
 	private Set<UserRole> userRoles = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rank_id", nullable = false)
+	@JoinColumn(name = "rank_id")
 	private UserRank rank;
 
 	public enum Sex {
