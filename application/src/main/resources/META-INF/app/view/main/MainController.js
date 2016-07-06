@@ -36,7 +36,7 @@ Ext.define("app.view.main.MainController", {
 			}
 		});
 	},
-	onMenuTreeItemClick : function(tree, item) {
+	onMenuTreeItemClick : function(treelist, item) {
 		if (item.isLeaf()) {
 			this.menuToCenter(item.data);
 		}

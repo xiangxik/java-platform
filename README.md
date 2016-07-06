@@ -1,3 +1,5 @@
+## 该工程不更新了。请移步到更合理结构的新工程 https://github.com/xiangxik/castle-platform 
+
 # Static modular java development platform
 Based on servlet3.1 module standardization, use spring MVC, JPA, spring data, querydsl, shiro, fastjson, Beetl, infinispan, redis etc. open source technology, build the modular extension of Java framework, and can choose to use extjs6, easyUI, bootstrap with the public function of the backstage management.
 
